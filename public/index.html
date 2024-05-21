@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Activity Configuration</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
+    <script src="https://bizcuit-sfmc-jbis.onrender.com/customactivity.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Configure Custom Activity</h1>
+    <form id="config-form">
+        <label for="futureUtcTime">Future UTC Time:</label>
+        <input type="text" id="futureUtcTime" name="futureUtcTime" placeholder="HH:MM:SS"><br><br>
+        <label for="userTimeZone">User Time Zone:</label>
+        <input type="text" id="userTimeZone" name="userTimeZone" placeholder="UTC+01:00"><br><br>
+        <button type="button" id="save-button">Save</button>
+    </form>
+
+    <script src="customactivity.js"></script>
+ </body>
+</html>
