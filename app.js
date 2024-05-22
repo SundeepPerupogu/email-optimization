@@ -52,15 +52,15 @@ app.post('/publish', (req, res) => {
 app.post('/validate', (req, res) => {
     console.log(`Validated`);
     console.log(JSON.stringify(req.body));
-    try {
-        const inArguments = req.body.arguments && req.body.arguments.execute && req.body.arguments.execute.inArguments;
-        if (!inArguments || inArguments.length === 0 || !inArguments[0].futureUtcTime || !inArguments[0].userTimeZone) {
-            throw new Error('Invalid configuration: Missing required inArguments');
-        }
         res.sendStatus(200);
-    } catch (error) {
-        handleError(res, error);
-    }
+//    try {
+        //const inArguments = req.body.arguments && req.body.arguments.execute && req.body.arguments.execute.inArguments;
+       // if (!inArguments || inArguments.length === 0 || !inArguments[0].futureUtcTime || !inArguments[0].userTimeZone) {
+       //     throw new Error('Invalid configuration: Missing required inArguments');
+     //   }
+   // } catch (error) {
+  //      handleError(res, error);
+//    }
 });
 
 app.post('/stop', (req, res) => {
