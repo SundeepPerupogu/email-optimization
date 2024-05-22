@@ -51,6 +51,7 @@ app.post('/publish', (req, res) => {
 
 app.post('/validate', (req, res) => {
     console.log(`Validated`);
+    console.log(`${req.body}`);
     try {
         const inArguments = req.body.arguments && req.body.arguments.execute && req.body.arguments.execute.inArguments;
         if (!inArguments || inArguments.length === 0 || !inArguments[0].futureUtcTime || !inArguments[0].userTimeZone) {
