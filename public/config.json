@@ -15,15 +15,18 @@
     "execute": {
       "inArguments": [
         {
-          "futureUtcTime": "{{Event.deltaDate.futureUtcTime}}"
+          "timezoneOffset": "{{Event.DE.timezoneOffset}}"
         },
         {
-          "userTimeZone": "UTC+01:00"
+          "triggerTime": "08:00"
+        },
+        {
+          "daytype": "weekday"
         }
       ],
       "outArguments": [
         {
-          "timeDifference": "2090"
+          "result": "2090"
         }
       ],
       "url": "https://email-optimization.onrender.com/execute",
