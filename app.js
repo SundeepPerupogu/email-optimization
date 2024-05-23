@@ -35,6 +35,8 @@ app.post('/execute', (req, res) => {
         const timeDifference = (futureTime - currentTime) / 1000; // Difference in seconds
 
         res.json({ timeDifference: timeDifference.toString() });
+	        console.log(JSON.stringify(res.body));
+
     } catch (error) {
         handleError(res, error);
     }
