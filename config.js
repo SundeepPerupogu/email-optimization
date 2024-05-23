@@ -36,33 +36,37 @@
     }
   },
   "schema": {
-  "arguments": {
-    "execute": {
-      "inArguments": [
-        "futureUtcTime": {
-          "dataType": "Text",
-          "isNullable": false,
-          "direction": "in",
-          "access": "visible"
-        },
-        "userTimeZone": {
-          "dataType": "Text",
-          "isNullable": false,
-          "direction": "in",
-          "access": "visible"
-        }
-      ],
-      "outArguments": [
-        "timeDifference": {
-          "dataType": "Text",
-          "isNullable": false,
-          "direction": "out",
-          "access": "visible"
-        }
-      ]
+    "arguments": {
+      "execute": {
+        "inArguments": [
+          {
+            "futureUtcTime": {
+              "dataType": "Text",
+              "isNullable": false,
+              "direction": "in",
+              "access": "visible"
+            },
+            "userTimeZone": {
+              "dataType": "Text",
+              "isNullable": false,
+              "direction": "in",
+              "access": "visible"
+            }
+          }
+        ],
+        "outArguments": [
+          {
+            "timeDifference": {
+              "dataType": "Text",
+              "isNullable": false,
+              "direction": "out",
+              "access": "visible"
+            }
+          }
+        ]
+      }
     }
-  }
-},
+  },
   "configurationArguments": {
     "applicationExtensionKey": "cfaaed29-c9a5-470b-9580-cf5e344567a2",
     "publish": {
