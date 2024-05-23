@@ -1,6 +1,6 @@
-define([
-    'postmonger'
-], function (Postmonger) {
+		
+				
+define(['postmonger'], function (Postmonger) {
     'use strict';
 
     var connection = new Postmonger.Session();
@@ -87,4 +87,9 @@ define([
 
         connection.trigger('updateActivity', payload);
     }
+
+    return {
+        // Optionally expose methods or properties if needed
+    };
 });
+
