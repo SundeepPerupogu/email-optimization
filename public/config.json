@@ -7,7 +7,7 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "Mail Optimization",
+      "name": "sendmoConvertUTC",
       "description": "Calculates time difference between current and future time in user's timezone"
     }
   },
