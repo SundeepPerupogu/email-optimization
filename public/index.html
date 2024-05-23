@@ -2,11 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Custom Activity Configuration</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Convert Time Zone to UTC</title>
+    <!--script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
-    <script src="https://email-optimization.onrender.com/customactivity.js"></script>
+    <script src="https://email-optimization.onrender.com/customactivity.js"></script-->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Function to convert user time zone to UTC
+            function convertToUTC() {
+                // Get user input or default values
+                let userTimeZoneOffset = document.getElementById("timezoneOffset").value || "-09:30"; // Default to +05:30
+                let triggerTime = document.getElementById("triggerTime").value || "08:00"; // Default to 14:00
+				const dayType = document.getElementById('daytype').value || "Weekday";
+
+                // Convert time zone offset to minutes
+                let offsetSign = userTimeZoneOffset[0] === '+' ? 1 : -1;
+                let offsetParts = userTimeZoneOffset.substring(1).split(':');
+                let offsetMinutes = offsetSign * (parseInt(offsetParts[0]) * 60 + parseInt(offsetParts[1]));
+
+                // Get current date
+                let now = new Date();
+
+                // Parse the trigger time
+                let triggerParts = triggerTime.split(':');
+                let triggerHours = parseInt(triggerParts[0]);
+                let triggerMinutes = parseInt(triggerParts[1]);
+
+                // Create a Date object for the trigger time today
+                let triggerDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), triggerHours, triggerMinutes);
+
+                // Adjust trigger time to UTC
+                triggerDate.setMinutes(triggerDate.getMinutes() - offsetMinutes);
+
+                // If the trigger time has already passed today, set it to the same time tomorrow
+                if (triggerDate < now) {
+                    triggerDate.setDate(triggerDate.getDate() + 1);
+                }
+
+				if (dayType === 'weekday') {
+					while (triggerDate.getDay() === 0 || triggerDate.getDay() === 6) {
+						triggerDate.setDate(triggerDate.getDate() + 1);
+					}
+				}
+
+
+                // Format the UTC trigger time
+                let utcHours = String(triggerDate.getUTCHours()).padStart(2, '0');
+                let utcMinutes = String(triggerDate.getUTCMinutes()).padStart(2, '0');
+                let utcTime = `${utcHours}:${utcMinutes}`;
+
+                // Display the UTC trigger time
+                document.getElementById("result").innerText = `Next trigger time in UTC: ${utcTime} and Date would be ${triggerDate.toUTCString()}`;
+            }
+
+            // Add event listeners to input fields to call convertToUTC on change
+            document.getElementById("timezoneOffset").addEventListener('input', convertToUTC);
+            document.getElementById("triggerTime").addEventListener('input', convertToUTC);
+
+            // Initial conversion with default values
+            convertToUTC();
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,15 +85,54 @@
     </style>
 </head>
 <body>
-    <h1>Configure Custom Activity</h1>
-    <form id="config-form">
-        <label for="futureUtcTime">Future UTC Time:</label>
-        <input type="text" id="futureUtcTime" name="futureUtcTime" placeholder="HH:MM:SS"><br><br>
-        <label for="userTimeZone">User Time Zone:</label>
-        <input type="text" id="userTimeZone" name="userTimeZone" placeholder="UTC+01:00"><br><br>
-        <button type="button" id="save-button">Save</button>
-    </form>
+    <h2>Mail Optimization to get UTC</h2>
+    <form>
+        <label for="timezoneOffset">Time Zone Offset from the Data Extension:Event.Record.user.timezone</label><br>
+        <!--input type="text" id="timezoneOffset" value="+05:30"><br><br>-->
+		<select id="timezoneOffset" required onchange="convertToUTC()">
+        <option value="">Select timezone</option>
+        <option value="+06:30">(UTC-12:00)</option>
+        <option value="+07:30">(UTC-11:00)</option>
+        <option value="+08:30">(UTC-10:00)</option>
+        <option value="+09:30">(UTC-09:00)</option>
+        <option value="+10:30">(UTC-08:00)(Pacific Time Zone)</option>
+        <option value="-12:30">(UTC-07:00)(Mountain Time Zone)</option>
+        <option value="-11:30">(UTC-06:00)(Central Time Zone)</option>
+        <option value="-10:30">(UTC-05:00)(Eastern Time Zone)</option>
+        <option value="-09:30">(UTC-04:00)(New York, NY, USA)</option>
+        <option value="-09:00">(UTC-03:30)</option>
+        <option value="-08:30">(UTC-03:00)</option>
+        <option value="-07:30">(UTC-02:00)</option>
+        <option value="-06:30">(UTC-01:00)</option>
+        <option value="-05:30">(UTC+00:00)</option>
+        <option value="+06:30">(UTC+12:00)</option>
+        <option value="+05:30">(UTC+11:00)</option>
+        <option value="+04:30">(UTC+10:00)</option>
+        <option value="+03:30">(UTC+09:00)</option>
+        <option value="+02:30">(UTC+08:00)</option>
+        <option value="+01:30">(UTC+07:00)</option>
+        <option value="+00:30">(UTC+06:00)</option>
+        <option value="+00:00">(UTC+05:30)(Asia/Kolkata)</option>
+        <option value="-00:30">(UTC+05:00)</option>
+        <option value="-01:30">(UTC+04:00)</option>
+        <option value="-02:30">(UTC+03:00)</option>
+        <option value="-03:30">(UTC+02:00)</option>
+        <option value="-04:30">(UTC+01:00)</option>
+        <!-- Add more options as needed 
+        <option value="UTC+14:00">(UTC+14:00) Kiritimati</option>-->
+    </select><br><br>        
+  
+		
+        <label for="triggerTime">Mail Trigger Time (24-hour format, e.g., 14:00):</label><br>
+        <input type="time" id="triggerTime" value="08:00"><br><br>
+		<label for="daytype">Select Day Type:</label>
+		<select id="daytype">
+			<option value="weekday">Weekday</option>
+			<option value="allday">All Day</option>
+		</select>
 
-    <script src="customactivity.js"></script>
- </body>
+    </form>
+	
+    <p id="result"></p>
+</body>
 </html>
