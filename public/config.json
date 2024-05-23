@@ -36,30 +36,33 @@
     }
   },
   "schema": {
-    "arguments": {
-      "execute": {
-        "inArguments": [
-          {
-            "name": "futureUtcTime",
-            "type": "String",
-            "description": "The future time in UTC format"
-          },
-          {
-            "name": "userTimeZone",
-            "type": "String",
-            "description": "The user's time zone in UTC offset format"
-          }
-        ],
-        "outArguments": [
-          {
-            "name": "timeDifference",
-            "type": "String",
-            "description": "The calculated time difference in minutes"
-          }
-        ]
-      }
+  "arguments": {
+    "execute": {
+      "inArguments": [
+        "futureUtcTime": {
+          "dataType": "Text",
+          "isNullable": false,
+          "direction": "in",
+          "access": "visible"
+        },
+        "userTimeZone": {
+          "dataType": "Text",
+          "isNullable": false,
+          "direction": "in",
+          "access": "visible"
+        }
+      ],
+      "outArguments": [
+        "timeDifference": {
+          "dataType": "Text",
+          "isNullable": false,
+          "direction": "out",
+          "access": "visible"
+        }
+      ]
     }
-  },
+  }
+},
   "configurationArguments": {
     "applicationExtensionKey": "cfaaed29-c9a5-470b-9580-cf5e344567a2",
     "publish": {
