@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const SendTimeCalculator = require('./public/customactivity');
-
+const cors = require('cors'); // Add this line
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -15,27 +14,34 @@ function handleError(res, error) {
     res.status(500).send({ error: 'Internal Server Error' });
 }
 
-
 app.post('/execute', (req, res) => {
-    const { time_zone, start_window, end_window } = req.body.inArguments[0];
     try {
-        const calculator = new SendTimeCalculator(start_window, end_window);
-        calculator.validate();
-        const nextSend = calculator.calculateNextSendTime(time_zone);
-        console.log(JSON.stringify(res.body));
-        res.status(200).send({ next_send: nextSend });
+        const inArguments = req.body.inArguments && req.body.inArguments[0];
+        if (!inArguments) {
+            throw new Error('inArguments missing or invalid');
+        }
+
+        const futureUtcTime = inArguments.futureUtcTime;
+        const userTimeZone = inArguments.userTimeZone;
+
+        if (!futureUtcTime || !userTimeZone) {
+            throw new Error('Missing required arguments: futureUtcTime or userTimeZone');
+        }
+
+        const currentUtcTime = new Date().toISOString().split('T')[1].split('.')[0]; // Current UTC time in HH:MM:SS
+        const futureTime = new Date(`1970-01-01T${futureUtcTime}Z`);
+        const currentTime = new Date(`1970-01-01T${currentUtcTime}Z`);
+
+        const timeDifference = (futureTime - currentTime) / 1000; // Difference in seconds
+
+        res.json({ timeDifference: timeDifference.toString() });
+	        console.log(JSON.stringify(res.body));
+
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        handleError(res, error);
     }
 });
-app.post('/validate', (req, res) => {
-    console.log(`Validated`);
-        res.sendStatus(200);
 
-});
-//app.get('/config', (req, res) => {
-  //  res.sendFile(__dirname + '/public/config.html');
-//});
 app.post('/publish', (req, res) => {
     try {
 							
@@ -43,6 +49,20 @@ app.post('/publish', (req, res) => {
     } catch (error) {
         handleError(res, error);
     }
+});
+
+app.post('/validate', (req, res) => {
+    console.log(`Validated`);
+    console.log(JSON.stringify(req.body));
+        res.sendStatus(200);
+//    try {
+        //const inArguments = req.body.arguments && req.body.arguments.execute && req.body.arguments.execute.inArguments;
+       // if (!inArguments || inArguments.length === 0 || !inArguments[0].futureUtcTime || !inArguments[0].userTimeZone) {
+       //     throw new Error('Invalid configuration: Missing required inArguments');
+     //   }
+   // } catch (error) {
+  //      handleError(res, error);
+//    }
 });
 
 app.post('/stop', (req, res) => {
@@ -55,5 +75,5 @@ app.post('/stop', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('Custom Activity Service is running on port ${port}');
+    console.log(`Custom Activity running on port ${port}`);
 });
