@@ -1,7 +1,10 @@
-'use strict';
+define([
+    'postmonger'
+], function (Postmonger) {
+    'use strict';
 
-define(['postmonger'], function (Postmonger) {
-    const connection = new Postmonger.Session();
+											  
+    var connection = new Postmonger.Session();
 
     $(window).ready(onRender);
 
