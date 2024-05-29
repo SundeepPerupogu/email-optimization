@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); // Add this line
 const app = express();
 const port = process.env.PORT || 3000;
-
+const SendTimeCalculator = require('./public/customactivity');
 app.use(cors()); // Add this line
 app.use(bodyParser.json());
 app.use(express.static('public'));  // To serve index.html, customactivity.js, etc.
@@ -15,30 +15,19 @@ function handleError(res, error) {
 }
 
 app.post('/execute', (req, res) => {
+    const { time_zone, start_window, end_window } = req.body.inArguments[0];
     try {
-        const inArguments = req.body.inArguments && req.body.inArguments[0];
-        if (!inArguments) {
-            throw new Error('inArguments missing or invalid');
-        }
-
-        const futureUtcTime = inArguments.futureUtcTime;
-        const userTimeZone = inArguments.userTimeZone;
-
-        if (!futureUtcTime || !userTimeZone) {
-            throw new Error('Missing required arguments: futureUtcTime or userTimeZone');
-        }
-
-        const currentUtcTime = new Date().toISOString().split('T')[1].split('.')[0]; // Current UTC time in HH:MM:SS
-        const futureTime = new Date(`1970-01-01T${futureUtcTime}Z`);
-        const currentTime = new Date(`1970-01-01T${currentUtcTime}Z`);
-
-        const timeDifference = (futureTime - currentTime) / 1000; // Difference in seconds
-
-        res.json({ timeDifference: timeDifference.toString() });
-	        console.log(JSON.stringify(res.body));
+           const calculator = new SendTimeCalculator(start_window, end_window);
+        calculator.validate();
+        const nextSend = calculator.calculateNextSendTime(time_zone);
+        console.log(JSON.stringify(res.body));
+        res.status(200).send({ next_send: nextSend });
+	    
+//        res.json({ timeDifference: timeDifference.toString() });
+//	        console.log(JSON.stringify(res.body));
 
     } catch (error) {
-        handleError(res, error);
+        res.status(400).send({ error: error.message });
     }
 });
 
