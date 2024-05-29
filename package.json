@@ -3,8 +3,12 @@
     "version": "1.0.0",
     "description": "Custom Activity for calculating next send time",
     "main": "server.js",
+    "scripts": {
+    "start": "node app.js"
+      },
     "dependencies": {
         "express": "^4.17.1",
+        "cors":"^2.8.5",
         "body-parser": "^1.19.0",
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.34"
