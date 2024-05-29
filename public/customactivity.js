@@ -1,46 +1,65 @@
-define([
-    'postmonger'
-], function (Postmonger) {
-    'use strict';
-
-											  
-    var connection = new Postmonger.Session();
-
-    $(window).ready(onRender);
-
-    connection.on('initActivity', initialize);
-    connection.on('clickedNext', save);
-
-    function onRender() {
-        connection.trigger('ready');
-    }
-
-    function initialize(payload) {
-        if (payload.arguments && payload.arguments.execute && payload.arguments.execute.inArguments) {
-            const inArguments = payload.arguments.execute.inArguments;
-            const startWindow = inArguments.find(arg => arg.start_window).start_window;
-            const endWindow = inArguments.find(arg => arg.end_window).end_window;
-            
-            $('#start_window').val(startWindow);
-            $('#end_window').val(endWindow);
+{
+    "workflowApiVersion": "1.1",
+    "metaData": {
+        "icon": "public/download.png",
+        "category": "message"
+    },
+    "type": "REST",
+    "lang": {
+        "en-US": {
+            "name": "Send Time Calculator",
+            "description": "Calculates the next available send time based on the user's time zone."
         }
-    }
-
-    function save() {
-        const startWindow = $('#start_window').val();
-        const endWindow = $('#end_window').val();
-        
-        const payload = {
-            arguments: {
-                execute: {
-                    inArguments: [
-                        { start_window: startWindow },
-                        { end_window: endWindow }
-                    ]
+    },
+    "arguments": {
+        "execute": {
+            "inArguments": [
+                {
+                    "time_zone": {
+                        "dataType": "Text",
+                        "isRequired": true,
+                        "direction": "in"
+                    },
+                    "start_window": {
+                        "dataType": "Text",
+                        "isRequired": true,
+                        "direction": "in"
+                    },
+                    "end_window": {
+                        "dataType": "Text",
+                        "isRequired": true,
+                        "direction": "in"
+                    }
+                }
+            ],
+            "outArguments": [
+                {
+                    "next_send": {
+                        "dataType": "Text",
+                        "direction": "out"
+                    }
+                }
+            ],
+            "url": "https://sendtimecalculator.onrender.com/execute"
+        },
+        "configuration": {
+            "arguments": {
+                "start_window": {
+                    "dataType": "Text",
+                    "isRequired": true
+                },
+                "end_window": {
+                    "dataType": "Text",
+                    "isRequired": true
                 }
             }
-        };
-
-        connection.trigger('updateActivity', payload);
+        }
+    },
+    "userInterfaces": {
+        "configModal": {
+            "height": 200,
+            "width": 400,
+            "url": "https://sendtimecalculator.onrender.com/config"
+        }
     }
-});
+}
