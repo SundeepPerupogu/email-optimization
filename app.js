@@ -28,14 +28,14 @@ app.post('/execute', (req, res) => {
         res.status(400).send({ error: error.message });
     }
 });
-//app.post('/validate', (req, res) => {
-  //  console.log(`Validated`);
-    //    res.sendStatus(200);
+app.post('/validate', (req, res) => {
+    console.log(`Validated`);
+        res.sendStatus(200);
 
-//});
-app.get('/config', (req, res) => {
-    res.sendFile(__dirname + '/public/config.html');
 });
+//app.get('/config', (req, res) => {
+  //  res.sendFile(__dirname + '/public/config.html');
+//});
 app.post('/publish', (req, res) => {
     try {
 							
