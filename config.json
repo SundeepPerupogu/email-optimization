@@ -20,18 +20,15 @@
                         "isRequired": true,
                         "direction": "in"
                     },
-                    {
-                        "start_window": {
-                            "dataType": "Text",
-                            "isRequired": true,
-                            "direction": "in"
-                        },
-                    {
-                        "end_window": {
-                            "dataType": "Text",
-                            "isRequired": true,
-                            "direction": "in"
-                        }
+                    "start_window": {
+                        "dataType": "Text",
+                        "isRequired": true,
+                        "direction": "in"
+                    },
+                    "end_window": {
+                        "dataType": "Text",
+                        "isRequired": true,
+                        "direction": "in"
                     }
                 }
             ],
