@@ -1,7 +1,7 @@
 {
     "workflowApiVersion": "1.1",
     "metaData": {
-        "icon": "path/to/icon.png",
+        "icon": "public/icon.png",
         "category": "message"
     },
     "type": "REST",
@@ -43,7 +43,7 @@
                     }
                 }
             ],
-            "url": "https://your-server-url/execute"
+            "url": "https://sendtimecalculator.onrender.com/execute"
         },
         "configuration": {
             "arguments": {
@@ -62,7 +62,7 @@
         "configModal": {
             "height": 200,
             "width": 400,
-            "url": "https://your-server-url/config"
+            "url": "https://sendtimecalculator.onrender.com/config"
         }
     }
 }
