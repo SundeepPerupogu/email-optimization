@@ -50,5 +50,5 @@ class SendTimeCalculator:
 if __name__ == '__main__':
     calculator = SendTimeCalculator("10:00:00Z", "14:30:00Z")
     calculator.validate()
-    next_send_time = calculator.calculate_next_send_time("+5:30")
+    next_send_time = calculator.calculate_next_send_time("+05:30")
     print(next_send_time)
