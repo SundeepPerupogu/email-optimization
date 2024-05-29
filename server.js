@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const SendTimeCalculator = require('./customActivity');
+const SendTimeCalculator = require('./public/customactivity');
 
 const app = express();
 app.use(bodyParser.json());
