@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); // Add this line
 const app = express();
 const port = process.env.PORT || 3000;
-//const SendTimeCalculator = require('./public/customactivity');
+const SendTimeCalculator = require('./backend/customActivity.py');
 app.use(cors()); // Add this line
 app.use(bodyParser.json());
 app.use(express.static('public'));  // To serve index.html, customactivity.js, etc.
