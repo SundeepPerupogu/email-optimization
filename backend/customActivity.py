@@ -17,7 +17,19 @@ class SendTimeCalculator:
         if self.start_window == self.end_window:
             raise ValueError("Start window and end window must not be the same.")
 
-    def calculate_next_send_time(self, time_zone: str):
+    def calculate_next_send_time(self, time_zone: str = 'UTC'):
+          """
+          This function calculates the next send time based on the provided time zone.
+        
+          Args:
+              self: The object instance.
+              time_zone (str, optional): The time zone to use for calculation. Defaults to 'UTC'.
+          """
+          # Your function logic here, using the time_zone parameter
+        
+          # Example usage:
+        #next_send_time = self.calculate_next_send_time()  # Uses default 'UTC'
+        #next_send_time_pacific = self.calculate_next_send_time(time_zone='US/Pacific')
         # Parse the input times
         start_window_utc = datetime.strptime(self.start_window, "%H:%M:%SZ").time()
         end_window_utc = datetime.strptime(self.end_window, "%H:%M:%SZ").time()
