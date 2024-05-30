@@ -45,7 +45,8 @@ class SendTimeCalculator:
         user_end_window = datetime.combine(current_date_utc, end_window_utc).astimezone(user_tz)
 
         if start_window_utc < end_window_utc:
-            if user_start_window.time() <= current_time_utc <= user_end_window.time() - timedelta(minutes=5):
+           #if user_start_window.time() <= current_time_utc <= user_end_window.time() - timedelta(minutes=5):
+            if user_start_window.time() <= current_time_utc <= current_time_utc + timedelta(minutes=5):
                 next_send = datetime.combine(current_date_utc, start_window_utc).astimezone(pytz.utc)
             else:
                 next_send = (datetime.combine(current_date_utc, start_window_utc) + timedelta(days=1)).astimezone(pytz.utc)
@@ -63,6 +64,6 @@ if __name__ == '__main__':
     calculator = SendTimeCalculator("10:00:00Z", "14:30:00Z")
     calculator.validate()
     next_send_time = calculator.calculate_next_send_time()  # Uses default 'UTC'
-    next_send_time_pacific = calculator.calculate_next_send_time(time_zone='US/Pacific')
+    #next_send_time_pacific = calculator.calculate_next_send_time(time_zone='US/Pacific')
     print(next_send_time)
     print(next_send_time_pacific)
