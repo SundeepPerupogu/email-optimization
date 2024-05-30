@@ -34,9 +34,12 @@ class SendTimeCalculator:
         current_datetime_utc = datetime.utcnow().replace(tzinfo=pytz.utc)
         current_date_utc = current_datetime_utc.date()
         current_time_utc = current_datetime_utc.time()
+        if time_zone and time_zone not in pytz.all_timezones:
+            raise ValueError(f"Invalid time zone provided: {time_zone}")
 
         # Apply the user's timezone offset
-        user_tz = pytz.timezone('Etc/GMT' + time_zone.replace(':', ''))
+        user_tz = pytz.timezone(time_zone)  # Use the validated time_zone
+        #user_tz = pytz.timezone('Etc/GMT' + time_zone.replace(':', ''))
 
         user_start_window = datetime.combine(current_date_utc, start_window_utc).astimezone(user_tz)
         user_end_window = datetime.combine(current_date_utc, end_window_utc).astimezone(user_tz)
