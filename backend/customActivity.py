@@ -66,4 +66,4 @@ if __name__ == '__main__':
     next_send_time = calculator.calculate_next_send_time()  # Uses default 'UTC'
     #next_send_time_pacific = calculator.calculate_next_send_time(time_zone='US/Pacific')
     print(next_send_time)
-    print(next_send_time_pacific)
+   #print(next_send_time_pacific)
