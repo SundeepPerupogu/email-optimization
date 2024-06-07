@@ -48,8 +48,9 @@
               "isNullable": false,
               "direction": "in",
               "access": "visible"
-            },
-           {
+            }
+          },
+          {
             "triggerTime": {
               "dataType": "Text",
               "isNullable": false,
