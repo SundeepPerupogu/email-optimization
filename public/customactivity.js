@@ -1,5 +1,3 @@
-		
-				
 define(['postmonger'], function (Postmonger) {
     'use strict';
 
@@ -33,12 +31,16 @@ define(['postmonger'], function (Postmonger) {
         var inArguments = payload['arguments'] && payload['arguments'].execute && payload['arguments'].execute.inArguments || [];
 
         $.each(inArguments, function (index, inArgument) {
-            if (inArgument.futureUtcTime) {
-                $('#futureUtcTime').val(inArgument.futureUtcTime);
+            if (inArgument.timezoneOffset) {
+                $('#timezoneOffset').val(inArgument.timezoneOffset);
+            }
+		
+            if (inArgument.triggerTime) {
+                $('#triggerTime').val(inArgument.triggerTime);
             }
 
-            if (inArgument.userTimeZone) {
-                $('#userTimeZone').val(inArgument.userTimeZone);
+            if (inArgument.daytype) {
+                $('#daytype').val(inArgument.daytype);
             }
         });
 
@@ -75,12 +77,14 @@ define(['postmonger'], function (Postmonger) {
     }
 
     function save() {
-        var futureUtcTime = $('#futureUtcTime').val();
-        var userTimeZone = $('#userTimeZone').val();
+        var timezoneOffset = $('#timezoneOffset').val();
+        var triggerTime = $('#triggerTime').val();
+        var daytype = $('#daytype').val();
 
         payload['arguments'].execute.inArguments = [{
-            "futureUtcTime": futureUtcTime,
-            "userTimeZone": userTimeZone
+            "timezoneOffset": timezoneOffset,
+            "triggerTime": triggerTime,
+            "daytype": daytype
         }];
 
         payload['metaData'].isConfigured = true;
