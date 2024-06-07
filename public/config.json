@@ -43,13 +43,20 @@
       "execute": {
         "inArguments": [
           {
-            "futureUtcTime": {
+            "timezoneOffset": {
               "dataType": "Text",
               "isNullable": false,
               "direction": "in",
               "access": "visible"
             },
-            "userTimeZone": {
+           {
+            "triggerTime": {
+              "dataType": "Text",
+              "isNullable": false,
+              "direction": "in",
+              "access": "visible"
+            },
+            "daytype": {
               "dataType": "Text",
               "isNullable": false,
               "direction": "in",
@@ -59,7 +66,7 @@
         ],
         "outArguments": [
           {
-            "timeDifference": {
+            "result": {
               "dataType": "Text",
               "isNullable": false,
               "direction": "out",
