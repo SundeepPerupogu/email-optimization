@@ -16,20 +16,23 @@ function handleError(res, error) {
 
 app.post('/execute', (req, res) => {
     try {
+	console.log(JSON.stringify(req.body));
+	    
         const inArguments = req.body.inArguments && req.body.inArguments[0];
         if (!inArguments) {
             throw new Error('inArguments missing or invalid');
         }
+        const timezoneOffset = inArguments.timezoneOffset;
+        const triggerTime = inArguments.triggerTime;
+        const daytype = inArguments.daytype;
+	const result = outArguments.result;
 
-        const futureUtcTime = inArguments.futureUtcTime;
-        const userTimeZone = inArguments.userTimeZone;
-
-        if (!futureUtcTime || !userTimeZone) {
-            throw new Error('Missing required arguments: futureUtcTime or userTimeZone');
+        if (!timezoneOffset || !triggerTime || !daytype) {
+            throw new Error('Missing required arguments: daytype or triggerTime or timezoneOffset');
         }
 
         const currentUtcTime = new Date().toISOString().split('T')[1].split('.')[0]; // Current UTC time in HH:MM:SS
-        const futureTime = new Date(`1970-01-01T${futureUtcTime}Z`);
+        const futureTime = new Date(`1970-01-01T${timezoneOffset}Z`);
         const currentTime = new Date(`1970-01-01T${currentUtcTime}Z`);
 
         const timeDifference = (futureTime - currentTime) / 1000; // Difference in seconds
@@ -52,17 +55,17 @@ app.post('/publish', (req, res) => {
 });
 
 app.post('/validate', (req, res) => {
-    console.log(`Validated`);
-    console.log(JSON.stringify(req.body));
-        res.sendStatus(200);
-//    try {
-        //const inArguments = req.body.arguments && req.body.arguments.execute && req.body.arguments.execute.inArguments;
+    try {
+	    console.log(`Validated`);
+	    console.log(JSON.stringify(req.body));
+	    res.sendStatus(200);
+	        //const inArguments = req.body.arguments && req.body.arguments.execute && req.body.arguments.execute.inArguments;
        // if (!inArguments || inArguments.length === 0 || !inArguments[0].futureUtcTime || !inArguments[0].userTimeZone) {
        //     throw new Error('Invalid configuration: Missing required inArguments');
      //   }
-   // } catch (error) {
-  //      handleError(res, error);
-//    }
+     } catch (error) {
+         handleError(res, error);
+     }
 });
 
 app.post('/stop', (req, res) => {
