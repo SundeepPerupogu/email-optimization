@@ -126,7 +126,7 @@
         <label for="triggerTime">Mail Trigger Time (24-hour format, e.g., 14:00):</label><br>
         <input type="time" id="triggerTime" value="08:00"><br><br>
 		<label for="daytype">Select Day Type:</label>
-		<select id="daytype">
+		<select id="daytype" required onchange="convertToUTC()">
 			<option value="weekday">Weekday</option>
 			<option value="allday">All Day</option>
 		</select>
