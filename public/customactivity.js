@@ -8,7 +8,6 @@ define(['postmonger'], function (Postmonger) {
     ];
     var currentStep = steps[0].key;
 
-    $(window).ready(onRender);
 
     connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
@@ -16,6 +15,8 @@ define(['postmonger'], function (Postmonger) {
     connection.on('clickedNext', onClickedNext);
     connection.on('clickedBack', onClickedBack);
     connection.on('gotoStep', onGotoStep);
+
+	$(window).ready(onRender);
 
     function onRender() {
         connection.trigger('ready');
