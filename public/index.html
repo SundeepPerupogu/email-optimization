@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Convert Time Zone to UTC</title>
-    <!--script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
-    <script src="https://email-optimization.onrender.com/customactivity.js"></script-->
-    <script>
+	<head>
+		<title>Convert Time Zone to UTC</title>
+		<!--script src="https://code.jquery.com/jquery-3.5.1.min.js"></script><script type="text/javascript" src="js/jquery.min.js"></script><script data-main="js/main.js" type="text/javascript" src="js/require.js"></script><script src="https://email-optimization.onrender.com/customactivity.js"></script-->
+		<script>
         document.addEventListener('DOMContentLoaded', (event) => {
             // Function to convert user time zone to UTC
             function convertToUTC() {
@@ -36,9 +32,7 @@
                 triggerDate.setMinutes(triggerDate.getMinutes() - offsetMinutes);
 
                 // If the trigger time has already passed today, set it to the same time tomorrow
-                if (triggerDate < now) {
-                    triggerDate.setDate(triggerDate.getDate() + 1);
-                }
+
 
 
                 if (dayType === 'weekday') {
@@ -66,7 +60,7 @@
             convertToUTC();
         });
     </script>
-    <style>
+		<style>
         body {
             font-family: Arial, sans-serif;
         }
@@ -85,56 +79,52 @@
             border-radius: 4px;
         }
     </style>
-</head>
-<body>
-    <h2>Mail Optimization to get UTC</h2>
-    <form>
-        <label for="timezoneOffset">Time Zone Offset from the Data Extension:Event.Record.user.timezone</label><br>
-        <!--input type="text" id="timezoneOffset" value="+05:30"><br><br>-->
-		<select id="timezoneOffset" required onchange="convertToUTC()">
-        <option value="">Select timezone</option>
-        <option value="+06:30">(UTC-12:00)</option>
-        <option value="+07:30">(UTC-11:00)</option>
-        <option value="+08:30">(UTC-10:00)</option>
-        <option value="+09:30">(UTC-09:00)</option>
-        <option value="+10:30">(UTC-08:00)(Pacific Time Zone)</option>
-        <option value="-12:30">(UTC-07:00)(Mountain Time Zone)</option>
-        <option value="-11:30">(UTC-06:00)(Central Time Zone)</option>
-        <option value="-10:30">(UTC-05:00)(Eastern Time Zone)</option>
-        <option value="-09:30">(UTC-04:00)(New York, NY, USA)</option>
-        <option value="-09:00">(UTC-03:30)</option>
-        <option value="-08:30">(UTC-03:00)</option>
-        <option value="-07:30">(UTC-02:00)</option>
-        <option value="-06:30">(UTC-01:00)</option>
-        <option value="-05:30">(UTC+00:00)</option>
-        <option value="+06:30">(UTC+12:00)</option>
-        <option value="+05:30">(UTC+11:00)</option>
-        <option value="+04:30">(UTC+10:00)</option>
-        <option value="+03:30">(UTC+09:00)</option>
-        <option value="+02:30">(UTC+08:00)</option>
-        <option value="+01:30">(UTC+07:00)</option>
-        <option value="+00:30">(UTC+06:00)</option>
-        <option value="+00:00">(UTC+05:30)(Asia/Kolkata)</option>
-        <option value="-00:30">(UTC+05:00)</option>
-        <option value="-01:30">(UTC+04:00)</option>
-        <option value="-02:30">(UTC+03:00)</option>
-        <option value="-03:30">(UTC+02:00)</option>
-        <option value="-04:30">(UTC+01:00)</option>
-        <!-- Add more options as needed 
+	</head>
+	<body>
+		<h2>Mail Optimization to get UTC</h2>
+		<form>
+			<label for="timezoneOffset">Time Zone Offset from the Data Extension:Event.Record.user.timezone</label>
+			<!--input type="text" id="timezoneOffset" value="+05:30"><br><br>-->
+			<select id="timezoneOffset">
+				<option value="">Select timezone</option>
+				<option value="+06:30">(UTC-12:00)</option>
+				<option value="+07:30">(UTC-11:00)</option>
+				<option value="+08:30">(UTC-10:00)</option>
+				<option value="+09:30">(UTC-09:00)</option>
+				<option value="+10:30">(UTC-08:00)(Pacific Time Zone)</option>
+				<option value="-12:30">(UTC-07:00)(Mountain Time Zone)</option>
+				<option value="-11:30">(UTC-06:00)(Central Time Zone)</option>
+				<option value="-10:30">(UTC-05:00)(Eastern Time Zone)</option>
+				<option value="-09:30">(UTC-04:00)(New York, NY, USA)</option>
+				<option value="-09:00">(UTC-03:30)</option>
+				<option value="-08:30">(UTC-03:00)</option>
+				<option value="-07:30">(UTC-02:00)</option>
+				<option value="-06:30">(UTC-01:00)</option>
+				<option value="-05:30">(UTC+00:00)</option>
+				<option value="+06:30">(UTC+12:00)</option>
+				<option value="+05:30">(UTC+11:00)</option>
+				<option value="+04:30">(UTC+10:00)</option>
+				<option value="+03:30">(UTC+09:00)</option>
+				<option value="+02:30">(UTC+08:00)</option>
+				<option value="+01:30">(UTC+07:00)</option>
+				<option value="+00:30">(UTC+06:00)</option>
+				<option value="+00:00">(UTC+05:30)(Asia/Kolkata)</option>
+				<option value="-00:30">(UTC+05:00)</option>
+				<option value="-01:30">(UTC+04:00)</option>
+				<option value="-02:30">(UTC+03:00)</option>
+				<option value="-03:30">(UTC+02:00)</option>
+				<option value="-04:30">(UTC+01:00)</option>
+				<!-- Add more options as needed 
         <option value="UTC+14:00">(UTC+14:00) Kiritimati</option>-->
-    </select><br><br>        
-  
-		
-        <label for="triggerTime">Mail Trigger Time (24-hour format, e.g., 14:00):</label><br>
-        <input type="time" id="triggerTime" value="08:00"><br><br>
-		<label for="daytype">Select Day Type:</label>
-		<select id="daytype" required onchange="convertToUTC()">
-			<option value="weekday">Weekday</option>
-			<option value="allday">All Day</option>
-		</select>
-
-    </form>
-	
-    <p id="result"></p>
-</body>
+			</select>
+			<label for="triggerTime">Mail Trigger Time (24-hour format, e.g., 14:00):</label>
+			<input type="time" id="triggerTime" value="08:00"></input>
+			<label for="daytype">Select Day Type:</label>
+			<select id="daytype" >
+				<option value="weekday">Weekday</option>
+				<option value="allday">All Day</option>
+			</select>
+		</form>
+		<p id="result"></p>
+	</body>
 </html>
