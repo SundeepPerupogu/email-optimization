@@ -38,46 +38,6 @@
       "timeout": 10000
     }
   },
-  "schema": {
-    "arguments": {
-      "execute": {
-        "inArguments": [
-          {
-            "timezoneOffset": {
-              "dataType": "Text",
-              "isNullable": false,
-              "direction": "in",
-              "access": "visible"
-            }
-          },
-          {
-            "triggerTime": {
-              "dataType": "Text",
-              "isNullable": false,
-              "direction": "in",
-              "access": "visible"
-            },
-            "daytype": {
-              "dataType": "Text",
-              "isNullable": false,
-              "direction": "in",
-              "access": "visible"
-            }
-          }
-        ],
-        "outArguments": [
-          {
-            "result": {
-              "dataType": "Text",
-              "isNullable": false,
-              "direction": "out",
-              "access": "visible"
-            }
-          }
-        ]
-      }
-    }
-  },
   "configurationArguments": {
     "applicationExtensionKey": "cfaaed29-c9a5-470b-9580-cf5e344567a2",
     "publish": {
