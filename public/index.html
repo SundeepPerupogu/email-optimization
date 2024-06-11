@@ -60,6 +60,7 @@
             // Add event listeners to input fields to call convertToUTC on change
             document.getElementById("timezoneOffset").addEventListener('input', convertToUTC);
             document.getElementById("triggerTime").addEventListener('input', convertToUTC);
+            document.getElementById("daytype").addEventListener('input', convertToUTC);
 
             // Initial conversion with default values
             convertToUTC();
