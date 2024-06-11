@@ -40,11 +40,12 @@
                     triggerDate.setDate(triggerDate.getDate() + 1);
                 }
 
-				if (dayType === 'weekday') {
-					while (triggerDate.getDay() === 0 || triggerDate.getDay() === 6) {
-						triggerDate.setDate(triggerDate.getDate() + 1);
-					}
-				}
+
+                if (dayType === 'weekday') {
+                    while (triggerDate.getDay() === 0 || triggerDate.getDay() === 6) {
+                        triggerDate.setDate(triggerDate.getDate() + 1);
+                    }
+                }
 
 
                 // Format the UTC trigger time
