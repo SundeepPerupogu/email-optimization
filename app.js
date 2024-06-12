@@ -47,7 +47,7 @@ app.post('/execute', (req, res) => {
 
 app.post('/publish', (req, res) => {
     try {
-							
+	console.log(`publishing..`);							
         res.sendStatus(200);
     } catch (error) {
         handleError(res, error);
@@ -59,10 +59,6 @@ app.post('/validate', (req, res) => {
 	    console.log(`Validated`);
 	    console.log(JSON.stringify(req.body));
 	    res.sendStatus(200);
-	        //const inArguments = req.body.arguments && req.body.arguments.execute && req.body.arguments.execute.inArguments;
-       // if (!inArguments || inArguments.length === 0 || !inArguments[0].futureUtcTime || !inArguments[0].userTimeZone) {
-       //     throw new Error('Invalid configuration: Missing required inArguments');
-     //   }
      } catch (error) {
          handleError(res, error);
      }
@@ -70,7 +66,7 @@ app.post('/validate', (req, res) => {
 
 app.post('/stop', (req, res) => {
     try {
-							
+	console.log(`Stopping`);
         res.sendStatus(200);
     } catch (error) {
         handleError(res, error);
