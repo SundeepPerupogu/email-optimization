@@ -110,8 +110,8 @@ define(['postmonger'], function (Postmonger) {
     }
 
     return {
-	console.log('Returning..');
-	console.log(JSON.stringify(payload));
+	//console.log('Returning..');
+	//console.log(JSON.stringify(payload));
         // Optionally expose methods or properties if needed
     };
 });
