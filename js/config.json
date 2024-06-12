@@ -54,7 +54,7 @@
             "timeout": 10000
         },
         "configurationArguments": {
-            "applicationExtensionKey": "YOUR_APP_EXTENSION_KEY"
+            "applicationExtensionKey": "cfaaed29-c9a5-470b-9580-cf5e344567a2"
         },
         "wizardSteps": [
             {
