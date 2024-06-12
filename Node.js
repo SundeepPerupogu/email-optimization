@@ -1,46 +1,68 @@
-const moment = require('moment-timezone');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors'); // Add this line
+const app = express();
+const port = process.env.PORT || 3000;
+const SendTimeCalculator = require('./backend/customActivity.py');
+app.use(cors()); // Add this line
+app.use(bodyParser.json());
+app.use(express.static('public'));  // To serve index.html, customactivity.js, etc.
 
-class SendTimeCalculator {
-    constructor(startWindow, endWindow) {
-        this.startWindow = startWindow;
-        this.endWindow = endWindow;
-    }
-
-    validate() {
-        const isoTimeFormat = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)Z$/;
-        if (!isoTimeFormat.test(this.startWindow) || !isoTimeFormat.test(this.endWindow)) {
-            throw new Error("Start window and end window must be in ISO8601 time format (HH:MM:SSZ).");
-        }
-
-        if (this.startWindow === this.endWindow) {
-            throw new Error("Start window and end window must not be the same.");
-        }
-    }
-
-    calculateNextSendTime(timeZone) {
-        const startWindowUTC = moment.utc(this.startWindow, "HH:mm:ssZ");
-        const endWindowUTC = moment.utc(this.endWindow, "HH:mm:ssZ");
-
-        const currentDatetimeUTC = moment.utc();
-        const currentDateUTC = currentDatetimeUTC.clone().startOf('day');
-
-        const userStartWindow = startWindowUTC.clone().tz(timeZone);
-        const userEndWindow = endWindowUTC.clone().tz(timeZone);
-
-        if (userStartWindow.isBefore(userEndWindow)) {
-            if (currentDatetimeUTC.isBetween(userStartWindow, userEndWindow.subtract(5, 'minutes'))) {
-                return userStartWindow.toISOString();
-            } else {
-                return userStartWindow.add(1, 'day').toISOString();
-            }
-        } else {
-            if (currentDatetimeUTC.isBetween(userStartWindow, userEndWindow.add(1, 'day').subtract(5, 'minutes'))) {
-                return userStartWindow.toISOString();
-            } else {
-                return userStartWindow.add(1, 'day').toISOString();
-            }
-        }
-    }
+// Utility function to log and send errors
+function handleError(res, error) {
+    console.error(error);
+    res.status(500).send({ error: 'Internal Server Error' });
 }
 
-module.exports = SendTimeCalculator;
+app.post('/execute', (req, res) => {
+    const { time_zone, start_window, end_window } = req.body.inArguments[0];
+    try {
+           const calculator = new SendTimeCalculator(start_window, end_window);
+        calculator.validate();
+        const nextSend = calculator.calculateNextSendTime(time_zone);
+        console.log(JSON.stringify(res.body));
+        res.status(200).send({ next_send: nextSend });
+	    
+//        res.json({ timeDifference: timeDifference.toString() });
+//	        console.log(JSON.stringify(res.body));
+
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+});
+
+app.post('/publish', (req, res) => {
+    try {
+							
+        res.sendStatus(200);
+    } catch (error) {
+        handleError(res, error);
+    }
+});
+
+app.post('/validate', (req, res) => {
+    console.log(`Validated`);
+    console.log(JSON.stringify(req.body));
+        res.sendStatus(200);
+//    try {
+        //const inArguments = req.body.arguments && req.body.arguments.execute && req.body.arguments.execute.inArguments;
+       // if (!inArguments || inArguments.length === 0 || !inArguments[0].futureUtcTime || !inArguments[0].userTimeZone) {
+       //     throw new Error('Invalid configuration: Missing required inArguments');
+     //   }
+   // } catch (error) {
+  //      handleError(res, error);
+//    }
+});
+
+app.post('/stop', (req, res) => {
+    try {
+							
+        res.sendStatus(200);
+    } catch (error) {
+        handleError(res, error);
+    }
+});
+
+app.listen(port, () => {
+    console.log(`Custom Activity running on port ${port}`);
+});

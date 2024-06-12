@@ -7,7 +7,7 @@
     "type": "REST",
     "lang": {
         "en-US": {
-            "name": "Send Time Calculator",
+            "name": "Send Time CustomActivity",
             "description": "Calculates the next available send time based on the user's time zone."
         }
     },
@@ -40,25 +40,28 @@
                     }
                 }
             ],
-            "url": "https://sendtimecalculator.onrender.com/execute"
+            "url": "https://sendtimecalculator.onrender.com/execute",
+            "verb": "POST",
+            "body": "",
+            "header": "",
+            "format": "json",
+            "useJwt": false,
+            "timeout": 10000
         },
-        "configuration": {
-            "arguments": {
-                "start_window": {
-                    "dataType": "Text",
-                    "isRequired": true
-                },
-                "end_window": {
-                    "dataType": "Text",
-                    "isRequired": true
-                }
+        "configurationArguments": {
+            "applicationExtensionKey": "YOUR_APP_EXTENSION_KEY"
+        },
+        "wizardSteps": [
+            {
+                "label": "Step 1",
+                "key": "step1"
             }
-        }
-    },
-    "userInterfaces": {
+        ],
+        "userInterfaces": {
         "configModal": {
             "height": 200,
             "width": 400,
+            "fullscreen": false,
             "url": "https://sendtimecalculator.onrender.com/config"
         }
     }
