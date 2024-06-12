@@ -15,7 +15,12 @@
         "execute": {
             "inArguments": [
                 {
-                    "time_zone": {
+                    "timezoneOffset": {
+                        "dataType": "Text",
+                        "isRequired": true,
+                        "direction": "in"
+                    },
+                    "daytype": {
                         "dataType": "Text",
                         "isRequired": true,
                         "direction": "in"
@@ -34,8 +39,8 @@
             ],
             "outArguments": [
                 {
-                    "next_send": {
-                        "dataType": "Text",
+                    "nextSendTime": {
+                        "dataType": "Date", 
                         "direction": "out"
                     }
                 }

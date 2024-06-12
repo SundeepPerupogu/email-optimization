@@ -1,7 +1,4 @@
-define(['postmonger', 'jquery'], function(Postmonger, $) {
-    'use strict';
 
-    var connection = new Postmonger.Session();
     var activity = {};
 
     activity.initialize = function() {
@@ -78,4 +75,3 @@ define(['postmonger', 'jquery'], function(Postmonger, $) {
     }
 
     return activity;
-});
