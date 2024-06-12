@@ -22,6 +22,7 @@ app.post('/execute', (req, res) => {
         if (!inArguments) {
             throw new Error('inArguments missing or invalid');
         }
+	console.log('After validating inArguments');
         const timezoneOffset = inArguments.timezoneOffset;
         const triggerTime = inArguments.triggerTime;
         const daytype = inArguments.daytype;
@@ -31,11 +32,13 @@ app.post('/execute', (req, res) => {
             throw new Error('Missing required arguments: daytype or triggerTime or timezoneOffset');
         }
 
+	console.log('Finding the time difference');
         const currentUtcTime = new Date().toISOString().split('T')[1].split('.')[0]; // Current UTC time in HH:MM:SS
         const futureTime = new Date(`1970-01-01T${timezoneOffset}Z`);
         const currentTime = new Date(`1970-01-01T${currentUtcTime}Z`);
 
         const timeDifference = (futureTime - currentTime) / 1000; // Difference in seconds
+	console.log('Response at execute in app.js ..');
 
         res.json({ timeDifference: timeDifference.toString() });
 	        console.log(JSON.stringify(res.body));
