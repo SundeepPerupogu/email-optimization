@@ -26,7 +26,7 @@ app.post('/execute', (req, res) => {
         const timezoneOffset = inArguments.timezoneOffset;
         const triggerTime = inArguments.triggerTime;
         const daytype = inArguments.daytype;
-	const result = outArguments.result;
+//	const result = outArguments.result;
 
         if (!timezoneOffset || !triggerTime || !daytype) {
             throw new Error('Missing required arguments: daytype or triggerTime or timezoneOffset');
