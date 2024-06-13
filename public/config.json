@@ -27,7 +27,11 @@
           "daytype": "{{Event.mailOpt.daytype}}"
         }
       ],
-      "outArguments": [],
+      "outArguments": [
+        {
+          "nextSendTime": "" 
+        }
+      ],
       "url": "https://sendtimecalculator.onrender.com/execute",
       "verb": "POST",
       "body": "",
@@ -64,7 +68,16 @@
             }
           }
         ],
-        "outArguments": []
+        "outArguments": [
+          {
+            "nextSendTime": {
+              "dataType": "Text",
+              "isRequired": true,
+              "direction": "in"
+            }
+
+          }
+        ]
       }
     }
   },
