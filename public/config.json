@@ -15,16 +15,16 @@
     "execute": {
       "inArguments": [
         {
-          "timezoneOffset": "{{Event.DE.timezoneOffset}}"
+          "timezoneOffset": "{{Event.mailOpt.timezoneOffset}}"
         },
         {
-          "start_window": "{{Event.DE.start_window}}"
+          "start_window": "{{Event.mailOpt.start_window}}"
         },
         {
-          "end_window": "{{Event.DE.end_window}}"
+          "end_window": "{{Event.mailOpt.end_window}}"
         },
         {
-          "daytype": "{{Event.DE.daytype}}"
+          "daytype": "{{Event.mailOpt.daytype}}"
         }
       ],
       "outArguments": [],
