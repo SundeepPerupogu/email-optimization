@@ -88,6 +88,7 @@ activity.calculateNextSendTime = function(event) {
 //});
 
 app.post('/execute', (req, res) => {
+	let nextSendTime ;
     try {
         console.log(req.body);[0]
         const { timezoneOffset } = req.body.inArguments[0];
@@ -101,13 +102,14 @@ app.post('/execute', (req, res) => {
         console.log(timezoneOffset);
         console.log(daytype);
         console.log(start_window);
-        const nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
+        let nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log(nextSendTime);
         res.status(200).json({ nextSendTime : nextSendTime });
        // console.log(JSON.stringify(res));
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+    
     return res.status(200).json({ nextSendTime : nextSendTime });	
 });
 app.post('/publish', (req, res) => {
