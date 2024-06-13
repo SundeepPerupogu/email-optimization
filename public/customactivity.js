@@ -101,9 +101,10 @@ define(['postmonger'], function (Postmonger) {
         var start_window = $('#start_window').val();
         var end_window = $('#end_window').val();
         var daytype = $('#daytype').val();
-		console.log(`Start save function`);
+	console.log(`${payload}`);
+	console.log(`Start save function`);
 
-        payload['arguments'].execute.inArguments = [{
+        payload['arguments'].inArguments = [{
             "timezoneOffset": timezoneOffset,
             "start_window": start_window,
             "end_window": end_window,
