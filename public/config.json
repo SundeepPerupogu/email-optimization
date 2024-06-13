@@ -27,11 +27,7 @@
           "daytype": "{{Event.DE.daytype}}"
         }
       ],
-      "outArguments": [
-//        {
-//          "nextSendTime": ""
-//       }
-      ],
+      "outArguments": [],
       "url": "https://sendtimecalculator.onrender.com/execute",
       "verb": "POST",
       "body": "",
@@ -68,14 +64,7 @@
             }
           }
         ],
-        "outArguments": [
-//          {
-//            "nextSendTime": {
-//              "dataType": "Date",
-//              "direction": "out"
-//            }
-//          }
-        ]
+        "outArguments": []
       }
     }
   },
