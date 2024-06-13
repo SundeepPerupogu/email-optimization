@@ -41,12 +41,17 @@ define(['postmonger'], function (Postmonger) {
 		console.log(JSON.stringify(inArgument.timezoneOffset));
             }
 		
-            if (inArgument.triggerTime) {
-                $('#triggerTime').val(inArgument.triggerTime);
-		console.log(JSON.stringify(inArgument.triggerTime));
+            if (inArgument.start_window) {
+                $('#start_window').val(inArgument.start_window);
+		console.log(JSON.stringify(inArgument.start_window));
             }
 
-            if (inArgument.daytype) {
+            if (inArgument.end_window) {
+                $('#end_window').val(inArgument.end_window);
+		console.log(JSON.stringify(inArgument.end_window));
+            }
+	
+	    if (inArgument.daytype) {
                 $('#daytype').val(inArgument.daytype);
 		console.log(JSON.stringify(inArgument.daytype));
             }
@@ -93,18 +98,20 @@ define(['postmonger'], function (Postmonger) {
 
     function save() {
         var timezoneOffset = $('#timezoneOffset').val();
-        var triggerTime = $('#triggerTime').val();
+        var start_window = $('#start_window').val();
+        var end_window = $('#end_window').val();
         var daytype = $('#daytype').val();
-	console.log(`Start save function`);
+		console.log(`Start save function`);
 
         payload['arguments'].execute.inArguments = [{
             "timezoneOffset": timezoneOffset,
-            "triggerTime": triggerTime,
+            "start_window": start_window,
+            "end_window": end_window,
             "daytype": daytype
         }];
 
         payload['metaData'].isConfigured = true;
-	console.log(`metaData configured`);
+		console.log(`metaData configured`);
 
         connection.trigger('updateActivity', payload);
     }
