@@ -18,19 +18,19 @@
           "timezoneOffset": "{{Event.DE.timezoneOffset}}"
         },
         {
-          "start_window": "08:00"
+          "start_window": "{{Event.DE.start_window}}"
         },
         {
-          "end_window": "09:00"
+          "end_window": "{{Event.DE.end_window}}"
         },
         {
-          "daytype": "weekday"
+          "daytype": "{{Event.DE.daytype}}"
         }
       ],
       "outArguments": [
-        {
-          "nextSendTime": ""
-        }
+//        {
+//          "nextSendTime": ""
+//       }
       ],
       "url": "https://sendtimecalculator.onrender.com/execute",
       "verb": "POST",
@@ -69,12 +69,12 @@
           }
         ],
         "outArguments": [
-          {
-            "nextSendTime": {
-              "dataType": "Date",
-              "direction": "out"
-            }
-          }
+//          {
+//            "nextSendTime": {
+//              "dataType": "Date",
+//              "direction": "out"
+//            }
+//          }
         ]
       }
     }
