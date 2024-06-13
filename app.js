@@ -104,10 +104,11 @@ app.post('/execute', (req, res) => {
         const nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log(nextSendTime);
         res.status(200).json({ next_send: nextSendTime });
-        console.log(JSON.stringify(res));
+       // console.log(JSON.stringify(res));
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+    return res.status(200).json({ next_send: nextSendTime });	
 });
 app.post('/publish', (req, res) => {
     try {
