@@ -90,8 +90,11 @@ activity.calculateNextSendTime = function(event) {
 app.post('/execute', (req, res) => {
     try {
         console.log(req.body);[0]
-        const { timezoneOffset, start_window, end_window, daytype } = req.body.inArguments[0];
-        console.log(req.body.inArguments[0]);
+        const { timezoneOffset } = req.body.inArguments[0];
+        const { start_window } = req.body.inArguments[1];
+        const { end_window } = req.body.inArguments[2];
+        const { daytype } = req.body.inArguments[3];
+        console.log(req.body.inArguments[2]);
 	    
         console.log(req.body);[0]
        // console.log(JSON.stringify(req));
