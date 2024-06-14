@@ -99,8 +99,8 @@ app.post('/execute', (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-    console.log(JSON.stringify(res));    
     return res.status(200).json({ nextSendTime : nextSendTime });	
+    console.log(res);
 });
 
 app.post('/publish', (req, res) => {
