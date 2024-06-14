@@ -95,7 +95,7 @@ app.post('/execute', (req, res) => {
         console.log(start_window);
         let nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log(nextSendTime);
-        res.status(200).json({ nextSendTime : nextSendTime });
+        //res.status(200).json({ nextSendTime : nextSendTime });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
