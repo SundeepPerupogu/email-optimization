@@ -80,6 +80,7 @@ function addDays(date, days) {
 
 // Routes
 app.post('/execute', (req, res) => {
+	var outArgument1 = JSON.stringify({nextSendTime:"value"});
 	let nextSendTime ;
     try {
         console.log(req.body);[0]
@@ -96,7 +97,8 @@ app.post('/execute', (req, res) => {
         let nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log(req.body);[0]
         //res.status(200).json({ nextSendTime : nextSendTime });
-	return res.status(200).json({ nextSendTime : nextSendTime });	
+	//return res.status(200).json({ nextSendTime : nextSendTime });	
+        res.status(200).send(outArgument1);
         console.log(res.body);
     } catch (error) {
         res.status(500).json({ error: error.message });
