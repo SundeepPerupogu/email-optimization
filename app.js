@@ -2,8 +2,6 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Add this line
-//const activity = require(path.join(__dirname, '.', '/public/scripts', 'activity.js'));
-
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -41,52 +39,46 @@ activity.calculateNextSendTime = function(event) {
     $('#result').text('Next Send Time: ' + nextSendTime);
 };
 
+function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window) {
+    const currentUTC = new Date();
+    const offsetParts = timezoneOffset.split(':');
+    const offsetHours = parseInt(offsetParts[0], 10);
+    const offsetMinutes = parseInt(offsetParts[1], 10);
+    const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -offsetMinutes : offsetMinutes);
 
+    const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
+    const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
 
-        function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window) {
-            const currentUTC = new Date();
-            const offsetParts = timezoneOffset.split(':');
-            const offsetHours = parseInt(offsetParts[0], 10);
-            const offsetMinutes = parseInt(offsetParts[1], 10);
-            const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -offsetMinutes : offsetMinutes);
+    let nextSendDateTime = null;
 
-            const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
-            const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
+    if (currentUTC <= startDateTimeUTC) {
+	nextSendDateTime = startDateTimeUTC;
+    } else {
+	nextSendDateTime = addDays(startDateTimeUTC, 1);
+    }
 
-            let nextSendDateTime = null;
+    if (daytype === 'weekday') {
+	while (nextSendDateTime.getUTCDay() === 0 || nextSendDateTime.getUTCDay() === 6) {
+	    nextSendDateTime = addDays(nextSendDateTime, 1);
+	}
+    }
+    return nextSendDateTime.toISOString();
+}
 
-            if (currentUTC <= startDateTimeUTC) {
-                nextSendDateTime = startDateTimeUTC;
-            } else {
-                nextSendDateTime = addDays(startDateTimeUTC, 1);
-            }
+function combineDateTime(date, time, offsetTotalMinutes) {
+    const [hours, minutes, seconds] = time.split(':');
+    const combinedDateTime = new Date(date.getTime());
+    combinedDateTime.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
+    return combinedDateTime;
+}
 
-            if (daytype === 'weekday') {
-                while (nextSendDateTime.getUTCDay() === 0 || nextSendDateTime.getUTCDay() === 6) {
-                    nextSendDateTime = addDays(nextSendDateTime, 1);
-                }
-            }
+function addDays(date, days) {
+    const result = new Date(date);
+    result.setUTCDate(result.getUTCDate() + days);
+    return result;
+}
 
-            return nextSendDateTime.toISOString();
-        }
-
-        function combineDateTime(date, time, offsetTotalMinutes) {
-            const [hours, minutes, seconds] = time.split(':');
-            const combinedDateTime = new Date(date.getTime());
-            combinedDateTime.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
-            return combinedDateTime;
-        }
-
-        function addDays(date, days) {
-            const result = new Date(date);
-            result.setUTCDate(result.getUTCDate() + days);
-            return result;
-        }
 // Routes
-//app.get('/', (req, res) => {
-//    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-//});
-
 app.post('/execute', (req, res) => {
 	let nextSendTime ;
     try {
@@ -98,20 +90,19 @@ app.post('/execute', (req, res) => {
         console.log(req.body.inArguments[2]);
 	    
         console.log(req.body);[0]
-       // console.log(JSON.stringify(req));
         console.log(timezoneOffset);
         console.log(daytype);
         console.log(start_window);
         let nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log(nextSendTime);
         res.status(200).json({ nextSendTime : nextSendTime });
-       // console.log(JSON.stringify(res));
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-    
+    console.log(JSON.stringify(res));    
     return res.status(200).json({ nextSendTime : nextSendTime });	
 });
+
 app.post('/publish', (req, res) => {
     try {
 	console.log(`publishing..`);
