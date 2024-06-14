@@ -29,7 +29,7 @@
       ],
       "outArguments": [
         {
-          "nextSendTime": "" 
+          "nextSendTime": "default"
         }
       ],
       "url": "https://sendtimecalculator.onrender.com/execute",
@@ -59,7 +59,9 @@
             "start_window": {
               "dataType": "Text",
               "isRequired": true,
-              "direction": "in"
+              "direction": "in",
+              "readOnly": false,
+              "access": "Visible"
             },
             "end_window": {
               "dataType": "Text",
@@ -73,9 +75,10 @@
             "nextSendTime": {
               "dataType": "Text",
               "isRequired": true,
-              "direction": "in"
+              "direction": "out",
+              "readOnly": false,
+              "access": "Visible"
             }
-
           }
         ]
       }
