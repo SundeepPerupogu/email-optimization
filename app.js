@@ -45,35 +45,42 @@ function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window
     const offsetHours = parseInt(offsetParts[0], 10);
     const offsetMinutes = parseInt(offsetParts[1], 10);
     const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -offsetMinutes : offsetMinutes);
-
+    console.log(`Started function calculateNextSendTime`);
     const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
     const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
+    console.log(`After function combineDateTime`);
 
     let nextSendDateTime = null;
 
     if (currentUTC <= startDateTimeUTC) {
 	nextSendDateTime = startDateTimeUTC;
+    	console.log(`currentUTC <= startDateTimeUTC`);
     } else {
 	nextSendDateTime = addDays(startDateTimeUTC, 1);
+    	console.log(`currentUTC > startDateTimeUTC`);
     }
 
     if (daytype === 'weekday') {
 	while (nextSendDateTime.getUTCDay() === 0 || nextSendDateTime.getUTCDay() === 6) {
+    	    console.log(`daytype === weekday`);
 	    nextSendDateTime = addDays(nextSendDateTime, 1);
 	}
     }
+    console.log(`about to return nextSendDateTime`);
     return nextSendDateTime.toISOString();
 }
 
 function combineDateTime(date, time, offsetTotalMinutes) {
     const [hours, minutes, seconds] = time.split(':');
     const combinedDateTime = new Date(date.getTime());
+    console.log(`Start function combineDateTime`);
     combinedDateTime.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
     return combinedDateTime;
 }
 
 function addDays(date, days) {
     const result = new Date(date);
+    console.log(`Start fun addDays`);
     result.setUTCDate(result.getUTCDate() + days);
     return result;
 }
