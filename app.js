@@ -102,7 +102,7 @@ app.post('/execute', (req, res) => {
         console.log(timezoneOffset);
         console.log(daytype);
         console.log(start_window);
-        let nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
+        nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log('After the function call');
         //res.status(200).json({ nextSendTime : nextSendTime });
         //console.log(res.body);
