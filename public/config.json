@@ -73,7 +73,7 @@
         "outArguments": [
           {
             "nextSendTime": {
-              "dataType": "Date",
+              "dataType": "Text",
               "isRequired": true,
               "direction": "out",
               "readOnly": false,
