@@ -99,7 +99,8 @@ app.post('/execute', (req, res) => {
         //res.status(200).json({ nextSendTime : nextSendTime });
         //console.log(res.body);
 	//return res.status(200).json({ nextSendTime : nextSendTime });	
-        return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));
+        //return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));
+	res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
