@@ -51,18 +51,22 @@ function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window
     console.log(`After function combineDateTime`);
 
     let nextSendDateTime = null;
+    console.log(nextSendDateTime);
 
     if (currentUTC <= startDateTimeUTC) {
 	nextSendDateTime = startDateTimeUTC;
+        console.log(nextSendDateTime);
     	console.log(`currentUTC <= startDateTimeUTC`);
     } else {
 	nextSendDateTime = addDays(startDateTimeUTC, 1);
-    	console.log(`currentUTC > startDateTimeUTC`);
+    	    console.log(nextSendDateTime);
+            console.log(`currentUTC > startDateTimeUTC`);
     }
 
     if (daytype === 'weekday') {
 	while (nextSendDateTime.getUTCDay() === 0 || nextSendDateTime.getUTCDay() === 6) {
     	    console.log(`daytype === weekday`);
+	    console.log(nextSendDateTime);
 	    nextSendDateTime = addDays(nextSendDateTime, 1);
 	}
     }
