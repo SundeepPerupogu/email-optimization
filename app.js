@@ -41,7 +41,7 @@ activity.calculateNextSendTime = function(event) {
 
 function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window) {
     const currentUTC = new Date();
-    const offsetParts = timezoneOffset.split(':');
+    const offsetParts = timezoneOffset.split('.');
     const offsetHours = parseInt(offsetParts[0], 10);
     const offsetMinutes = parseInt(offsetParts[1], 10);
     const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -offsetMinutes : offsetMinutes);
@@ -116,6 +116,14 @@ app.post('/execute', (req, res) => {
         //console.log(res.body);
 	//return res.status(200).json({ nextSendTime : nextSendTime });	
         //res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));
+	if (nextSendTime) {
+		// nextSendTime has a value, proceed with your logic here
+		console.log("Next send time is:", nextSendTime);
+    	} else {
+		// nextSendTime is empty or undefined, send error message
+		console.log("Error in input params");
+		nextSendTime = "Error in input params";
+    	}    
 	return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
     } catch (error) {
         res.status(500).json({ error: error.message });
