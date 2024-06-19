@@ -67,6 +67,7 @@ function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window
 	}
     }
     console.log(`about to return nextSendDateTime`);
+    console.log(nextSendDateTime);
     return nextSendDateTime.toISOString();
 }
 
@@ -87,8 +88,6 @@ function addDays(date, days) {
 
 // Routes
 app.post('/execute', (req, res) => {
-	const now = new Date();
-	let nextSendTime = now.toLocaleString();
     try {
         console.log(req.body);[0]
         const { timezoneOffset } = req.body.inArguments[0];
@@ -97,6 +96,8 @@ app.post('/execute', (req, res) => {
         const { daytype } = req.body.inArguments[3];
         console.log(req.body.inArguments[2]);
 //	var outArgument1 ;	    
+	const now = new Date();
+	let nextSendTime = now.toLocaleString();
         console.log(req.body);[0]
         console.log(timezoneOffset);
         console.log(daytype);
