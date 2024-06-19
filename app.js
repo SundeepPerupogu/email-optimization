@@ -78,8 +78,10 @@ function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window
 function combineDateTime(date, time, offsetTotalMinutes) {
     const [hours, minutes, seconds] = time.split(':');
     const combinedDateTime = new Date(date.getTime());
+    console.log(`${hours} ${minutes} ${seconds}`);
     console.log(`Start function combineDateTime ${combinedDateTime}`);
     combinedDateTime.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
+    console.log(`End function setUTCHours ${combinedDateTime}`);
     return combinedDateTime;
 }
 
