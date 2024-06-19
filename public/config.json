@@ -29,7 +29,7 @@
       ],
       "outArguments": [
         {
-          "nextSendTime": "11-11-2024"
+          "nextSendTime": "default"
         }
       ],
       "url": "https://sendtimecalculator.onrender.com/execute",
