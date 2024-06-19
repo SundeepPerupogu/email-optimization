@@ -48,8 +48,8 @@ function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window
     console.log(`Started function calculateNextSendTime`);
     const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
     const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
-    console.log(`After function combineDateTime`);
-
+    console.log(startDateTimeUTC);
+    console.log(endDateTimeUTC);
     let nextSendDateTime = null;
     console.log(nextSendDateTime);
 
@@ -85,8 +85,10 @@ function combineDateTime(date, time, offsetTotalMinutes) {
 
 function addDays(date, days) {
     const result = new Date(date);
-    console.log(`Start fun addDays`);
+    console.log(result);
     result.setUTCDate(result.getUTCDate() + days);
+    console.log(result.getUTCDate());
+    console.log(result);
     return result;
 }
 
