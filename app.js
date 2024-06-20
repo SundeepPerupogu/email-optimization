@@ -46,8 +46,10 @@ activity.calculateNextSendTime = function(event) {
 function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window ) {
     const currentUTC = new Date();
     const offsetParts = timezoneOffset.split('.');
-    const offsetHours = parseInt(offsetParts[0], 10);
-    const offsetMinutes = parseInt(offsetParts[1], 10);
+    const offsetHours = parseInt(offsetParts[0], 10) ;
+    console.log(offsetHours);
+    const offsetMinutes = parseInt(offsetParts[1], 10) || 0;
+    console.log(offsetMinutes);
     const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -(offsetMinutes * 0.6) : (offsetMinutes  * 0.6));
     console.log(`Started function calculateNextSendTime`);
     const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
@@ -82,10 +84,10 @@ function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window
 function combineDateTime(date, time, offsetTotalMinutes) {
     const [hours, minutes, seconds] = time.split(':');
     const combinedDateTime = new Date(date.getTime());
-    console.log(`${hours} ${minutes} ${seconds}`);
+    console.log(`${hours} ${minutes} ${seconds} ${offsetTotalMinutes}`);
     console.log(`Start function combineDateTime ${combinedDateTime}`);
     combinedDateTime.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
-    console.log(`End function setUTCHours ${combinedDateTime}`);
+    console.log(`End function combineDateTime ${combinedDateTime}`);
     return combinedDateTime;
 }
 
@@ -118,11 +120,11 @@ app.post('/execute', (req, res) => {
 	const now = new Date();
 	let nextSendTime = now.toLocaleString();
 	let subscriberKey = Name || req.body.keyValue;    
-        console.log(Name);[0]
+        //console.log(Name);[0]
         console.log(timezoneOffset);
         console.log(daytype);
         console.log(start_window);
-        console.log(Name);
+       // console.log(Name);
         nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log('After the function call');
         //res.status(200).json({ nextSendTime : nextSendTime });
