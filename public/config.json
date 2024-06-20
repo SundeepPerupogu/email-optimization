@@ -33,7 +33,7 @@
       ],
       "outArguments": [
         {
-          "nextSendTime": "default"
+          "nextSendTime": ""
         }
       ],
       "url": "https://email-optimization.onrender.com/execute",
@@ -84,7 +84,7 @@
         "outArguments": [
           {
             "nextSendTime": {
-              "dataType": "Text",
+              "dataType": "Date",
               "isRequired": true,
               "direction": "out",
               "readOnly": false,
