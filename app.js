@@ -8,6 +8,7 @@ const cors = require('cors'); // Add this line
 //Run this command npm install express body-parser fuel-rest 
 //You will need Express.js to handle server requests and the Fuel SDK to interact with Marketing Cloud
 const FuelRest = require('fuel-rest'); // 
+require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 exports.logExecuteData = [];
@@ -202,8 +203,9 @@ app.post('/execute', (req, res) => {
     
 	try {
             //const response = RestClient.patch(
-	    var response = {
-                uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
+	   //var response = {
+             RestClient.patch({
+		uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
 		method: 'POST',
 		//url: 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/hub/v1/dataevents/key:custDataMailOpt/rowset',
 	 	//console.log("Inside patch");
@@ -219,11 +221,13 @@ app.post('/execute', (req, res) => {
                         nextSendTime: nextSendTime || "A"
                     }
                 }]
-            };
+            })
+	    .then(response => { 
 	    console.log("Assiged ", subscriberKey, " and " , nextSendTime, " at rest API");
-
-	    return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
-            
+	    res.status(200).send('Data Extension updated successfully');
+    	   // return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
+           })
+	    
         } catch (error) {
 	    console.log(response, "&&and&&&", error.message);
             res.status(500).send(`Error updating Data Extension: ${error.message}`);
