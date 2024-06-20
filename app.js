@@ -136,7 +136,7 @@ app.post('/execute', (req, res) => {
     	const updateDE = async () => {
 	console.log("Started updating DE");
          const options = {
-	 console.log("Before taking up the auth values");
+	 //console.log("Before taking up the auth values");
             auth: {
                 clientId: process.env.CLIENT_ID,  // need to update client ID
                 clientSecret: process.env.CLIENT_SECRET, // need to update secret
