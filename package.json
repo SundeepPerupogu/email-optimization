@@ -13,7 +13,12 @@
         "body-parser": "^1.19.0",
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.34",
-        "fuel-rest": "^0.7.2"
+        "fuel-rest": "^0.7.2",
+        "jsonwebtoken": "^8.0.1",
+        "request": "^2.81.0",
+        "require": "^2.4.20",
+        "errorhandler": "^1.5.0",
+        "bower": "^1.8.4"
     },
     "keywords": [],
     "author": "Sundeep Perupogu",
