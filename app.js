@@ -156,14 +156,14 @@ app.post('/execute', (req, res) => {
          };
 
         const RestClient = new FuelRest(options);
- 	console.log("RestClient declared");
+ 	console.log("RestClient declared",nextSendTime);
     
 	try {
             //const response = RestClient.patch(
 	    var response = {
                 uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
 		method: 'POST',
-		url: 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/hub/v1/dataevents/key:custDataMailOpt/rowset',
+		//url: 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/hub/v1/dataevents/key:custDataMailOpt/rowset',
 	 	//console.log("Inside patch");
                 headers: {
                     'Cache-Control': 'no-cache',
@@ -174,11 +174,11 @@ app.post('/execute', (req, res) => {
                         SubscriberKey: req.body.keyValue
                     },
                     values: {
-                        nextSendTime: nextSendTime
+                        nextSendTime: nextSendTime || "A"
                     }
                 }]
             };
-	    console.log('Assiged ${subscriberKey} and ${nextSendTime} at rest API');
+	    console.log("Assiged ", subscriberKey, " and " , nextSendTime, " at rest API");
 
 	    return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
             
