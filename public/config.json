@@ -7,7 +7,7 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "UpdateDECustomActivity",
+      "name": "SendDateTime",
       "description": "Calculates the next available send time based on the user's time zone."
     }
   },
