@@ -5,7 +5,7 @@
     "main": "app.js",
     "scripts": {
         "start": "node app.js",
-        "test": "jest"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
         "express": "^4.17.1",
@@ -14,6 +14,7 @@
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.34"
     },
+    "keywords": [],
     "author": "Sundeep Perupogu",
     "license": "ISC"
 }
