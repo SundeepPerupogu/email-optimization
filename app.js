@@ -101,11 +101,13 @@ function addDays(date, days) {
 // Routes
 app.post('/execute', (req, res) => {
     try {
+        console.log("Starting the /execute");
         console.log(req.body);[0]
-	const { inArguments } = req.body;
-	if (!inArguments || inArguments.length === 0) {
-        	return res.status(400).send('Missing inArguments');
-    	}
+	
+	//const { inArguments } = req.body;
+	//if (!inArguments || inArguments.length === 0) {
+        //	return res.status(400).send('Missing inArguments');
+    	//}
         const { timezoneOffset } = req.body.inArguments[0];
         const { start_window } = req.body.inArguments[1];
         const { end_window } = req.body.inArguments[2];
