@@ -204,7 +204,7 @@ app.post('/execute', (req, res) => {
 	try {
             //const response = RestClient.patch(
 	   //var response = {
-             RestClient.patch({
+             RestClient.post({
 		uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
 		method: 'POST',
 		//url: 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/hub/v1/dataevents/key:custDataMailOpt/rowset',
