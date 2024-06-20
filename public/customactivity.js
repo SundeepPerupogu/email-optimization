@@ -55,6 +55,11 @@ define(['postmonger'], function (Postmonger) {
                 $('#daytype').val(inArgument.daytype);
 		console.log(JSON.stringify(inArgument.daytype));
             }
+
+	    if (inArgument.Name) {
+                $('#Name').val(inArgument.Name);
+		console.log(JSON.stringify(inArgument.Name));
+            }
         });
 
         connection.trigger('updateButton', { button: 'next', text: 'done', visible: true });
@@ -101,6 +106,7 @@ define(['postmonger'], function (Postmonger) {
         var start_window = $('#start_window').val();
         var end_window = $('#end_window').val();
         var daytype = $('#daytype').val();
+	var Name = $('#Name').val();
 	console.log(`${payload}`);
 	console.log(`Start save function`);
 
@@ -108,7 +114,8 @@ define(['postmonger'], function (Postmonger) {
             "timezoneOffset": timezoneOffset,
             "start_window": start_window,
             "end_window": end_window,
-            "daytype": daytype
+            "daytype": daytype,
+	    "Name": Name
         }];
 
         payload['metaData'].isConfigured = true;
