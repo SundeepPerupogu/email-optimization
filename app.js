@@ -157,7 +157,7 @@ app.post('/execute', (req, res) => {
  	console.log("RestClient declared");
     
 	try {
-            const response = await RestClient.patch({
+            const response = RestClient.patch({
                 uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
 	 	//console.log("Inside patch");
                 headers: {
