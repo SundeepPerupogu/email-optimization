@@ -111,11 +111,11 @@ define(['postmonger'], function (Postmonger) {
 	console.log(`Start save function`);
 
         payload['arguments'].inArguments = [{
-            "timezoneOffset": timezoneOffset,
+            "timezoneOffset": timezoneOffset, // {{Contact.Attribute.Take2_Journey_Audience.TimeZone}}
             "start_window": start_window,
             "end_window": end_window,
             "daytype": daytype,
-	    "Name": Name // {{Contact.Attribute.Take2_Journey_Audience.Name}}
+	    "Name": Name // {{payoad['arguments'].keyValue}}
         }];
 
         payload['metaData'].isConfigured = true;
