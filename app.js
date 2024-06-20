@@ -57,7 +57,7 @@ function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window
     console.log(startDateTimeUTC);
     console.log(endDateTimeUTC);
     let nextSendDateTime = null;
-    console.log(nextSendDateTime);
+    //console.log(nextSendDateTime);
 
     if (currentUTC <= startDateTimeUTC) {
 	nextSendDateTime = startDateTimeUTC;
@@ -140,7 +140,7 @@ app.post('/execute', (req, res) => {
 		nextSendTime = "Error in input params";
     	}    
 
-	console.log("Started updating DE ${subscriberKey}");
+	console.log('Started updating DE ${subscriberKey}');
 	    
     	// Update the Data Extension
 //    	const updateDE = async () => {
@@ -161,8 +161,11 @@ app.post('/execute', (req, res) => {
 	try {
             const response = RestClient.patch({
                 uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
+		method: 'POST',
+		url: 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/hub/v1/dataevents/key:custDataMailOpt/rowset',
 	 	//console.log("Inside patch");
                 headers: {
+                    'Cache-Control': 'no-cache',
                     'Content-Type': 'application/json'
                 },
                 json: [{
@@ -174,11 +177,12 @@ app.post('/execute', (req, res) => {
                     }
                 }]
             });
-	    console.log("Assiged ${subscriberKey} and ${nextSendTime} at rest API");
+	    console.log('Assiged ${subscriberKey} and ${nextSendTime} at rest API');
 
 	    return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
             
         } catch (error) {
+	    console.log('${response} &&and&&& ${error.message}');
             res.status(500).send(`Error updating Data Extension: ${error.message}`);
         }    
     }catch (error) {
