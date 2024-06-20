@@ -172,13 +172,13 @@ app.post('/execute', (req, res) => {
                     }
                 }]
             });
-	 	console.log("Assiged ${subscriberKey} and ${nextSendTime} at rest API");
+	    console.log("Assiged ${subscriberKey} and ${nextSendTime} at rest API");
 
-            res.status(200).send('Data Extension updated successfully');
+	    return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
+            
         } catch (error) {
             res.status(500).send(`Error updating Data Extension: ${error.message}`);
         }    
-	return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
 //     }
     }catch (error) {
         res.status(500).json({ error: error.message });
