@@ -117,8 +117,8 @@ app.post('/execute', (req, res) => {
 //	var outArgument1 ;	    
 	const now = new Date();
 	let nextSendTime = now.toLocaleString();
-	let subscriberKey = "Name";    
-        console.log(req.body);[0]
+	let subscriberKey = Name || req.body.keyValue;    
+        console.log(Name);[0]
         console.log(timezoneOffset);
         console.log(daytype);
         console.log(start_window);
@@ -138,12 +138,12 @@ app.post('/execute', (req, res) => {
 		nextSendTime = "Error in input params";
     	}    
 
-	console.log("Started updating DE");
+	console.log("Started updating DE ${subscriberKey}");
 	    
     	// Update the Data Extension
-    	const updateDE = async () => {
-         const options = {
+//    	const updateDE = async () => {
 	 //console.log("Before taking up the auth values");
+         const options = {
             auth: {
                 clientId: "oeatad9l98yhgdxmmet4f52u", //process.env.CLIENT_ID,  // need to update client ID
                 clientSecret: "PdiODfmj9InnyJnpjbYsVkbY", //process.env.CLIENT_SECRET, // need to update secret
@@ -165,7 +165,7 @@ app.post('/execute', (req, res) => {
                 },
                 json: [{
                     keys: {
-                        SubscriberKey: Name
+                        SubscriberKey: req.body.keyValue
                     },
                     values: {
                         nextSendTime: nextSendTime
@@ -179,7 +179,7 @@ app.post('/execute', (req, res) => {
             res.status(500).send(`Error updating Data Extension: ${error.message}`);
         }    
 	return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
-     }
+//     }
     }catch (error) {
         res.status(500).json({ error: error.message });
     }
