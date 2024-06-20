@@ -115,7 +115,7 @@ define(['postmonger'], function (Postmonger) {
             "start_window": start_window,
             "end_window": end_window,
             "daytype": daytype,
-	    "Name": Name
+	    "Name": Name // {{Contact.Attribute.Take2_Journey_Audience.Name}}
         }];
 
         payload['metaData'].isConfigured = true;
