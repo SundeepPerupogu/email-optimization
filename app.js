@@ -203,8 +203,8 @@ app.post('/execute', (req, res) => {
     
 	try {
             //const response = RestClient.patch(
-	   //var response = {
-             RestClient.put({
+	   var response = {
+           //RestClient.put({
 		uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
 		method: 'POST',
 		//url: 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/hub/v1/dataevents/key:custDataMailOpt/rowset',
@@ -221,12 +221,12 @@ app.post('/execute', (req, res) => {
                         nextSendTime: nextSendTime || "A"
                     }
                 }]
-            })
-	    .then(response => { 
+            }
+	    //).then(response => { 
 	    console.log("Assiged ", subscriberKey, " and " , nextSendTime, " at rest API");
-	    res.status(200).send('Data Extension updated successfully');
-    	   // return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
-           })
+	   // res.status(200).send('Data Extension updated successfully');
+    	    return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
+           
 	    
         } catch (error) {
 	    console.log(response, "&&and&&&", error.message);
