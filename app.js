@@ -189,10 +189,10 @@ app.post('/execute', (req, res) => {
 	 //console.log("Before taking up the auth values");
          const options = {
             auth: {
-                clientId: "oeatad9l98yhgdxmmet4f52u", //process.env.CLIENT_ID,  // need to update client ID
-                clientSecret: "PdiODfmj9InnyJnpjbYsVkbY", //process.env.CLIENT_SECRET, // need to update secret
-                authUrl: "https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/", //process.env.AUTH_URL, // update auth URL
-                accountId: "7281488", //process.env.ACCOUNT_ID // account ID
+                clientId: process.env.CLIENT_ID || "oeatad9l98yhgdxmmet4f52u", //,  // need to update client ID
+                clientSecret: process.env.CLIENT_SECRET || "PdiODfmj9InnyJnpjbYsVkbY", //, // need to update secret
+                authUrl: process.env.AUTH_URL || "https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/", //, // update auth URL
+                accountId: process.env.ACCOUNT_ID || "7281488", // // account ID
 	 	//console.log("After taking up the auth values");
             }
          };
