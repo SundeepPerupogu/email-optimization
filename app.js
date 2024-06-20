@@ -140,7 +140,7 @@ app.post('/execute', (req, res) => {
 		nextSendTime = "Error in input params";
     	}    
 
-	console.log('Started updating DE ${subscriberKey}');
+	console.log("Started updating DE", subscriberKey);
 	    
     	// Update the Data Extension
 //    	const updateDE = async () => {
@@ -159,7 +159,8 @@ app.post('/execute', (req, res) => {
  	console.log("RestClient declared");
     
 	try {
-            const response = RestClient.patch({
+            //const response = RestClient.patch(
+	    var response = {
                 uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
 		method: 'POST',
 		url: 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/hub/v1/dataevents/key:custDataMailOpt/rowset',
@@ -176,13 +177,13 @@ app.post('/execute', (req, res) => {
                         nextSendTime: nextSendTime
                     }
                 }]
-            });
+            };
 	    console.log('Assiged ${subscriberKey} and ${nextSendTime} at rest API');
 
 	    return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
             
         } catch (error) {
-	    console.log('${response} &&and&&& ${error.message}');
+	    console.log(response, "&&and&&&", error.message);
             res.status(500).send(`Error updating Data Extension: ${error.message}`);
         }    
     }catch (error) {
