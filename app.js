@@ -27,6 +27,7 @@ activity.calculateNextSendTime = function(event) {
     event.preventDefault();
 
     console.log(`Started executing function: calculateNextSendTime`);
+    var Name = $('#Name').val();
     var daytype = $('#daytype').val();
     var timezoneOffset = $('#timezoneOffset').val();
     var startWindow = $('#start_window').val();
@@ -42,7 +43,7 @@ activity.calculateNextSendTime = function(event) {
     $('#result').text('Next Send Time: ' + nextSendTime);
 };
 
-function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window) {
+function calculateNextSendTime(timezoneOffset, daytype, start_window, end_window ) {
     const currentUTC = new Date();
     const offsetParts = timezoneOffset.split('.');
     const offsetHours = parseInt(offsetParts[0], 10);
@@ -109,7 +110,8 @@ app.post('/execute', (req, res) => {
         const { start_window } = req.body.inArguments[1];
         const { end_window } = req.body.inArguments[2];
         const { daytype } = req.body.inArguments[3];
-        console.log(req.body.inArguments[2]);
+        const { Name } = req.body.inArguments[4];
+//        console.log(req.body);
 //	var outArgument1 ;	    
 	const now = new Date();
 	let nextSendTime = now.toLocaleString();
@@ -118,6 +120,7 @@ app.post('/execute', (req, res) => {
         console.log(timezoneOffset);
         console.log(daytype);
         console.log(start_window);
+        console.log(Name);
         nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log('After the function call');
         //res.status(200).json({ nextSendTime : nextSendTime });
@@ -160,7 +163,7 @@ app.post('/execute', (req, res) => {
                 },
                 json: [{
                     keys: {
-                        SubscriberKey: subscriberKey
+                        SubscriberKey: Name
                     },
                     values: {
                         nextSendTime: nextSendTime
