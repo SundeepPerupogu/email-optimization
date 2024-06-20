@@ -12,7 +12,8 @@
         "cors":"^2.8.5",
         "body-parser": "^1.19.0",
         "moment": "^2.29.1",
-        "moment-timezone": "^0.5.34"
+        "moment-timezone": "^0.5.34",
+        "fuel-rest": "^0.7.2"
     },
     "keywords": [],
     "author": "Sundeep Perupogu",
