@@ -179,7 +179,6 @@ app.post('/execute', (req, res) => {
         } catch (error) {
             res.status(500).send(`Error updating Data Extension: ${error.message}`);
         }    
-//     }
     }catch (error) {
         res.status(500).json({ error: error.message });
     }
