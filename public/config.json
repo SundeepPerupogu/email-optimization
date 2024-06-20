@@ -27,7 +27,7 @@
           "daytype": "{{Event.userRecords.daytype}}"
         },
         {
-          "daytype": "{{Event.userRecords.Name}}"
+          "Name": "{{Event.userRecords.Name}}"
         }
 
       ],
