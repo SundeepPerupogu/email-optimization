@@ -142,7 +142,7 @@ app.post('/execute', (req, res) => {
                 clientSecret: process.env.CLIENT_SECRET, // need to update secret
                 authUrl: process.env.AUTH_URL, // update auth URL
                 accountId: process.env.ACCOUNT_ID // account ID
-	 	console.log("After taking up the auth values");
+	 	//console.log("After taking up the auth values");
             }
          };
 
@@ -152,7 +152,7 @@ app.post('/execute', (req, res) => {
 	try {
             const response = await RestClient.patch({
                 uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
-	 	console.log("Inside patch");
+	 	//console.log("Inside patch");
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -164,8 +164,8 @@ app.post('/execute', (req, res) => {
                         nextSendTime: nextSendTime
                     }
                 }]
-	 	console.log("Assigning ${subscriberKey} and ${nextSendTime}");
             });
+	 	console.log("Assiged ${subscriberKey} and ${nextSendTime} at rest API");
 
             res.status(200).send('Data Extension updated successfully');
         } catch (error) {
