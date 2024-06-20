@@ -25,7 +25,11 @@
         },
         {
           "daytype": "{{Event.userRecords.daytype}}"
+        },
+        {
+          "daytype": "{{Event.userRecords.Name}}"
         }
+
       ],
       "outArguments": [
         {
@@ -57,6 +61,13 @@
               "direction": "in"
             },
             "start_window": {
+              "dataType": "Text",
+              "isRequired": true,
+              "direction": "in",
+              "readOnly": false,
+              "access": "Visible"
+            },
+            "Name": {
               "dataType": "Text",
               "isRequired": true,
               "direction": "in",
