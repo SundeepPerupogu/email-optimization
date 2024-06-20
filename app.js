@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Add this line
+//Run this command npm install express body-parser fuel-rest 
+//You will need Express.js to handle server requests and the Fuel SDK to interact with Marketing Cloud
+const FuelRest = require('fuel-rest'); // 
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -98,6 +101,9 @@ function addDays(date, days) {
 app.post('/execute', (req, res) => {
     try {
         console.log(req.body);[0]
+	if (!inArguments || inArguments.length === 0) {
+        	return res.status(400).send('Missing inArguments');
+    	}
         const { timezoneOffset } = req.body.inArguments[0];
         const { start_window } = req.body.inArguments[1];
         const { end_window } = req.body.inArguments[2];
@@ -106,6 +112,7 @@ app.post('/execute', (req, res) => {
 //	var outArgument1 ;	    
 	const now = new Date();
 	let nextSendTime = now.toLocaleString();
+	let subscriberKey = "Name";    
         console.log(req.body);[0]
         console.log(timezoneOffset);
         console.log(daytype);
@@ -116,7 +123,7 @@ app.post('/execute', (req, res) => {
         //console.log(res.body);
 	//return res.status(200).json({ nextSendTime : nextSendTime });	
         //res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));
-	if (nextSendTime) {
+	if (nextSendTime|| nextSendTime.length > 0) {
 		// nextSendTime has a value, proceed with your logic here
 		console.log("Next send time is:", nextSendTime);
     	} else {
@@ -124,6 +131,46 @@ app.post('/execute', (req, res) => {
 		console.log("Error in input params");
 		nextSendTime = "Error in input params";
     	}    
+
+    	// Update the Data Extension
+    	const updateDE = async () => {
+	console.log("Started updating DE");
+         const options = {
+	 console.log("Before taking up the auth values");
+            auth: {
+                clientId: process.env.CLIENT_ID,  // need to update client ID
+                clientSecret: process.env.CLIENT_SECRET, // need to update secret
+                authUrl: process.env.AUTH_URL, // update auth URL
+                accountId: process.env.ACCOUNT_ID // account ID
+	 	console.log("After taking up the auth values");
+            }
+         };
+
+        const RestClient = new FuelRest(options);
+ 	console.log("RestClient declared");
+    
+	try {
+            const response = await RestClient.patch({
+                uri: '/hub/v1/dataevents/key:custDataMailOpt/rowset',
+	 	console.log("Inside patch");
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                json: [{
+                    keys: {
+                        SubscriberKey: subscriberKey
+                    },
+                    values: {
+                        nextSendTime: nextSendTime
+                    }
+                }]
+	 	console.log("Assigning ${subscriberKey} and ${nextSendTime}");
+            });
+
+            res.status(200).send('Data Extension updated successfully');
+        } catch (error) {
+            res.status(500).send(`Error updating Data Extension: ${error.message}`);
+        }    
 	return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
     } catch (error) {
         res.status(500).json({ error: error.message });
