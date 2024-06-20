@@ -103,7 +103,7 @@ app.post('/execute', (req, res) => {
     try {
         console.log("Starting the /execute");
         console.log(req.body);[0]
-	
+        console.log(req.body.keyValue);	
 	//const { inArguments } = req.body;
 	//if (!inArguments || inArguments.length === 0) {
         //	return res.status(400).send('Missing inArguments');
@@ -112,7 +112,7 @@ app.post('/execute', (req, res) => {
         const { start_window } = req.body.inArguments[1];
         const { end_window } = req.body.inArguments[2];
         const { daytype } = req.body.inArguments[3];
-        const { Name } = req.body.inArguments[4];
+        const { Name } = req.body.keyValue || "Key Not found" ;
 //        console.log(req.body);
 //	var outArgument1 ;	    
 	const now = new Date();
