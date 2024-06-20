@@ -101,6 +101,7 @@ function addDays(date, days) {
 app.post('/execute', (req, res) => {
     try {
         console.log(req.body);[0]
+	const { inArguments } = req.body;
 	if (!inArguments || inArguments.length === 0) {
         	return res.status(400).send('Missing inArguments');
     	}
