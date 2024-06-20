@@ -133,9 +133,10 @@ app.post('/execute', (req, res) => {
 		nextSendTime = "Error in input params";
     	}    
 
+	console.log("Started updating DE");
+	    
     	// Update the Data Extension
     	const updateDE = async () => {
-	console.log("Started updating DE");
          const options = {
 	 //console.log("Before taking up the auth values");
             auth: {
