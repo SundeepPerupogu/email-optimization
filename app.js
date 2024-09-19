@@ -123,8 +123,12 @@ app.post('/execute', (req, res) => {
 		// nextSendTime is empty or undefined, send error message
 		console.log("Error in input params");
 		nextSendTime = "Error in input params";
-    	}    
-	return res.status(200).send(JSON.stringify({ nextSendTime : nextSendTime}));    
+    	}
+	const nextSendTimeDateType = new Date(nextSendTime);    
+	return res.status(200).send(JSON.stringify({
+    	    nextSendTime: nextSendTime,
+    	    nextSendTimeDateType: nextSendTimeDateType.toISOString() // Send as an ISO string for consistency
+	}));    
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
