@@ -29,6 +29,9 @@
       ],
       "outArguments": [
         {
+          "nextsendTimeDateType": "default"
+        },
+        {
           "nextSendTime": "default"
         }
       ],
@@ -72,9 +75,16 @@
         ],
         "outArguments": [
           {
+            "nextsendTimeDateType": {
+              "dataType": "Date",
+              "isRequired": false,
+              "direction": "out",
+              "readOnly": false,
+              "access": "Visible"
+            },
             "nextSendTime": {
               "dataType": "Text",
-              "isRequired": true,
+              "isRequired": false,
               "direction": "out",
               "readOnly": false,
               "access": "Visible"
