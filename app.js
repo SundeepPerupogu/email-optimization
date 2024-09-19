@@ -126,6 +126,9 @@ app.post('/execute', (req, res) => {
     	}
 	const nextSendTimeDateType = new Date(nextSendTime);    
 	console.log("Next send time in date time is:", nextSendTimeDateType.toISOString());
+	if (!nextSendTimeDateType) {
+            return res.status(400).send(JSON.stringify({ error: "nextSendTimeDateType could not be generated" }));
+        }
 	return res.status(200).send(JSON.stringify({
     	    nextSendTime: nextSendTime,
     	    nextSendTimeDateType: nextSendTimeDateType.toISOString() // Send as an ISO string for consistency
