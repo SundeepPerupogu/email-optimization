@@ -136,6 +136,7 @@ app.post('/execute', (req, res) => {
     	    nextSendTimeDateType: nextSendTimeDateType
 	}));    
     } catch (error) {
+	console.error('Error in /execute:', error);
         res.status(500).json({ error: error.message });
     }
     console.log(res);
