@@ -129,9 +129,11 @@ app.post('/execute', (req, res) => {
 	if (!nextSendTimeDateType) {
             return res.status(400).send(JSON.stringify({ error: "nextSendTimeDateType could not be generated" }));
         }
+	console.log("Data type of nextSendTime: ", typeof nextSendTime);
+	console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
 	return res.status(200).send(JSON.stringify({
-    	    nextSendTime: nextSendTime,
-    	    nextSendTimeDateType: nextSendTimeDateType.toISOString() // Send as an ISO string for consistency
+    	    nextSendTime: nextSendTime.toISOString(),  // Send as an ISO string for consistency
+    	    nextSendTimeDateType: nextSendTimeDateType
 	}));    
     } catch (error) {
         res.status(500).json({ error: error.message });
