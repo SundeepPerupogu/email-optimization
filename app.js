@@ -133,7 +133,7 @@ app.post('/execute', (req, res) => {
 	console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
 	return res.status(200).send(JSON.stringify({
     	    nextSendTime: nextSendTime.toISOString(),  // Send as an ISO string for consistency
-    	    nextSendTimeDateType: nextSendTimeDateType
+    	    nextSendTimeDateType: nextSendTimeDateType.toISOString()
 	}));    
     } catch (error) {
 	console.error('Error in /execute:', error);
