@@ -107,7 +107,7 @@ app.post('/execute', (req, res) => {
         nextSendTime: new Date().toISOString(), // Placeholder for calculated date
         nextSendTimeDateType: "default"
     };
-    console.log(nextSendTime);	
+    console.log(response);	
     return res.status(200).send({
   //  res.status(200).json({
         success: true,
