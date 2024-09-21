@@ -33,7 +33,7 @@
           "nextSendTimeDateType": "default"
         }
       ],
-      "url": "https://your-server-url/execute",
+      "url": "https://simple-email-optimization.onrender.com/execute",
       "verb": "POST",
       "body": "",
       "header": "",
@@ -101,7 +101,7 @@
     "configModal": {
       "height": 300,
       "width": 400,
-      "url": "https://your-server-url/index.html"
+      "url": "https://simple-email-optimization.onrender.com/index.html"
     }
   }
 }
