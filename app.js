@@ -9,9 +9,83 @@ app.use(express.static('public')); // Serve static files from public directory
 // Intiate the activity
 activity.initialize = function() {
     connection.trigger('ready');
-//    $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
+    $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
     console.log(`Started Initialize in activity.js`);
 };
+
+activity.calculateNextSendTime = function(event) {
+    event.preventDefault();
+
+    console.log(`Started executing function: calculateNextSendTime`);
+    var daytype = $('#daytype').val();
+    var timezoneOffset = $('#timezoneOffset').val();
+    var startWindow = $('#start_window').val();
+    var endWindow = $('#end_window').val();
+
+    // Validation
+    if (!validateTimeFormat(startWindow) || !validateTimeFormat(endWindow) || startWindow === endWindow) {
+        alert('Invalid input. Please check the time format and ensure start and end windows are different.');
+        return;
+    }
+
+    var nextSendTime = calculateNextSendTime(timezoneOffset, daytype, startWindow, endWindow);
+    $('#result').text('Next Send Time: ' + nextSendTime);
+};
+
+function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_window='11:00:00Z', end_window='12:00:00Z') {
+    const currentUTC = new Date();
+    const offsetParts = timezoneOffset.split('.');
+    const offsetHours = parseInt(offsetParts[0], 10);
+    const offsetMinutes = parseInt(offsetParts[1], 10);
+    const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -(offsetMinutes * 0.6) : (offsetMinutes * 0.6));
+    console.log(`Started function calculateNextSendTime`);
+    const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
+    const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
+    console.log(startDateTimeUTC);
+    console.log(endDateTimeUTC);
+    let nextSendDateTime = null;
+    console.log(nextSendDateTime);
+
+    if (currentUTC <= startDateTimeUTC) {
+	nextSendDateTime = startDateTimeUTC;
+        console.log(nextSendDateTime);
+    	console.log(`currentUTC <= startDateTimeUTC`);
+    } else {
+	nextSendDateTime = addDays(startDateTimeUTC, 1);
+    	    console.log(nextSendDateTime);
+            console.log(`currentUTC > startDateTimeUTC`);
+    }
+
+    if (daytype === 'weekday') {
+	while (nextSendDateTime.getUTCDay() === 0 || nextSendDateTime.getUTCDay() === 6) {
+    	    console.log(`daytype === weekday`);
+	    console.log(nextSendDateTime);
+	    nextSendDateTime = addDays(nextSendDateTime, 1);
+	}
+    }
+    console.log(`about to return nextSendDateTime`);
+    console.log(nextSendDateTime);
+    return nextSendDateTime.toISOString();
+}
+
+function combineDateTime(date, time, offsetTotalMinutes) {
+    const [hours, minutes, seconds] = time.split(':');
+    const combinedDateTime = new Date(date.getTime());
+    console.log(`${hours} ${minutes} ${seconds}`);
+    console.log(`Start function combineDateTime ${combinedDateTime}`);
+    combinedDateTime.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
+    console.log(`End function setUTCHours ${combinedDateTime}`);
+    return combinedDateTime;
+}
+
+function addDays(date, days) {
+    const result = new Date(date);
+    console.log(result);
+    result.setUTCDate(result.getUTCDate() + days);
+    console.log(result.getUTCDate());
+    console.log(result);
+    return result;
+}
 
 
 // POST endpoint to execute the custom activity logic
