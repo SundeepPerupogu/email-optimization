@@ -9,7 +9,7 @@ app.use(express.static('public')); // Serve static files from public directory
 // Intiate the activity
 activity.initialize = function() {
     connection.trigger('ready');
-    $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
+//    $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
     console.log(`Started Initialize in activity.js`);
 };
 
