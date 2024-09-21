@@ -41,7 +41,10 @@
       "header": "",
       "format": "json",
       "useJwt": false,
-      "timeout": 10000
+      "timeout": 20000,
+      "retryCount": 1,
+      "retryDelay": 10000,
+      "concurrentRequests": 10
     }
   },
   "schema": {
