@@ -1,23 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { fetchDateData } = require('./app');
-
 const app = express();
+
 app.use(bodyParser.json());
+app.use(express.static('public')); // Serve static files from the public directory
 
 app.post('/execute', (req, res) => {
-    try {
-        const dateData = fetchDateData();
-        res.status(200).json({
-            success: true,
-            data: dateData
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
+    // In a real implementation, you'd process the request here
+    const dateData = {
+        targetDate: req.body.targetDate || new Date().toISOString().split('T')[0] // Default to today's date
+    };
+    
+    res.status(200).json({
+        success: true,
+        data: dateData
+    });
 });
 
 const PORT = process.env.PORT || 3000;
