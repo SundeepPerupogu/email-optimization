@@ -30,9 +30,9 @@
       "outArguments": [
         {
           "nextSendTime": "default"
-        },
-        {
-          "nextSendTimeDateType": "default"
+      //  },
+      //  {
+      //    "nextSendTimeDateType": "default"
         }
       ],
       "url": "https://simple-email-optimization.onrender.com/execute",
@@ -83,14 +83,14 @@
               "direction": "out",
               "readOnly": false,
               "access": "Visible"
-            },
-            "nextSendTimeDateType": {
-              "dataType": "Text",
-              "isNullable": true,
-              "isRequired": false,
-              "direction": "out",
-              "readOnly": false,
-              "access": "Visible"
+     //       },
+     //       "nextSendTimeDateType": {
+     //         "dataType": "Text",
+     //         "isNullable": true,
+     //         "isRequired": false,
+     //         "direction": "out",
+     //         "readOnly": false,
+     //         "access": "Visible"
             }
           }
         ]
