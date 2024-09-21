@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
+const cors = require('cors'); // Add this line for Cross-Origin Resource Sharing policy
+app.use(cors()); // Add this line for resource sharing
 
 // Middleware for JSON parsing
 app.use(bodyParser.json());
@@ -9,7 +11,6 @@ app.use(express.static('public')); // Serve static files from public directory
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(cors()); // Add this line
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
