@@ -6,6 +6,14 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public')); // Serve static files from public directory
 
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(cors()); // Add this line
+
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
+var activity = {};
+
 // Intiate the activity
 activity.initialize = function() {
     connection.trigger('ready');
