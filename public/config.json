@@ -75,22 +75,29 @@
   },
   "configurationArguments": {
     "applicationExtensionKey": "your-extension-key",
+    "save": {
+      "url": "https://simple-email-optimization.onrender.com/save",
+      "verb": "POST",
+      "header": "Content-Type: application/json",
+      "body": "{}",
+      "useJwt": false
+    },
     "publish": {
-      "url": "https://your-server-url/publish",
+      "url": "https://simple-email-optimization.onrender.com/publish",
       "verb": "POST",
       "header": "Content-Type: application/json",
       "body": "{}",
       "useJwt": false
     },
     "validate": {
-      "url": "https://your-server-url/validate",
+      "url": "https://simple-email-optimization.onrender.com/validate",
       "verb": "POST",
       "header": "Content-Type: application/json",
       "body": "{}",
       "useJwt": false
     },
     "stop": {
-      "url": "https://your-server-url/stop",
+      "url": "https://simple-email-optimization.onrender.com/stop",
       "verb": "POST",
       "header": "Content-Type: application/json",
       "body": "{}",
