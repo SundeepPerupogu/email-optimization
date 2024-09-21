@@ -6,7 +6,7 @@
     <title>Send Time Custom Activity</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script data-main="js/main.js" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
     <!--link rel="stylesheet" href="styles.css"> < Optional: Link to your CSS file -->
 
     <!--script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
@@ -19,7 +19,7 @@
             }
         });
     </script>
-    <script data-main="app.js" type="text/javascript" src="js/require.js"></script-->
+    <script data-main="app.js" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script-->
 </head>
 <body>
     <div id="container">
@@ -37,7 +37,8 @@
             <input type="text" id="end-window" name="end_window" required>
         </form>
     </div>
-
-    <script src="https://simple-email-optimization.onrender.com/customactivity.js"></script> <!-- Custom activity script -->
+    <script data-main="js/app" src="js/require.js"></script>
+    <!--script src="https://simple-email-optimization.onrender.com/customactivity.js"></script--> 
+    <!--  Custom activity script -->
 </body>
 </html>
