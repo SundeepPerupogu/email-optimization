@@ -29,7 +29,9 @@
       ],
       "outArguments": [
         {
-          "nextSendTime": "default",
+          "nextSendTime": "default", 
+        },
+        {  
           "nextSendTimeDateType": "default"
         }
       ],
@@ -69,7 +71,14 @@
             }
           }
         ],
-        "outArguments": []
+        "outArguments": [
+          {
+            "nextSendTime": ""
+          },
+          {
+            "nextSendTimeType": ""
+          }
+        ]
       }
     }
   },
