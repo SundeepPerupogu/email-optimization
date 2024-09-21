@@ -1,4 +1,4 @@
-define(['postmonger'], function (Postmonger) {
+define('customactivity',['postmonger'], function (Postmonger) {
     'use strict';
 
     var connection = new Postmonger.Session();
