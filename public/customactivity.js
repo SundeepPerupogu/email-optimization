@@ -8,7 +8,7 @@ define(['postmonger'], function (Postmonger) {
     ];
     var currentStep = steps[0].key;
 
-	console.log(`Starting customactivity.js`);
+    console.log(`Starting app.js`);
 
     connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
@@ -17,8 +17,8 @@ define(['postmonger'], function (Postmonger) {
     connection.on('clickedBack', onClickedBack);
     connection.on('gotoStep', onGotoStep);
 
-	$(window).ready(onRender);
-	console.log(`postmonger is ready on render`);
+    $(window).ready(onRender);
+    console.log(`Postmonger is ready on render`);
 
     function onRender() {
         connection.trigger('ready');
@@ -27,99 +27,72 @@ define(['postmonger'], function (Postmonger) {
     }
 
     function initialize(data) {
-	console.log(`Initializing the initActivity`);
+        console.log(`Initializing the initActivity`);
         if (data) {
             payload = data;
         }
 
         var inArguments = payload['arguments'] && payload['arguments'].execute && payload['arguments'].execute.inArguments || [];
-	console.log(JSON.stringify(payload));
+        console.log(JSON.stringify(payload));
 
         $.each(inArguments, function (index, inArgument) {
-            if (inArgument.timezoneOffset) {
-                $('#timezoneOffset').val(inArgument.timezoneOffset);
-		console.log(JSON.stringify(inArgument.timezoneOffset));
-            }
-		
-            if (inArgument.start_window) {
-                $('#start_window').val(inArgument.start_window);
-		console.log(JSON.stringify(inArgument.start_window));
-            }
-
-            if (inArgument.end_window) {
-                $('#end_window').val(inArgument.end_window);
-		console.log(JSON.stringify(inArgument.end_window));
-            }
-	
-	    if (inArgument.daytype) {
-                $('#daytype').val(inArgument.daytype);
-		console.log(JSON.stringify(inArgument.daytype));
+            if (inArgument.targetDate) {
+                $('#targetDate').val(inArgument.targetDate);
+                console.log(`Loaded targetDate: ${inArgument.targetDate}`);
             }
         });
 
         connection.trigger('updateButton', { button: 'next', text: 'done', visible: true });
-	console.log(`Initializing is done`);
+        console.log(`Initialization complete`);
     }
 
     function onGetTokens(tokens) {
-        // Handle tokens
-	console.log(`Handles token`);
+        console.log(`Handles tokens`);
     }
 
     function onGetEndpoints(endpoints) {
-        // Handle endpoints
-	console.log(`Handles endpoints`);
+        console.log(`Handles endpoints`);
     }
 
     function onClickedNext() {
         save();
         connection.trigger('nextStep');
-	console.log(`Clicked on save`);
+        console.log(`Clicked on next`);
     }
 
     function onClickedBack() {
         connection.trigger('prevStep');
-	console.log(`Clicked on prevStep`);
+        console.log(`Clicked on back`);
     }
 
     function onGotoStep(step) {
         showStep(step);
         connection.trigger('ready');
-	console.log(`Clicked on step`);
+        console.log(`Navigated to step: ${step}`);
     }
 
     function showStep(step) {
         currentStep = step;
-
         $('.step').hide();
         $('#' + step).show();
-	console.log(`View step`);
+        console.log(`Showing step: ${step}`);
     }
 
     function save() {
-        var timezoneOffset = $('#timezoneOffset').val();
-        var start_window = $('#start_window').val();
-        var end_window = $('#end_window').val();
-        var daytype = $('#daytype').val();
-	console.log(`${payload}`);
-	console.log(`Start save function`);
+        var targetDate = $('#targetDate').val();
+        console.log(`Saving targetDate: ${targetDate}`);
 
         payload['arguments'].inArguments = [{
-            "timezoneOffset": timezoneOffset,
-            "start_window": start_window,
-            "end_window": end_window,
-            "daytype": daytype
+            "targetDate": targetDate
         }];
 
         payload['metaData'].isConfigured = true;
-		console.log(`metaData configured`);
+        console.log(`Configuration saved`);
 
         connection.trigger('updateActivity', payload);
     }
 
     return {
-	//console.log('Returning..');
-	//console.log(JSON.stringify(payload));
         // Optionally expose methods or properties if needed
     };
 });
