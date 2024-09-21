@@ -132,7 +132,7 @@ app.post('/validate', (req, res) => {
          handleError(res, error);
      }
 });
-app.post('/stop', (req, res) => {
+app.post('/save', (req, res) => {
     try {
 	console.log(`Saving ..`);
         res.sendStatus(200);
