@@ -29,9 +29,9 @@
       ],
       "outArguments": [
         {
-          "nextSendTime": "default", 
+          "nextSendTime": "default"
         },
-        {  
+        {
           "nextSendTimeDateType": "default"
         }
       ],
