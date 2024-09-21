@@ -10,6 +10,7 @@ define(['postmonger'], function (Postmonger) {
 
     console.log(`Starting app.js`);
 
+    // Event listeners for Postmonger
     connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
     connection.on('requestedEndpoints', onGetEndpoints);
@@ -27,18 +28,25 @@ define(['postmonger'], function (Postmonger) {
     }
 
     function initialize(data) {
-        console.log(`Initializing the initActivity`);
+        console.log(`Initializing activity`);
         if (data) {
             payload = data;
         }
 
+        // Load inArguments into the form fields
         var inArguments = payload['arguments'] && payload['arguments'].execute && payload['arguments'].execute.inArguments || [];
-        console.log(JSON.stringify(payload));
-
         $.each(inArguments, function (index, inArgument) {
-            if (inArgument.targetDate) {
-                $('#targetDate').val(inArgument.targetDate);
-                console.log(`Loaded targetDate: ${inArgument.targetDate}`);
+            if (inArgument.timezoneOffset) {
+                $('#timezone-offset').val(inArgument.timezoneOffset);
+            }
+            if (inArgument.start_window) {
+                $('#start-window').val(inArgument.start_window);
+            }
+            if (inArgument.end_window) {
+                $('#end-window').val(inArgument.end_window);
+            }
+            if (inArgument.daytype) {
+                $('#day-type').val(inArgument.daytype);
             }
         });
 
@@ -47,11 +55,11 @@ define(['postmonger'], function (Postmonger) {
     }
 
     function onGetTokens(tokens) {
-        console.log(`Handles tokens`);
+        console.log(`Received tokens: ${JSON.stringify(tokens)}`);
     }
 
     function onGetEndpoints(endpoints) {
-        console.log(`Handles endpoints`);
+        console.log(`Received endpoints: ${JSON.stringify(endpoints)}`);
     }
 
     function onClickedNext() {
@@ -79,15 +87,21 @@ define(['postmonger'], function (Postmonger) {
     }
 
     function save() {
-        var targetDate = $('#targetDate').val();
-        console.log(`Saving targetDate: ${targetDate}`);
+        // Gather form input values
+        var timezoneOffset = $('#timezone-offset').val();
+        var startWindow = $('#start-window').val();
+        var endWindow = $('#end-window').val();
+        var dayType = $('#day-type').val();
 
         payload['arguments'].inArguments = [{
-            "targetDate": targetDate
+            "timezoneOffset": timezoneOffset,
+            "start_window": startWindow,
+            "end_window": endWindow,
+            "daytype": dayType
         }];
 
         payload['metaData'].isConfigured = true;
-        console.log(`Configuration saved`);
+        console.log(`Configuration saved: ${JSON.stringify(payload)}`);
 
         connection.trigger('updateActivity', payload);
     }
