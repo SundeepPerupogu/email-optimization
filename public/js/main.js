@@ -4,6 +4,7 @@ requirejs.config({
     paths: {
         postmonger: 'postmonger',
         jquery: 'jquery.min', // Add jquery here if it's a separate file
+        app: 'app', // Define path for your app logic
         customactivity: '../customactivity' // Define path for custom activity
     },
     shim: {
@@ -12,12 +13,16 @@ requirejs.config({
         },
         'customactivity': {
             deps: ['jquery', 'postmonger']
+        },
+        'app': {
+            deps: ['jquery', 'postmonger']
         }
+        
     }
 });
 
 // Load the necessary modules
-requirejs(['jquery', 'postmonger', 'customactivity'], function ($, Postmonger, customEvent) {
+requirejs(['jquery', 'postmonger', 'customactivity', 'app'], function ($, Postmonger, app) {
     // Initialize your application here, e.g., setting up Postmonger event listeners
     var connection = new Postmonger.Session();
 
