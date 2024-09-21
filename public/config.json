@@ -7,7 +7,7 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "Send Time CustomActivity",
+      "name": "Send Mail Time",
       "description": "Calculates the next available send time based on the user's time zone."
     }
   },
