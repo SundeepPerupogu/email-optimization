@@ -1,11 +1,359 @@
-;/*FB_PKG_DELIM*/
+'use strict';
 
-/**
- * License: https://www.facebook.com/legal/license/9cisb7Fe7ih/
- */
-__d("postmonger-0.0.16",[],(function(a,b,c,d,e,f){"use strict";var g={},h={exports:g};function i(){(function(a,b){typeof g==="object"?h.exports=b(a):a.Postmonger=b(a)})(this,function(b){b=b||window;var a=a||void 0,c,d=b.Postmonger,e=b.addEventListener||b.attachEvent?b:window,g,h;typeof a!=="undefined"?c=a:c={};c.noConflict=function(){b.Postmonger=d;return this};c.version="0.0.14";g=c.Connection=function(a){a=typeof a==="object"?a:{};var b=a.connect||e.parent,c=a.from||"*",d=a.to||"*",f=this;typeof b==="string"&&(b=document.getElementById(b));b&&!b.postMessage&&b.jquery&&(b=b.get(0));b&&!b.postMessage&&(b.contentWindow||b.contentDocument)&&(b=b.contentWindow||b.contentDocument);if(!(b&&b.postMessage)){e.console&&e.console.warn&&e.console.warn(" Warning: Postmonger could not establish connection with ",a.connect);return!1}f.connect=b;f.to=d;f.from=c;return f};h=c.Events=function(){var a=/\s+/,b=this;b._callbacks={};b._has=function(a,b){return Object.prototype.hasOwnProperty.call(a,b)};b._keys=function(a){if(Object.keys)return Object.keys(a);if(typeof a!=="object")throw new TypeError("Invalid object");var c=[];for(var d in a)b._has(a,d)&&(c[c.length]=d);return c};b.on=function(c,d,e){var f,g,h,i,j;if(!d)return b;c=c.split(a);b._callbacks=b._callbacks||{};f=b._callbacks;while(g=c.shift())j=f[g],h=j?j.tail:{},i={},h.next=i,h.context=e,h.callback=d,f[g]={tail:i,next:j?j.next:h};return b};b.off=function(c,d,e){var f=b._callbacks,g,h,i,j,k;if(!f)return;if(!(c||d||e)){delete b._callbacks;return b}c=c?c.split(a):b._keys(f);while(g=c.shift()){h=f[g];delete f[g];if(!h||!(d||e))continue;i=h.tail;while((h=h.next)!==i)j=h.callback,k=h.context,((d&&j)!==d||(e&&k)!==e)&&b.on(g,j,k)}return b};b.trigger=function(c){var d,e,f,g,h,i,j;if(!(f=b._callbacks))return b;i=f.all;c=c.split(a);j=Array.prototype.slice.call(arguments,1);while(d=c.shift()){if(e=f[d]){g=e.tail;while((e=e.next)!==g)e.callback.apply(e.context||b,j)}if(e=i){g=e.tail;h=[d].concat(j);while((e=e.next)!==g)e.callback.apply(e.context||b,h)}}return b};return b};c.Session=function(){var a=arguments.length>0?Array.prototype.slice.call(arguments,0):[{}],c=[],d=new h(),f=new h(),i=this,j,k,l,m,n,o;i.on=d.on;i.off=d.off;i.trigger=f.trigger;i.end=function(){d.off();f.off();e.removeEventListener?e.removeEventListener("message",o,!1):e.detachEvent&&e.detachEvent("onmessage",o);return i};for(k=0,m=a.length;k<m;k++){j=new g(a[k]);if(j){for(l=0,n=c.length;l<n;l++)if(c[l].connect===j.connect&&c[l].from===j.from&&c[l].to===j.to){j=null;break}j&&c.push(j)}}o=function(a){var e=null,f=[],g,h,i;for(h=0,i=c.length;h<i;h++)if(c[h].connect===a.source){e=c[h];break}if(!e)return!1;if(e.from!=="*"&&e.from!==a.origin)return!1;try{g=JSON.parse(a.data);if(!g.e)return!1}catch(a){return!1}f.push(g.e);delete g.e;for(h in g)f.push(g[h]);d.trigger.apply(b,f)};if(e.addEventListener)e.addEventListener("message",o,!1);else if(e.attachEvent)e.attachEvent("onmessage",o);else{e.console&&e.console.warn&&e.console.warn("WARNING: Postmonger could not listen for messages on window %o",e);return!1}f.on("all",function(){var a=Array.prototype.slice.call(arguments,0),b={},d,e;b.e=a[0];for(d=1,e=a.length;d<e;d++)b["a"+d]=a[d];for(d=0,e=c.length;d<e;d++)c[d].connect.postMessage(JSON.stringify(b),c[d].to)});return i};return c})}var j=!1;function k(){j||(j=!0,i());return h.exports}function a(a){switch(a){case void 0:return k()}}e.exports=a}),null);
-/**
- * License: https://www.facebook.com/legal/license/Hnt8PzozZpk/
- */
-__d("sfmc-jbca-react-1.0.5",["react-0.0.0","postmonger-0.0.16"],(function(a,b,c,d,e,f){"use strict";var g=b("react-0.0.0"),h=b("postmonger-0.0.16"),i={},j={exports:i};function k(){Object.defineProperty(i,"__esModule",{value:!0});i.rejectTimer=void 0;var a=function(a,b){b===void 0&&(b=1500);return setTimeout(function(){return a()},b)};i.rejectTimer=a}var l=!1;function m(){l||(l=!0,k());return j.exports}var n={},o={exports:n};function p(){Object.defineProperty(n,"__esModule",{value:!0});n.__getInteraction=n.__getTokens=n.__ready=n.__init=void 0;var a=m(),b=function(b){return new Promise(function(c,d){var e=a.rejectTimer(d);d=function(a){c(a),clearTimeout(e)};b.on("initEvent",d);b.on("initActivity",d);b.on("initActivityRunningHover",d);b.on("initActivityRunningModal",d)})};n.__init=b;b=function(a){return a.trigger("ready")};n.__ready=b;b=function(b){return new Promise(function(c,d){var e=a.rejectTimer(d),f=function(a){typeof a==="string"?d():c(a),clearTimeout(e)};b===null||b===void 0?void 0:b.trigger("requestTokens");b===null||b===void 0?void 0:b.on("requestedTokens",f)})};n.__getTokens=b;b=function(b){return new Promise(function(c,d){var e=a.rejectTimer(d);d=function(a){c(a),clearTimeout(e)};b===null||b===void 0?void 0:b.trigger("requestInteraction");b===null||b===void 0?void 0:b.on("requestedInteraction",d)})};n.__getInteraction=b}var q=!1;function r(){q||(q=!0,p());return o.exports}var s={},t={exports:s};function u(){Object.defineProperty(s,"__esModule",{value:!0});s.postmongerPromise=void 0;var a=m(),b=function(b,c,d){return new Promise(function(e,f){var g=a.rejectTimer(f);b.trigger(c);b.on(d,function(a){e(a),clearTimeout(g)})})};s.postmongerPromise=b}var v=!1;function w(){v||(v=!0,u());return t.exports}var x={},y={exports:x};function z(){var a=this&&this.__importDefault||function(a){return a&&a.__esModule?a:{"default":a}};Object.defineProperty(x,"__esModule",{value:!0});x.JBCustomActivityAContext=void 0;a=a(g());x.JBCustomActivityAContext=a["default"].createContext({})}var A=!1;function B(){A||(A=!0,z());return y.exports}var C={},D={exports:C};function E(){var a=this&&this.__importDefault||function(a){return a&&a.__esModule?a:{"default":a}};Object.defineProperty(C,"__esModule",{value:!0});C.useJourneyBuilder=void 0;var b=a(g()),c=r(),d=w(),e=B();a=function(){var a=b["default"].useContext(e.JBCustomActivityAContext),f=a.session,g=a.activity;a=a.interaction;var h=function(){return c.__ready(f)},i=function(){return f.trigger("destroy")},j=function(){return c.__getTokens(f)},k=function(){return d.postmongerPromise(f,"requestSchema","requestedSchema")},l=function(){return d.postmongerPromise(f,"requestCulture","requestedCulture")},m=function(){return d.postmongerPromise(f,"requestDataSources","requestedDataSources")},n=function(){return d.postmongerPromise(f,"requestEndpoints","requestedEndpoints")},o=function(){return d.postmongerPromise(f,"requestInteractionDefaults","requestedInteractionDefaults")},p=function(){return d.postmongerPromise(f,"requestTriggerEventDefinition","requestedTriggerEventDefinition")},q=function(){return f.trigger("nextStep")},r=function(){return f.trigger("prevStep")},s=function(a){return f.trigger("updateSteps",a)},t=function(a){return f.trigger("updateButton",a)},u=function(a){return t({button:a,enabled:!0})},v=function(a){return t({button:a,enabled:!1})},w=function(a){if(!a)throw new Error("data object is missed");if(!a.metaData)throw new Error("no metadata object");if(a.metaData.isConfigured!==!0)throw new Error("data.metaData.isConfigured must be set to true for the journey to recognize the activity as fully configured (required for activation)");f.trigger("updateActivity",a)},x=function(a,b){return f.on(a,b)};return{ready:h,destroy:i,nextStep:q,prevStep:r,activity:g,getSchema:k,getTokens:j,getCulture:l,updateSteps:s,interaction:a,updateButton:t,enableButton:u,getEndpoints:n,disableButton:v,getDataSources:m,updateActivity:w,addEventListener:x,getInteractionDefaults:o,getInteractionTriggerEventDefinition:p}};C.useJourneyBuilder=a}var F=!1;function G(){F||(F=!0,E());return D.exports}var H={},I={exports:H};function J(){var a=this&&this.__awaiter||function(a,b,c,d){function e(a){return a instanceof c?a:new c(function(b){b(a)})}return new(c||(c=Promise))(function(c,f){function g(a){try{i(d.next(a))}catch(a){f(a)}}function h(a){try{i(d["throw"](a))}catch(a){f(a)}}function i(a){a.done?c(a.value):e(a.value).then(g,h)}i((d=d.apply(a,b||[])).next())})},b=this&&this.__generator||function(a,b){var c={label:0,sent:function(){if(f[0]&1)throw f[1];return f[1]},trys:[],ops:[]},d,e,f;return g={next:g(0),"throw":g(1),"return":g(2)},typeof Symbol==="function"&&(g[Symbol.iterator]=function(){return this}),g;function g(a){return function(b){return h([a,b])}}function h(g){if(d)throw new TypeError("Generator is already executing.");while(c)try{if(d=1,e&&(f=g[0]&2?e["return"]:g[0]?e["throw"]||((f=e["return"])&&f.call(e),0):e.next)&&!(f=f.call(e,g[1])).done)return f;(e=0,f)&&(g=[g[0]&2,f.value]);switch(g[0]){case 0:case 1:f=g;break;case 4:c.label++;return{value:g[1],done:!1};case 5:c.label++;e=g[1];g=[0];continue;case 7:g=c.ops.pop();c.trys.pop();continue;default:if(!(f=c.trys,f=f.length>0&&f[f.length-1])&&(g[0]===6||g[0]===2)){c=0;continue}if(g[0]===3&&(!f||g[1]>f[0]&&g[1]<f[3])){c.label=g[1];break}if(g[0]===6&&c.label<f[1]){c.label=f[1];f=g;break}if(f&&c.label<f[2]){c.label=f[2];c.ops.push(g);break}f[2]&&c.ops.pop();c.trys.pop();continue}g=b.call(a,c)}catch(a){g=[6,a],e=0}finally{d=f=0}if(g[0]&5)throw g[1];return{value:g[0]?g[1]:void 0,done:!0}}},c=this&&this.__importDefault||function(a){return a&&a.__esModule?a:{"default":a}};Object.defineProperty(H,"__esModule",{value:!0});H.JourneyBuilderProvider=void 0;var d=c(g()),e=c(h()),f=B(),i=r(),j;(function(a){a[a.Init=0]="Init",a[a.Ready=1]="Ready",a[a.Error=2]="Error"})(j||(j={}));c=function(c){var g=c.children,h=c.initComponent,k=c.errorComponent;c=d["default"].useState({status:j.Init});var l=c[0],m=c[1];d["default"].useEffect(function(){var c=new e["default"].Session();i.__ready(c);(function(){return a(void 0,void 0,void 0,function(){var d,a;return b(this,function(b){switch(b.label){case 0:a={session:c};return[4,i.__init(c)];case 1:a.activity=b.sent();return[4,i.__getInteraction(c)];case 2:d=(a.interaction=b.sent(),a);m({value:d,status:j.Ready});return[2]}})})})()["catch"](function(){return m({status:j.Error})})},[]);return d["default"].createElement(d["default"].Fragment,null,function(){switch(l.status){case j.Init:return h?h:d["default"].createElement("div",null);case j.Ready:return d["default"].createElement(f.JBCustomActivityAContext.Provider,{value:l.value},g);case j.Error:return k?k:d["default"].createElement("div",{style:{display:"flex",height:"100vh",justifyContent:"center",alignItems:"center"}},d["default"].createElement("div",{style:{height:25}},d["default"].createElement("span",null,"Connection with Marketing Cloud failed.")))}}())};H.JourneyBuilderProvider=c}var K=!1;function L(){K||(K=!0,J());return I.exports}var M={},N={exports:M};function O(){Object.defineProperty(M,"__esModule",{value:!0});M.JourneyBuilderProvider=M.useJourneyBuilder=void 0;var a=G();Object.defineProperty(M,"useJourneyBuilder",{enumerable:!0,get:function(){return a.useJourneyBuilder}});var b=L();Object.defineProperty(M,"JourneyBuilderProvider",{enumerable:!0,get:function(){return b.JourneyBuilderProvider}})}var P=!1;function Q(){P||(P=!0,O());return N.exports}function a(a){switch(a){case void 0:return Q()}}e.exports=a}),null);
-__d("sfmc-jbca-react",["sfmc-jbca-react-1.0.5"],(function(a,b,c,d,e,f){e.exports=b("sfmc-jbca-react-1.0.5")()}),null);
+requirejs.config({
+	paths: {
+		postmonger: 'postmonger'
+	},
+	shim: {
+		'jquery.min': {
+			exports: '$'
+		},
+		'../customactivity': {
+			deps: ['jquery.min', 'postmonger']
+		}
+	}
+});
+
+requirejs(['jquery.min', '../customactivity'], function ($, customEvent) {
+});
+
+requirejs.onError = function (err) {
+	if (err.requireType === 'timeout') {
+		console.log('modules: ' + err.requireModules);
+	}
+	throw err;
+};
+/*
+ * Postmonger.js   version 0.0.14
+ * https://github.com/kevinparkerson/postmonger
+ *
+ * Copyright (c) 2012-2014 Kevin Parkerson
+ * Available via the MIT or new BSD license.
+ * Further details and documentation:
+ * http://kevinparkerson.github.com/postmonger/
+ *
+ *///
+
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd) {
+		define('postmonger', [], function () { return factory(root); });
+	} else if (typeof exports === 'object') {
+		module.exports = factory(root);
+	} else {
+		// OR use browser globals if AMD is not present
+		root.Postmonger = factory(root);
+	}
+}(this, function (root) {
+	root = root || window;
+
+	var exports = exports || undefined;
+	var Postmonger;
+	var previous = root.Postmonger;
+	var _window = (root.addEventListener || root.attachEvent) ? root : window;
+	var Connection, Events, Session;
+
+	//Set up Postmonger namespace, provide noConflict support, and version
+	if (typeof(exports) !== 'undefined') {
+		Postmonger = exports;
+	} else {
+		Postmonger = {};
+	}
+	Postmonger.noConflict = function () {
+		root.Postmonger = previous;
+		return this;
+	};
+	Postmonger.version = '0.0.14';
+
+	//Create a new Postmonger Connection
+	Connection = Postmonger.Connection = function (options) {
+		options = (typeof(options) === 'object') ? options : {};
+
+		var connect = options.connect || _window.parent;
+		var from = options.from || '*';
+		var to = options.to || '*';
+		var self = this;
+
+		//If string, grab based on id
+		if (typeof(connect) === 'string') {
+			connect = document.getElementById(connect);
+		}
+
+		//If no connection, check for jquery object
+		if (connect && !connect.postMessage && connect.jquery) {
+			connect = connect.get(0);
+		}
+
+		//If still no connection, check for iframe
+		if (connect && !connect.postMessage && (connect.contentWindow || connect.contentDocument)) {
+			connect = connect.contentWindow || connect.contentDocument;
+		}
+
+		//Throw warning if connection could not be made
+		if (!(connect && connect.postMessage)) {
+			if (_window.console && _window.console.warn) {
+				_window.console.warn(' Warning: Postmonger could not establish connection with ', options.connect);
+			}
+			return false;
+		}
+
+		self.connect = connect;
+		self.to = to;
+		self.from = from;
+
+		return self;
+	};
+
+	//Postmonger.Events - Hacked together from Backbone.Events and two Underscore functions.
+	Events = Postmonger.Events = function () {
+		var eventSplitter = /\s+/;
+		var self = this;
+
+		self._callbacks = {};
+
+		self._has = function (obj, key) {
+			return Object.prototype.hasOwnProperty.call(obj, key);
+		};
+
+		self._keys = function (obj) {
+			if (Object.keys) {
+				return Object.keys(obj);
+			}
+
+			if (typeof(obj)!=='object') {
+				throw new TypeError('Invalid object');
+			}
+
+			var keys = [];
+
+			for (var key in obj) {
+				if (self._has(obj, key)) {
+					keys[keys.length] = key;
+				}
+			}
+
+			return keys;
+		};
+
+		self.on = function (events, callback, context) {
+			var calls, event, node, tail, list;
+
+			if (!callback) {
+				return self;
+			}
+
+			events = events.split(eventSplitter);
+
+			self._callbacks = self._callbacks || {};
+			calls = self._callbacks;
+
+			while (event = events.shift()) {
+				list = calls[event];
+
+				node = (list) ? list.tail : {};
+				tail = {};
+
+				node.next = tail;
+				node.context = context;
+				node.callback = callback;
+
+				calls[event] = {
+					tail: tail,
+					next: (list) ? list.next : node
+				};
+			}
+
+			return self;
+		};
+
+		self.off = function (events, callback, context) {
+			var calls = self._callbacks;
+			var event, node, tail, cb, ctx;
+
+			if (!calls) {
+				return;
+			}
+
+			if (!(events || callback || context)) {
+				delete self._callbacks;
+				return self;
+			}
+
+			events = (events) ? events.split(eventSplitter) : self._keys(calls);
+
+			while (event = events.shift()) {
+				node = calls[event];
+				delete calls[event];
+				if (!node || !(callback || context)) {
+					continue;
+				}
+
+				tail = node.tail;
+				while ((node = node.next) !== tail) {
+					cb = node.callback;
+					ctx = node.context;
+					if (((callback && cb) !== callback) || ((context && ctx) !== context)) {
+						self.on(event, cb, ctx);
+					}
+				}
+			}
+
+			return self;
+		};
+
+		self.trigger = function (events) {
+			var event, node, calls, tail, args, all, rest;
+
+			if (!(calls = self._callbacks)) {
+				return self;
+			}
+
+			all = calls.all;
+			events = events.split(eventSplitter);
+			rest = Array.prototype.slice.call(arguments, 1);
+
+			while (event = events.shift()) {
+				if (node = calls[event]) {
+					tail = node.tail;
+					while ((node = node.next) !== tail) {
+						node.callback.apply(node.context || self, rest);
+					}
+				}
+				if (node = all) {
+					tail = node.tail;
+					args = [event].concat(rest);
+					while ((node = node.next) !== tail) {
+						node.callback.apply(node.context || self, args);
+					}
+				}
+			}
+
+			return self;
+		};
+
+		return self;
+	};
+
+	//Create a new Postmonger Session
+	Session = Postmonger.Session = function () {
+		var args = (arguments.length>0) ? Array.prototype.slice.call(arguments, 0) : [{}];
+		var connections = [];
+		var incoming = new Events();
+		var outgoing = new Events();
+		var self = this;
+		var connection, i, j, l, ln, postMessageListener;
+
+		//Session API hooks
+		self.on = incoming.on;
+		self.off = incoming.off;
+		self.trigger = outgoing.trigger;
+		self.end = function () {
+			incoming.off();
+			outgoing.off();
+			if (_window.removeEventListener) {
+				_window.removeEventListener('message', postMessageListener, false);
+			} else if (_window.detachEvent) {
+				_window.detachEvent('onmessage', postMessageListener);
+			}
+			return self;
+		};
+
+		//Establishing connections
+		for (i=0, l=args.length; i<l; i++) {
+			connection = new Connection(args[i]);
+			if (connection) {
+				for (j=0, ln=connections.length; j<ln; j++) {
+					if (
+						connections[j].connect === connection.connect &&
+						connections[j].from === connection.from &&
+						connections[j].to === connection.to
+					) {
+						connection = null;
+						break;
+					}
+				}
+				if (connection) {
+					connections.push(connection);
+				}
+			}
+		}
+
+		//Listener for incoming messages
+		postMessageListener = function(event){
+			var conn = null;
+			var message = [];
+			var data;
+			var k, len;
+
+			//Attempt to find the connection we're dealing with
+			for (k=0, len=connections.length; k<len; k++) {
+				if (connections[k].connect === event.source) {
+					conn = connections[k];
+					break;
+				}
+			}
+
+			//Check if we've found the connection
+			if (!conn) {
+				return false;
+			}
+
+			//Check if the message is from the expected origin
+			if (conn.from !== '*' && conn.from !== event.origin) {
+				return false;
+			}
+
+			//Check the data that's been passed
+			try{
+				data = JSON.parse(event.data);
+				if(!data.e){
+					return false;
+				}
+			}catch(e){
+				return false;
+			}
+
+			//Format the passed in data
+			message.push(data.e);
+			delete data.e;
+			for (k in data) {
+				message.push(data[k]);
+			}
+
+			//Send the message
+			incoming['trigger'].apply(root, message);
+		};
+
+		//Add the listener
+		if (_window.addEventListener) {
+			_window.addEventListener('message', postMessageListener, false);
+		} else if(_window.attachEvent) {
+			_window.attachEvent('onmessage', postMessageListener);
+		} else{
+			if (_window.console && _window.console.warn) {
+				_window.console.warn('WARNING: Postmonger could not listen for messages on window %o', _window);
+			}
+			return false;
+		}
+
+		//Sending outgoing messages
+		outgoing.on('all', function () {
+			var args = Array.prototype.slice.call(arguments, 0);
+			var message = {};
+			var k, len;
+
+			message.e = args[0];
+
+			for (k=1, len=args.length; k<len; k++) {
+				message['a' + k] = args[k];
+			}
+
+			for (k=0, len=connections.length; k<len; k++) {
+				connections[k].connect.postMessage(JSON.stringify(message), connections[k].to);
+			}
+		});
+
+		return self;
+	};
+
+	return Postmonger;
+}));
