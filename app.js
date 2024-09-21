@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const path = require('path');
 
 // Middleware for JSON parsing
 app.use(bodyParser.json());
@@ -17,7 +18,7 @@ var activity = {};
 // Intiate the activity
 activity.initialize = function() {
     connection.trigger('ready');
-    $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
+//    $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
     console.log(`Started Initialize in activity.js`);
 };
 
