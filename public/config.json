@@ -81,7 +81,7 @@
               "readOnly": false,
               "access": "Visible"
             },
-            "nextSendTimeType": {
+            "nextSendTimeDateType": {
               "dataType": "Date",
               "isNullable": true,
               "isRequired": false,
