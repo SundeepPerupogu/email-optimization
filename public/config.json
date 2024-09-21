@@ -96,13 +96,6 @@
   },
   "configurationArguments": {
     "applicationExtensionKey": "your-extension-key",
-    "save": {
-      "url": "https://simple-email-optimization.onrender.com/save",
-      "verb": "POST",
-      "header": "Content-Type: application/json",
-      "body": "{}",
-      "useJwt": false
-    },
     "publish": {
       "url": "https://simple-email-optimization.onrender.com/publish",
       "verb": "POST",
@@ -127,8 +120,8 @@
   },
   "userInterfaces": {
     "configModal": {
-      "height": 300,
-      "width": 400,
+      "height": 600,
+      "width": 800,
       "url": "https://simple-email-optimization.onrender.com/index.html"
     }
   }
