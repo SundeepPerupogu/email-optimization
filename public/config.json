@@ -71,24 +71,7 @@
             }
           }
         ],
-        "outArguments": [
-          {
-            "nextsendTimeDateType": {
-              "dataType": "Date",
-              "isRequired": false,
-              "direction": "out",
-              "readOnly": false,
-              "access": "Visible"
-            },
-            "nextSendTime": {
-              "dataType": "Text",
-              "isRequired": false,
-              "direction": "out",
-              "readOnly": false,
-              "access": "Visible"
-            }
-          }
-        ]
+        "outArguments": []
       }
     }
   },
