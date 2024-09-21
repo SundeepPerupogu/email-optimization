@@ -79,6 +79,14 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
 }
 
 function combineDateTime(date, time, offsetTotalMinutes) {
+    if (!time || typeof time !== 'string' || !time.includes(':')) {
+        // You can change below code to Handle the error: throw an error, return null, or set to a default time
+         //return null;  
+        //console.error('Invalid time parameter:', time);  throw an error 
+	  //  setting a default time
+	const defdate = new Date(date);    
+	return defdate;    
+    }
     const [hours, minutes, seconds] = time.split(':');
     const combinedDateTime = new Date(date.getTime());
     console.log(`${hours} ${minutes} ${seconds}`);
