@@ -100,19 +100,59 @@ function addDays(date, days) {
 
 // POST endpoint to execute the custom activity logic
 app.post('/execute', (req, res) => {
-    const { timezoneOffset, start_window, end_window, daytype } = req.body;
+    //const { timezoneOffset, start_window, end_window, daytype } = req.body;
+    try {
+        console.log(req.body);[0]
+        const { timezoneOffset } = req.body.inArguments[0];
+        const { start_window } = req.body.inArguments[1];
+        const { end_window } = req.body.inArguments[2];
+        const { daytype } = req.body.inArguments[3];
+        console.log(req.body.inArguments[2]);
+//	var outArgument1 ;	    
+	const now = new Date();
+	let nextSendTime = now.toLocaleString();
+        console.log(req.body);[0]
+        console.log(timezoneOffset);
+        console.log(daytype);
+        console.log(start_window);
+        nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
+        console.log('After the function call');
 
     // Implement your logic here; for now, just return received data
-    const response = {
-        nextSendTime: new Date().toISOString(), // Placeholder for calculated date
-        nextSendTimeDateType: "default"
-    };
-    console.log(response);	
-    return res.status(200).send({
+   // const response = {
+   //     nextSendTime: new Date().toISOString(), // Placeholder for calculated date
+   //     nextSendTimeDateType: "default"
+   // };
+   // console.log(response);	
+   // return res.status(200).send({
   //  res.status(200).json({
-        success: true,
-        data: response
-    });
+  //      success: true,
+   //     data: response
+   // });
+	if (nextSendTime) {
+		// nextSendTime has a value, proceed with your logic here
+		console.log("Next send time is:", nextSendTime);
+    	} else {
+		// nextSendTime is empty or undefined, send error message
+		console.log("Error in input params");
+		nextSendTime = "Error in input params";
+    	}
+	const nextSendTimeDateType = new Date(nextSendTime);    
+	console.log("Next send time in date time is:", nextSendTimeDateType.toISOString());
+	if (!nextSendTimeDateType) {
+            return res.status(400).send(JSON.stringify({ error: "nextSendTimeDateType could not be generated" }));
+        }
+	console.log("Data type of nextSendTime: ", typeof nextSendTime);
+	console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
+	return res.status(200).send(JSON.stringify({
+    	    nextSendTime: nextSendTime,  // Send as an ISO string for consistency
+    	   // nextSendTimeDateType: nextSendTimeDateType.toISOString()
+	}));    
+    } catch (error) {
+	console.error('Error in /execute:', error);
+        res.status(500).json({ error: error.message });
+    }
+    console.log(res);
 });
 
 app.post('/publish', (req, res) => {
