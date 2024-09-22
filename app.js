@@ -47,7 +47,7 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
     const offsetParts = timezoneOffset.split('.');
     const offsetHours = parseInt(offsetParts[0], 10);
     const offsetMinutes = parseInt(offsetParts[1] || "0", 10);
-    const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -(offsetMinutes * 0.6) : (offsetMinutes * 0.6));
+    const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -(offsetMinutes * 6) : (offsetMinutes * 6));
     console.log(`Started function calculateNextSendTime`);
     const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
     const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
