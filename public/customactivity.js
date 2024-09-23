@@ -8,14 +8,18 @@ define(['postmonger'], function (Postmonger) {
     ];
     var currentStep = steps[0].key;
 
-    $(window).ready(onRender);
+    console.log(`Starting app.js`);
 
+    // Event listeners for Postmonger
     connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
     connection.on('requestedEndpoints', onGetEndpoints);
     connection.on('clickedNext', onClickedNext);
     connection.on('clickedBack', onClickedBack);
     connection.on('gotoStep', onGotoStep);
+
+    $(window).ready(onRender);
+    console.log(`Postmonger is ready on render`);
 
     function onRender() {
         connection.trigger('ready');
@@ -24,70 +28,80 @@ define(['postmonger'], function (Postmonger) {
     }
 
     function initialize(data) {
+        console.log(`Initializing activity`);
         if (data) {
             payload = data;
         }
 
+        // Load inArguments into the form fields
         var inArguments = payload['arguments'] && payload['arguments'].execute && payload['arguments'].execute.inArguments || [];
-
         $.each(inArguments, function (index, inArgument) {
             if (inArgument.timezoneOffset) {
-                $('#timezoneOffset').val(inArgument.timezoneOffset);
+                $('#timezone-offset').val(inArgument.timezoneOffset);
             }
-		
-            if (inArgument.triggerTime) {
-                $('#triggerTime').val(inArgument.triggerTime);
+            if (inArgument.start_window) {
+                $('#start-window').val(inArgument.start_window);
             }
-
+            if (inArgument.end_window) {
+                $('#end-window').val(inArgument.end_window);
+            }
             if (inArgument.daytype) {
-                $('#daytype').val(inArgument.daytype);
+                $('#day-type').val(inArgument.daytype);
             }
         });
 
         connection.trigger('updateButton', { button: 'next', text: 'done', visible: true });
+        console.log(`Initialization complete`);
     }
 
     function onGetTokens(tokens) {
-        // Handle tokens
+        console.log(`Received tokens: ${JSON.stringify(tokens)}`);
     }
 
     function onGetEndpoints(endpoints) {
-        // Handle endpoints
+        console.log(`Received endpoints: ${JSON.stringify(endpoints)}`);
     }
 
     function onClickedNext() {
         save();
         connection.trigger('nextStep');
+        console.log(`Clicked on next`);
     }
 
     function onClickedBack() {
         connection.trigger('prevStep');
+        console.log(`Clicked on back`);
     }
 
     function onGotoStep(step) {
         showStep(step);
         connection.trigger('ready');
+        console.log(`Navigated to step: ${step}`);
     }
 
     function showStep(step) {
         currentStep = step;
-
         $('.step').hide();
         $('#' + step).show();
+        console.log(`Showing step: ${step}`);
     }
 
     function save() {
-        var timezoneOffset = $('#timezoneOffset').val();
-        var triggerTime = $('#triggerTime').val();
-        var daytype = $('#daytype').val();
+        // Gather form input values
+        var timezoneOffset = $('#timezone-offset').val();
+        var startWindow = $('#start-window').val();
+        var endWindow = $('#end-window').val();
+        var dayType = $('#day-type').val();
 
-        payload['arguments'].execute.inArguments = [{
+        payload['arguments'].inArguments = [{
             "timezoneOffset": timezoneOffset,
-            "triggerTime": triggerTime,
-            "daytype": daytype
+            "start_window": startWindow,
+            "end_window": endWindow,
+            "daytype": dayType
         }];
 
         payload['metaData'].isConfigured = true;
+        console.log(`Configuration saved: ${JSON.stringify(payload)}`);
 
         connection.trigger('updateActivity', payload);
     }
@@ -96,4 +110,3 @@ define(['postmonger'], function (Postmonger) {
         // Optionally expose methods or properties if needed
     };
 });
-
