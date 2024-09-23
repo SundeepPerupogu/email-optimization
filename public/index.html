@@ -1,130 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Convert Time Zone to UTC</title>
-		<!--script src="https://code.jquery.com/jquery-3.5.1.min.js"></script><script type="text/javascript" src="js/jquery.min.js"></script><script data-main="js/main.js" type="text/javascript" src="js/require.js"></script><script src="https://email-optimization.onrender.com/customactivity.js"></script-->
-		<script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            // Function to convert user time zone to UTC
-            function convertToUTC() {
-                // Get user input or default values
-                let userTimeZoneOffset = document.getElementById("timezoneOffset").value || "-09:30"; // Default to +05:30
-                let triggerTime = document.getElementById("triggerTime").value || "08:00"; // Default to 14:00
-				const dayType = document.getElementById('daytype').value || "Weekday";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Time Custom Activity</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
+    <!--link rel="stylesheet" href="styles.css"> < Optional: Link to your CSS file -->
 
-                // Convert time zone offset to minutes
-                let offsetSign = userTimeZoneOffset[0] === '+' ? 1 : -1;
-                let offsetParts = userTimeZoneOffset.substring(1).split(':');
-                let offsetMinutes = offsetSign * (parseInt(offsetParts[0]) * 60 + parseInt(offsetParts[1]));
-
-                // Get current date
-                let now = new Date();
-
-                // Parse the trigger time
-                let triggerParts = triggerTime.split(':');
-                let triggerHours = parseInt(triggerParts[0]);
-                let triggerMinutes = parseInt(triggerParts[1]);
-
-                // Create a Date object for the trigger time today
-                let triggerDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), triggerHours, triggerMinutes);
-
-                // Adjust trigger time to UTC
-                triggerDate.setMinutes(triggerDate.getMinutes() - offsetMinutes);
-
-                // If the trigger time has already passed today, set it to the same time tomorrow
-
-
-
-                if (dayType === 'weekday') {
-                    while (triggerDate.getDay() === 0 || triggerDate.getDay() === 6) {
-                        triggerDate.setDate(triggerDate.getDate() + 1);
-                    }
-                }
-
-
-                // Format the UTC trigger time
-                let utcHours = String(triggerDate.getUTCHours()).padStart(2, '0');
-                let utcMinutes = String(triggerDate.getUTCMinutes()).padStart(2, '0');
-                let utcTime = `${utcHours}:${utcMinutes}`;
-
-                // Display the UTC trigger time
-                document.getElementById("result").innerText = `Next trigger time in UTC: ${utcTime} and Date would be ${triggerDate.toUTCString()}`;
+    <!--script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
+    <script data-main="https://simple-email-optimization.onrender.com/js/require.js" type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+    <script>
+        require.config({
+            paths: {
+                'postmonger': 'https://simple-email-optimization.onrender.com/js/postmonger.js', // Adjust this to your Postmonger location
+                'customactivity': 'https://simple-email-optimization.onrender.com/customactivity.js'
             }
-
-            // Add event listeners to input fields to call convertToUTC on change
-            document.getElementById("timezoneOffset").addEventListener('input', convertToUTC);
-            document.getElementById("triggerTime").addEventListener('input', convertToUTC);
-            document.getElementById("daytype").addEventListener('input', convertToUTC);
-
-            // Initial conversion with default values
-            convertToUTC();
         });
     </script>
-		<style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            margin: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-    </style>
-	</head>
-	<body>
-		<h2>Mail Optimization to get UTC</h2>
-		<form>
-			<label for="timezoneOffset">Time Zone Offset from the Data Extension:Event.Record.user.timezone</label>
-			<!--input type="text" id="timezoneOffset" value="+05:30"><br><br>-->
-			<select id="timezoneOffset">
-				<option value="">Select timezone</option>
-				<option value="+06:30">(UTC-12:00)</option>
-				<option value="+07:30">(UTC-11:00)</option>
-				<option value="+08:30">(UTC-10:00)</option>
-				<option value="+09:30">(UTC-09:00)</option>
-				<option value="+10:30">(UTC-08:00)(Pacific Time Zone)</option>
-				<option value="-12:30">(UTC-07:00)(Mountain Time Zone)</option>
-				<option value="-11:30">(UTC-06:00)(Central Time Zone)</option>
-				<option value="-10:30">(UTC-05:00)(Eastern Time Zone)</option>
-				<option value="-09:30">(UTC-04:00)(New York, NY, USA)</option>
-				<option value="-09:00">(UTC-03:30)</option>
-				<option value="-08:30">(UTC-03:00)</option>
-				<option value="-07:30">(UTC-02:00)</option>
-				<option value="-06:30">(UTC-01:00)</option>
-				<option value="-05:30">(UTC+00:00)</option>
-				<option value="+06:30">(UTC+12:00)</option>
-				<option value="+05:30">(UTC+11:00)</option>
-				<option value="+04:30">(UTC+10:00)</option>
-				<option value="+03:30">(UTC+09:00)</option>
-				<option value="+02:30">(UTC+08:00)</option>
-				<option value="+01:30">(UTC+07:00)</option>
-				<option value="+00:30">(UTC+06:00)</option>
-				<option value="+00:00">(UTC+05:30)(Asia/Kolkata)</option>
-				<option value="-00:30">(UTC+05:00)</option>
-				<option value="-01:30">(UTC+04:00)</option>
-				<option value="-02:30">(UTC+03:00)</option>
-				<option value="-03:30">(UTC+02:00)</option>
-				<option value="-04:30">(UTC+01:00)</option>
-				<!-- Add more options as needed 
-        <option value="UTC+14:00">(UTC+14:00) Kiritimati</option>-->
-			</select>
-			<label for="triggerTime">Mail Trigger Time (24-hour format, e.g., 14:00):</label>
-			<input type="time" id="triggerTime" value="08:00"></input>
-			<label for="daytype">Select Day Type:</label>
-			<select id="daytype" >
-				<option value="weekday">Weekday</option>
-				<option value="allday">All Day</option>
-			</select>
-		</form>
-		<p id="result"></p>
-	</body>
+    <script data-main="app.js" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script-->
+</head>
+<body>
+    <div id="container">
+        <form id="config-form">
+            <label for="timezone-offset">Timezone Offset (e.g., +05:30, -04:00):</label>
+            <input type="text" id="timezone-offset" name="timezoneOffset" required>
+	   	
+            <label for="day-type">Day Type (weekday/anyday):</label>
+            <input type="text" id="day-type" name="daytype" required>
+
+            <label for="start-window">Start Window (e.g., 10:00:00Z):</label>
+            <input type="text" id="start-window" name="start_window" required>
+
+            <label for="end-window">End Window (e.g., 14:30:00Z):</label>
+            <input type="text" id="end-window" name="end_window" required>
+        </form>
+    </div>
+    <script data-main="js/app" src="js/require.js"></script>
+    <!--script src="https://simple-email-optimization.onrender.com/customactivity.js"></script--> 
+    <!--  Custom activity script -->
+</body>
 </html>
