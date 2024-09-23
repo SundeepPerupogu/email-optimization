@@ -1,32 +1,35 @@
 {
   "workflowApiVersion": "1.1",
   "metaData": {
-    "icon": "icon.png",
+    "icon": "icon.jpg",
     "category": "message"
   },
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "sundeep-1",
-      "description": "Calculates time difference between current and future time in user's timezone"
+      "name": "Sundeep Custom Activity",
+      "description": "Calculates the next available send time based on the user's time zone."
     }
   },
   "arguments": {
     "execute": {
       "inArguments": [
         {
-          "timezoneOffset": "{{Event.DE.timezoneOffset}}"
+          "timezoneOffset": "{{Event.CustomActivitySendableDE.timezoneOffset}}"
         },
         {
-          "triggerTime": "08:00"
+          "start_window": "{{Event.CustomActivitySendableDE.start_window}}"
         },
         {
-          "daytype": "weekday"
+          "end_window": "{{Event.CustomActivitySendableDE.end_window}}"
+        },
+        {
+          "daytype": "{{Event.CustomActivitySendableDE.daytype}}"
         }
       ],
       "outArguments": [
         {
-          "result": "2090"
+          "nextSendTime": "default"
         }
       ],
       "url": "https://sundeep-1.onrender.com/execute",
@@ -35,11 +38,56 @@
       "header": "",
       "format": "json",
       "useJwt": false,
-      "timeout": 10000
+      "timeout": 20000,
+      "retryCount": 1,
+      "retryDelay": 10000,
+      "concurrentRequests": 10
+    }
+  },
+  "schema": {
+    "arguments": {
+      "execute": {
+        "inArguments": [
+          {
+            "timezoneOffset": {
+              "dataType": "Text",
+              "isRequired": true,
+              "direction": "in"
+            },
+            "daytype": {
+              "dataType": "Text",
+              "isRequired": true,
+              "direction": "in"
+            },
+            "start_window": {
+              "dataType": "Text",
+              "isRequired": true,
+              "direction": "in"
+            },
+            "end_window": {
+              "dataType": "Text",
+              "isRequired": true,
+              "direction": "in"
+            }
+          }
+        ],
+        "outArguments": [
+          {
+            "nextSendTime": {
+              "dataType": "Text",
+              "isRequired": false,
+              "isNullable": true,
+              "direction": "out",
+              "readOnly": false,
+              "access": "Visible"
+            }
+          }
+        ]
+      }
     }
   },
   "configurationArguments": {
-    "applicationExtensionKey": "cfaaed29-c9a5-470b-9580-cf5e344567a2",
+    "applicationExtensionKey": "your-extension-key",
     "publish": {
       "url": "https://sundeep-1.onrender.com/publish",
       "verb": "POST",
@@ -64,8 +112,9 @@
   },
   "userInterfaces": {
     "configModal": {
-      "height": 200,
-      "width": 300,
+      "fullscreen": true,
+      "height": 300,
+      "width": 800,
       "url": "https://sundeep-1.onrender.com/index.html"
     }
   }
