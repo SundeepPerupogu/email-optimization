@@ -80,6 +80,14 @@
               "direction": "out",
               "readOnly": false,
               "access": "Visible"
+            },
+            "nextSendTimeDateType": {
+              "dataType": "Date",
+              "isRequired": false,
+              "isNullable": true,
+              "direction": "out",
+              "readOnly": false,
+              "access": "Visible"
             }
           }
         ]
