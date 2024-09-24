@@ -218,7 +218,7 @@ app.post('/execute', (req, res) => {
                         SubscriberKey: req.body.keyValue
                     },
                     values: {
-                        nextSendTime: nextSendTime || "A"
+                        nextSendTime: nextSendTime || "Could not update the field"
                     }
                 }]
             }
