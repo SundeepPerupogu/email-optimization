@@ -27,7 +27,11 @@
           "daytype": "{{Event.CustomActivitySendableDE.daytype}}"
         }
       ],
-      "outArguments": [],
+      "outArguments": [
+        {
+          "nextSendTime": "default"
+        }
+      ],
       "url": "https://sundeep-1.onrender.com/execute",
       "verb": "POST",
       "body": "",
