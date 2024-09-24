@@ -9,6 +9,7 @@ const cors = require('cors'); // Add this line
 //You will need Express.js to handle server requests and the Fuel SDK to interact with Marketing Cloud
 const FuelRest = require('fuel-rest'); // 
 require('dotenv').config();
+const axios = require('axios');
 const app = express();
 const port = process.env.PORT || 3000;
 exports.logExecuteData = [];
