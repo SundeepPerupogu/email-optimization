@@ -27,14 +27,7 @@
           "daytype": "{{Event.CustomActivitySendableDE.daytype}}"
         }
       ],
-      "outArguments": [
-        {
-          "nextSendTime": "default"
-         },
-        {
-          "nextSendTimeDateType": "default"
-        }
-      ],
+      "outArguments": [],
       "url": "https://sundeep-1.onrender.com/execute",
       "verb": "POST",
       "body": "",
@@ -78,14 +71,6 @@
           {
             "nextSendTime": {
               "dataType": "Text",
-              "isRequired": false,
-              "isNullable": true,
-              "direction": "out",
-              "readOnly": false,
-              "access": "Visible"
-            },
-            "nextSendTimeDateType": {
-              "dataType": "Date",
               "isRequired": false,
               "isNullable": true,
               "direction": "out",
