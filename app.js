@@ -154,7 +154,8 @@ app.post('/execute', (req, res) => {
 	console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
 	console.log('{"result":{ "nextSendTime" : ',nextSendTime,',"nextSendTimeDateType":',nextSendTime,' }}');
 	//return res.status(200).json({ "nextSendTime" : nextSendTime });     
-	//return res.status(200).json({result:{ nextSendTime : nextSendTime }});    
+	//return res.status(200).json({result:{ nextSendTime : nextSendTime }});  
+	res.setHeader('Content-Type', 'application/json');    
 	return res.status(200).send(JSON.stringify({result:{ nextSendTime : nextSendTime }})); 
 	//return res.status(200).json({"result":{ "nextSendTime" : nextSendTime,"nextSendTimeDateType":nextSendTime }});    
     	 //  nextSendTime: nextSendTime,  // Send as an ISO string for consistency
