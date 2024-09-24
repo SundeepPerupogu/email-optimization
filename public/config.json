@@ -29,9 +29,7 @@
       ],
       "outArguments": [
         {
-          "result": {
             "nextSendTime": "default"
-          }
         }
       ],
       "url": "https://sundeep-1.onrender.com/execute",
@@ -75,7 +73,6 @@
         ],
         "outArguments": [
           {
-            "result": {
               "nextSendTime": {
                 "dataType": "Text",
                 "isRequired": false,
@@ -84,7 +81,7 @@
                 "readOnly": false,
                 "access": "Visible"
               }  
-            }
+          
           }
         ]
       }
