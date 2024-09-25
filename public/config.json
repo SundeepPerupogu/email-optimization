@@ -30,6 +30,9 @@
       "outArguments": [
         {
             "nextSendTime": "default"
+        },
+        {
+            "nextSendTimeDateType": null
         }
       ],
       "url": "https://sundeep-1.onrender.com/execute",
@@ -80,8 +83,15 @@
                 "direction": "out",
                 "readOnly": false,
                 "access": "Visible"
-              }  
-          
+              },
+              "nextSendTimeDateType": {
+                "dataType": "DateTime",
+                "isRequired": false,
+                "isNullable": true,
+                "direction": "out",
+                "readOnly": false,
+                "access": "Visible"
+              }            
           }
         ]
       }
