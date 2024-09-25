@@ -30,7 +30,7 @@
       "outArguments": [
         {
           “result”: {
-             "nextSendTime": "default"
+             "nextSendTime": "default",
              "nextSendTimeDateType": null
               }
         }
