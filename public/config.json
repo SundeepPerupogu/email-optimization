@@ -29,10 +29,8 @@
       ],
       "outArguments": [
         {
-          "result": {
-             "nextSendTime": "default",
-             "nextSendTimeDateType": null
-              }
+          "nextSendTime": "default",
+          "nextSendTimeDateType": null
         }
       ],
       "url": "https://sundeep-1.onrender.com/execute",
