@@ -29,8 +29,7 @@
       ],
       "outArguments": [
         {
-          "nextsendTimeDateType": "default",
-          "nextSendTime": "default"
+          "nextSendTime": null
         }
       ],
       "url": "https://sendtimecalculator.onrender.com/execute",
@@ -39,7 +38,11 @@
       "header": "",
       "format": "json",
       "useJwt": false,
+      "timeout": 20000,
       "timeout": 10000
+      "retryCount": 1,
+      "retryDelay": 10000,
+      "concurrentRequests": 10    
     }
   },
   "schema": {
@@ -71,7 +74,18 @@
             }
           }
         ],
-        "outArguments": []
+        "outArguments": [
+          {
+            "nextSendTime": {
+              "dataType": "Date",
+              "isRequired": false,
+              "isNullable": true,
+              "direction": "out",
+              "readOnly": false,
+              "access": "Visible"
+            }
+          }
+        ]
       }
     }
   },
