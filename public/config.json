@@ -15,16 +15,16 @@
     "execute": {
       "inArguments": [
         {
-          "timezoneOffset": "{{Event.userRecords.timezoneOffset}}"
+          "timezoneOffset": "{{Event.userMailSchedulerInputs.timezoneOffset}}"
         },
         {
-          "start_window": "{{Event.userRecords.start_window}}"
+          "daytype": "{{Event.userMailSchedulerInputs.daytype}}"
         },
         {
-          "end_window": "{{Event.userRecords.end_window}}"
+          "start_window": "{{Event.userMailSchedulerInputs.start_window}}"
         },
         {
-          "daytype": "{{Event.userRecords.daytype}}"
+          "end_window": "{{Event.userMailSchedulerInputs.end_window}}"
         }
       ],
       "outArguments": [
@@ -115,8 +115,8 @@
   },
   "userInterfaces": {
     "configModal": {
-      "height": 200,
-      "width": 300,
+      "height": 800,
+      "width": 500,
       "url": "https://sendtimecalculator.onrender.com/index.html"
     }
   }
