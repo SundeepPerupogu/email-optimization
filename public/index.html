@@ -13,25 +13,38 @@
     <script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
 
 </head>
-<body>
-    <div id="container">
-        <form id="config-form">
-            <label for="timezone-offset">Timezone Offset (e.g., +05:30, -04:00):</label>
-            <input type="text" id="timezone-offset" name="timezoneOffset" required>
+<body class="fuel-page fuel-admin-template">
+    <div id="body">
+        <div class="page-loader loader" data-initialize="loader"></div>
+    </div>
+    <div class="mc-app-preloader"></div>
+    <div class="mc-app-imh-preloader"></div>
+    
+    <div id="container" style="margin: 50px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 90%; max-width: 500px;">
+        <form id="config-form" style="display: flex; flex-direction: column;">
+            <h2 style="text-align: center; color: #007bff;">Email User Scheduler Configuration</h2>
+            
+            <label for="timezone-offset" style="margin: 10px 0 5px;">Timezone Offset (e.g., +05:30, -04:00):</label>
+            <input type="text" id="timezone-offset" name="timezoneOffset" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
 
-            <label for="day-type">Day Type (weekday/anyday):</label>
-            <input type="text" id="day-type" name="daytype" required>
+            <label for="day-type" style="margin: 10px 0 5px;">Day Type (weekday/anyday):</label>
+            <input type="text" id="day-type" name="daytype" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
 
-            <label for="start-window">Start Window (e.g., 10:00:00Z):</label>
-            <input type="text" id="start-window" name="start_window" required>
+            <label for="start-window" style="margin: 10px 0 5px;">Start Window (e.g., 10:00:00Z):</label>
+            <input type="text" id="start-window" name="start_window" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
 
-            <label for="end-window">End Window (e.g., 14:30:00Z):</label>
-            <input type="text" id="end-window" name="end_window" required>
-
-            <!--button type="submit">Save</button-->
+            <label for="end-window" style="margin: 10px 0 5px;">End Window (e.g., 14:30:00Z):</label>
+            <input type="text" id="end-window" name="end_window" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
         </form>
     </div>
 
+    <script type="text/javascript">
+        window.MC = {};
+        window.MC.options = {
+            logErrors: true
+        };
+    </script>
+    <script src="mc/js/app-start-built.js?v=250.0.25"></script>
     <script data-main="js/app" src="js/require.js"></script>
 </body>
 </html>
