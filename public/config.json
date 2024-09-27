@@ -38,11 +38,10 @@
       "header": "",
       "format": "json",
       "useJwt": false,
-      "timeout": 20000,
-      "timeout": 10000
+      "timeout": 10000,
       "retryCount": 1,
       "retryDelay": 10000,
-      "concurrentRequests": 10    
+      "concurrentRequests": 10
     }
   },
   "schema": {
