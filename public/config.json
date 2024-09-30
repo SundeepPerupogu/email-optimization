@@ -18,13 +18,13 @@
           "timezoneOffset": "{{Event.userMailSchedulerInputs.timezoneOffset}}"
         },
         {
-          "daytype": "{{Event.userMailSchedulerInputs.daytype}}"
-        },
-        {
           "start_window": "{{Event.userMailSchedulerInputs.start_window}}"
         },
         {
           "end_window": "{{Event.userMailSchedulerInputs.end_window}}"
+        },
+        {
+          "daytype": "{{Event.userMailSchedulerInputs.daytype}}"
         }
       ],
       "outArguments": [
@@ -54,11 +54,6 @@
               "isRequired": true,
               "direction": "in"
             },
-            "daytype": {
-              "dataType": "Text",
-              "isRequired": true,
-              "direction": "in"
-            },
             "start_window": {
               "dataType": "Text",
               "isRequired": true,
@@ -67,6 +62,11 @@
               "access": "Visible"
             },
             "end_window": {
+              "dataType": "Text",
+              "isRequired": true,
+              "direction": "in"
+            },
+            "daytype": {
               "dataType": "Text",
               "isRequired": true,
               "direction": "in"
