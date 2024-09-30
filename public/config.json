@@ -83,7 +83,7 @@
                 "access": "Visible"
               },
               "nextSendTimeDateType": {
-                "dataType": "DateTime",
+                "dataType": "Date",
                 "isRequired": false,
                 "isNullable": true,
                 "direction": "out",
