@@ -128,16 +128,6 @@ app.post('/execute', (req, res) => {
         console.log('After the function call');
 
     // Implement your logic here; for now, just return received data
-   // const response = {
-   //     nextSendTime: new Date().toISOString(), // Placeholder for calculated date
-   //     nextSendTimeDateType: "default"
-   // };
-   // console.log(response);	
-   // return res.status(200).send({
-  //  res.status(200).json({
-  //      success: true,
-   //     data: response
-   // });
 	if (nextSendTime) {
 		// nextSendTime has a value, proceed with your logic here
 		console.log("Next send time is:", nextSendTime);
@@ -153,7 +143,7 @@ app.post('/execute', (req, res) => {
         }
 	console.log("Data type of nextSendTime: ", typeof nextSendTime);
 	console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
-	return res.status(200).json({ "nextSendTime" : nextSendTime });    
+	return res.status(200).json({ "nextSendTime" : nextSendTimeDateType });    
 	//return res.status(200).send(JSON.stringify({
     	 //  nextSendTime: nextSendTime,  // Send as an ISO string for consistency
     	  // nextSendTimeDateType: nextSendTimeDateType.toISOString()
