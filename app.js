@@ -141,16 +141,6 @@ app.post('/execute', (req, res) => {
         console.log('After the function call');
 
     // Implement your logic here; for now, just return received data
-   // const response = {
-   //     nextSendTime: new Date().toISOString(), // Placeholder for calculated date
-   //     nextSendTimeDateType: "default"
-   // };
-   // console.log(response);	
-   // return res.status(200).send({
-  //  res.status(200).json({
-  //      success: true,
-   //     data: response
-   // });
 	if (nextSendTime) {
 		// nextSendTime has a value, proceed with your logic here
 		console.log("Next send time is:", nextSendTime);
