@@ -136,7 +136,7 @@ app.post('/execute', (req, res) => {
 		console.log("Error in input params");
 		nextSendTime = "Error in input params";
     	}
-	const nextSendTimeDateType = new Date(nextSendTime);    
+	const nextSendTimeDateType = new Date(nextSendTime).toISOString();    
 	console.log("Next send time in date time is:", nextSendTimeDateType.toISOString());
 	if (!nextSendTimeDateType) {
             return res.status(400).send(JSON.stringify({ error: "nextSendTimeDateType could not be generated" }));
