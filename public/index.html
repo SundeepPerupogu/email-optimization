@@ -29,6 +29,13 @@
         </form>
     </div>
     <script data-main="js/app" src="js/require.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#calculateButton').on('click', function(event) {
+                activity.calculateNextSendTime(event);
+            });
+        });
+    </script>	
     <!--script src="https://simple-email-optimization.onrender.com/customactivity.js"></script--> 
     <!--  Custom activity script -->
 </body>
