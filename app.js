@@ -105,6 +105,20 @@ function addDays(date, days) {
     return result;
 }
 
+function formatDateToUTC(date) {
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+        timeZone: 'UTC' // Specify UTC timezone
+    };
+    return date.toLocaleString('en-US', options);
+}
+
 
 // POST endpoint to execute the custom activity logic
 app.post('/execute', (req, res) => {
@@ -157,7 +171,10 @@ app.post('/execute', (req, res) => {
 	//return res.status(200).json({result:{ nextSendTime : nextSendTime }});  
 	res.setHeader('Content-Type', 'application/json');    
 	//return res.status(200).send(JSON.stringify({result:{ nextSendTime : nextSendTime }})); 
-	return res.status(200).json({ "nextSendTime" : nextSendTimeDateType });    
+	const dateToSend = new Date(nextSendTime); // Adjust to your desired date
+	const formattedDate = formatDateToUTC(dateToSend);
+	console.log("Date being sent:",formattedDate);     
+	return res.status(200).json({ "nextSendTime" : formattedDate });    
     	 //  nextSendTime: nextSendTime,  // Send as an ISO string for consistency
     	  // nextSendTimeDateType: nextSendTimeDateType.toISOString()
 	//}));    
