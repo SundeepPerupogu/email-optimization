@@ -37,22 +37,22 @@ define(['postmonger'], function (Postmonger) {
 
         $.each(inArguments, function (index, inArgument) {
             if (inArgument.timezoneOffset) {
-                $('#timezoneOffset').val(inArgument.timezoneOffset);
+                $('#timezone-offset').val(inArgument.timezoneOffset);
 		console.log(JSON.stringify(inArgument.timezoneOffset));
             }
 		
             if (inArgument.start_window) {
-                $('#start_window').val(inArgument.start_window);
+                $('#start-window').val(inArgument.start_window);
 		console.log(JSON.stringify(inArgument.start_window));
             }
 
             if (inArgument.end_window) {
-                $('#end_window').val(inArgument.end_window);
+                $('#end-window').val(inArgument.end_window);
 		console.log(JSON.stringify(inArgument.end_window));
             }
 	
 	    if (inArgument.daytype) {
-                $('#daytype').val(inArgument.daytype);
+                $('#day-type').val(inArgument.daytype);
 		console.log(JSON.stringify(inArgument.daytype));
             }
         });
@@ -97,10 +97,10 @@ define(['postmonger'], function (Postmonger) {
     }
 
     function save() {
-        var timezoneOffset = $('#timezoneOffset').val();
-        var start_window = $('#start_window').val();
-        var end_window = $('#end_window').val();
-        var daytype = $('#daytype').val();
+        var timezoneOffset = $('#timezone-offset').val();
+        var start_window = $('#start-window').val();
+        var end_window = $('#end-window').val();
+        var daytype = $('#day-type').val();
 	console.log(`${payload}`);
 	console.log(`Start save function`);
 
