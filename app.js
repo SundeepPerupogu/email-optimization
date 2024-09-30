@@ -73,7 +73,7 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
 	    nextSendDateTime = addDays(nextSendDateTime, 1);
 	}
     }
-    nextSendDateTime = addDays(nextSendDateTime, 2);
+    //nextSendDateTime = addDays(nextSendDateTime, 2);
     console.log(`Final nextSendDateTime`,nextSendDateTime);
     return nextSendDateTime.toISOString();
 }
