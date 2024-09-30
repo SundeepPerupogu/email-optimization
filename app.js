@@ -54,11 +54,11 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
     console.log(startDateTimeUTC);
     console.log(endDateTimeUTC);
     let nextSendDateTime = null;
-    console.log(nextSendDateTime);
+    console.log('current UTC :',currentUTC);
 
     if (currentUTC <= startDateTimeUTC) {
 	nextSendDateTime = startDateTimeUTC;
-        console.log(nextSendDateTime);
+        console.log('startDateTimeUTC : ',nextSendDateTime);
     	console.log(`currentUTC <= startDateTimeUTC`);
     } else {
 	nextSendDateTime = addDays(startDateTimeUTC, 1);
