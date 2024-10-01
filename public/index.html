@@ -6,7 +6,18 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
-
+    <style>
+        .time-selector {
+            display: flex;
+            gap: 10px; /* Space between hour and minute dropdowns */
+        }
+        select {
+            width: 250px; /* Fixed width for dropdowns */
+            padding: 5px; /* Padding for better touch targets */
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+    </style>
 </head>
 <body class="fuel-page fuel-admin-template">
     <div id="body">
