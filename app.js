@@ -112,10 +112,11 @@ app.post('/execute', (req, res) => {
     //const { timezoneOffset, start_window, end_window, daytype } = req.body;
     try {
         console.log(req.body);[0]
-        const { timezoneOffset } = req.body.inArguments[0];
-        const { start_window } = req.body.inArguments[1];
-        const { end_window } = req.body.inArguments[2];
-        const { daytype } = req.body.inArguments[3];
+	const { timezoneOffset, daytype, start_window, end_window } = req.body.inArguments[0];
+        //const { timezoneOffset } = req.body.inArguments[0];
+        //const { start_window } = req.body.inArguments[1];
+        //const { end_window } = req.body.inArguments[2];
+        //const { daytype } = req.body.inArguments[3];
 	const now = new Date();
 	let nextSendTime = now.toLocaleString();
         console.log('timezoneOffset is',timezoneOffset);
