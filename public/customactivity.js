@@ -138,7 +138,7 @@ function save() {
 
     // Mark the metaData as configured
     payload['metaData'].isConfigured = true;
-    console.log(`metaData configured`,timezoneOffset);
+    console.log(`metaData configured`,payload);
     console.log("eventDefKey :", eventDefinitionKey);
     // Trigger the updateActivity event with the updated payload
     connection.trigger('updateActivity', payload);
