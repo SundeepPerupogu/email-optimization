@@ -46,10 +46,10 @@ function initialize(data) {
 
     // Iterate through each inArgument to populate the form
     $.each(inArguments, function (index, inArgument) {
-        if (inArgument.timezoneOffset) {
-            $('#timezone-offset').val(inArgument.timezoneOffset); // Ensure the ID matches the input in index.html
-            console.log(JSON.stringify(inArgument.timezoneOffset));
-        }
+       // if (inArgument.timezoneOffset) {
+        //    $('#timezone-offset').val(inArgument.timezoneOffset); // Ensure the ID matches the input in index.html
+        //    console.log(JSON.stringify(inArgument.timezoneOffset));
+        //}
 
         if (inArgument.start_window) {
             const startWindowParts = inArgument.start_window.split(':');
@@ -118,7 +118,7 @@ function initialize(data) {
 
 function save() {
     // Fetch values from the user-filled form
-    var timezoneOffset = $('#timezone-offset').val();
+  //  var timezoneOffset = $('#timezone-offset').val();
     var startHour = $('#start-hour').val();
     var startMinute = $('#start-minute').val();
     var endHour = $('#end-hour').val();
