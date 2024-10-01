@@ -21,7 +21,7 @@
           "start_window": ""
         },
         {
-          "end_window": "{{Event.triggers[0].metaData.eventDefinitionId.end_window}}"
+          "end_window": ""
         },
         {
           "daytype": "{{triggers[0].metaData.eventDefinitionId.daytype}}"
