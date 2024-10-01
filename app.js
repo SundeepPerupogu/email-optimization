@@ -24,14 +24,15 @@ activity.initialize = function() {
 };
 
 activity.calculateNextSendTime = function(event) {
-    event.preventDefault();
+    //event.preventDefault();
 
     console.log(`Started executing function: calculateNextSendTime`);
     var daytype = $('#daytype').val();
     var timezoneOffset = $('#timezoneOffset').val();
     var startWindow = $('#start_window').val();
     var endWindow = $('#end_window').val();
-
+    console.log(daytype,timezoneOffset,startWindow);
+    
     // Validation
     if (!validateTimeFormat(startWindow) || !validateTimeFormat(endWindow) || startWindow === endWindow) {
         alert('Invalid input. Please check the time format and ensure start and end windows are different.');
