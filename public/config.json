@@ -15,15 +15,9 @@
     "execute": {
       "inArguments": [
         {
-          "timezoneOffset": "{{Event.userMailSchedulerInputs.timezoneOffset}}"
-        },
-        {
-          "start_window": ""
-        },
-        {
-          "end_window": ""
-        },
-        {
+          "timezoneOffset": "{{Event.userMailSchedulerInputs.timezoneOffset}}",
+          "start_window": "",
+          "end_window": "",
           "daytype": "{{triggers[0].metaData.eventDefinitionId.daytype}}"
         }
       ],
