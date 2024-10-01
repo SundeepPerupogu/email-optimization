@@ -2,13 +2,14 @@ define(['postmonger'], function (Postmonger) {
     'use strict';
 
     var connection = new Postmonger.Session();
+    var eventDefinitionKey;
     var payload = {};
     var steps = [
         { label: 'Configure Activity', key: 'step1' }
     ];
     var currentStep = steps[0].key;
 
-	console.log(`Starting customactivity.js`);
+    console.log(`Starting customactivity.js`);
 
     connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
@@ -16,7 +17,12 @@ define(['postmonger'], function (Postmonger) {
     connection.on('clickedNext', onClickedNext);
     connection.on('clickedBack', onClickedBack);
     connection.on('gotoStep', onGotoStep);
+    connection.trigger('requestInteraction');
 
+    connection.on('requestedInteraction', function(settings){
+        console.log("settings", settings);
+        eventDefinitionKey = settings.triggers[0].metaData.eventDefinitionKey;
+    });
 	$(window).ready(onRender);
 	console.log(`postmonger is ready on render`);
 
@@ -133,7 +139,7 @@ function save() {
     // Mark the metaData as configured
     payload['metaData'].isConfigured = true;
     console.log(`metaData configured`);
-
+    console.log("eventDefKey :", eventDefinitionKey);
     // Trigger the updateActivity event with the updated payload
     connection.trigger('updateActivity', payload);
     }
