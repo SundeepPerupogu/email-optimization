@@ -110,30 +110,37 @@ function initialize(data) {
 	console.log(`View step`);
     }
 
-    function save() {
-        var timezoneOffset = $('#timezone-offset').val();
-        var start_window = $('#start-window').val();
-        var end_window = $('#end-window').val();
-        var daytype = $('#day-type').val();
-	console.log(`${payload}`);
-	console.log(`Start save function`);
+function save() {
+    // Fetch values from the user-filled form
+    var timezoneOffset = $('#timezone-offset').val();
+    var startHour = $('#start-hour').val();
+    var startMinute = $('#start-minute').val();
+    var endHour = $('#end-hour').val();
+    var endMinute = $('#end-minute').val();
+    var daytype = $('#day-type').val();
 
-        payload['arguments'].inArguments = [{
-            "timezoneOffset": timezoneOffset,
-            "start_window": start_window,
-            "end_window": end_window,
-            "daytype": daytype
-        }];
+    console.log(`Payload before saving: ${JSON.stringify(payload)}`);
+    console.log(`Start save function`);
 
-        payload['metaData'].isConfigured = true;
-		console.log(`metaData configured`);
+    // Set the inArguments with the user input values
+    payload['arguments'].execute.inArguments = [{
+        "timezoneOffset": timezoneOffset,
+        "start_window": `${startHour}:${startMinute}:00Z`,
+        "end_window": `${endHour}:${endMinute}:00Z`,
+        "daytype": daytype
+    }];
 
-        connection.trigger('updateActivity', payload);
+    // Mark the metaData as configured
+    payload['metaData'].isConfigured = true;
+    console.log(`metaData configured`);
+
+    // Trigger the updateActivity event with the updated payload
+    connection.trigger('updateActivity', payload);
     }
 
+    // Ensure to return the necessary methods if required
     return {
-	//console.log('Returning..');
-	//console.log(JSON.stringify(payload));
-        // Optionally expose methods or properties if needed
+        save: save
     };
+
 });
