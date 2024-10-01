@@ -15,7 +15,6 @@
     "execute": {
       "inArguments": [
         {
-          "timezoneOffset": "",
           "start_window": "",
           "end_window": "",
           "daytype": ""
@@ -43,11 +42,6 @@
       "execute": {
         "inArguments": [
           {
-            "timezoneOffset": {
-              "dataType": "Text",
-              "isRequired": true,
-              "direction": "in"
-            },
             "start_window": {
               "dataType": "Text",
               "isRequired": true,
