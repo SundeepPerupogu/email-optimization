@@ -130,7 +130,7 @@ function save() {
 
     // Set the inArguments with the user input values
     payload['arguments'].execute.inArguments = [{
-        "timezoneOffset": timezoneOffset,
+        "timezoneOffset": "{{Event." + eventDefinitionKey + '."timezoneOffset"}}',
         "start_window": `${startHour}:${startMinute}:00Z`,
         "end_window": `${endHour}:${endMinute}:00Z`,
         "daytype": daytype
@@ -138,7 +138,7 @@ function save() {
 
     // Mark the metaData as configured
     payload['metaData'].isConfigured = true;
-    console.log(`metaData configured`);
+    console.log(`metaData configured`,timezoneOffset);
     console.log("eventDefKey :", eventDefinitionKey);
     // Trigger the updateActivity event with the updated payload
     connection.trigger('updateActivity', payload);
