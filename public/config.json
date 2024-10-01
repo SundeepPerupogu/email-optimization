@@ -18,13 +18,13 @@
           "timezoneOffset": "{{Event.userMailSchedulerInputs.timezoneOffset}}"
         },
         {
-          "start_window": "{{Event.userMailSchedulerInputs.start_window}}"
+          "start_window": ""
         },
         {
-          "end_window": "{{Event.userMailSchedulerInputs.end_window}}"
+          "end_window": "{{Event.triggers[0].metaData.eventDefinitionId.end_window}}"
         },
         {
-          "daytype": "{{Event.userMailSchedulerInputs.daytype}}"
+          "daytype": "{{triggers[0].metaData.eventDefinitionId.daytype}}"
         }
       ],
       "outArguments": [
