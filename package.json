@@ -1,16 +1,19 @@
 {
-  "name": "custom-activity",
-  "version": "1.0.0",
-  "description": "Custom Activity for Salesforce Marketing Cloud Journey Builder",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js"
-  },
-  "dependencies": {
-    "express": "^4.17.1",
-    "cors":"^2.8.5",
-    "body-parser": "^1.19.0"
-  },
-  "author": "Sundeep",
-  "license": "ISC"
+    "name": "custom-activity",
+    "version": "1.0.0",
+    "description": "A custom activity for Journey Builder to determine the next available send time based on user timezone and preferred window.",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "test": "jest"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "cors":"^2.8.5",
+        "body-parser": "^1.19.0",
+        "moment": "^2.29.1",
+        "moment-timezone": "^0.5.34"
+    },
+    "author": "Sundeep Perupogu",
+    "license": "ISC"
 }
