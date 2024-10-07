@@ -1,132 +1,217 @@
-const express = require('express');
-//const convert = require(./public/index.html);
-//const convert=convertToUTC();
-const bodyParser = require('body-parser');
-const cors = require('cors'); // Add this line
-const app = express();
-const port = process.env.PORT || 3000;
+// Import required modules
+const express = require('express'); // Web framework for Node.js
+const bodyParser = require('body-parser'); // Middleware for parsing request bodies
+const app = express(); // Create an Express application
+const path = require('path'); // Module for working with file and directory paths
+const cors = require('cors'); // Middleware for enabling CORS (Cross-Origin Resource Sharing)
 
-app.use(cors()); // Add this line
+// Enable CORS to allow resource sharing across different origins
+app.use(cors()); 
+
+// Middleware to parse JSON request bodies
 app.use(bodyParser.json());
-app.use(express.static('public'));  // To serve index.html, customactivity.js, etc.
+// Serve static files from the 'public' directory
+app.use(express.static('public')); 
 
-// Utility function to log and send errors
-function handleError(res, error) {
-    console.error(error);
-    res.status(500).send({ error: 'Internal Server Error' });
+// Middleware to parse URL-encoded request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serve static files from the 'public' directory again, using an absolute path
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Initialize an object to hold activity-related methods
+var activity = {};
+
+// Function to initialize the activity
+activity.initialize = function() {
+    connection.trigger('ready'); // Trigger an event when the connection is ready
+    // Attach event handler for form submission (commented out for now)
+    // $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
+    console.log(`Started Initialize in activity.js`); // Log initialization
+};
+
+// Function to calculate the next send time based on user inputs
+activity.calculateNextSendTime = function(event) {
+    // Prevent default form submission behavior (commented out for now)
+    // event.preventDefault();
+
+    console.log(`Started executing function: calculateNextSendTime`); // Log function start
+    // Get input values from the form
+    var daytype = $('#daytype').val();
+    var timezoneOffset = $('#timezoneOffset').val();
+    var startWindow = $('#start_window').val();
+    var endWindow = $('#end_window').val();
+    console.log(daytype, timezoneOffset, startWindow);
+    
+    // Validate input time formats and ensure start and end times are different
+    if (!validateTimeFormat(startWindow) || !validateTimeFormat(endWindow) || startWindow === endWindow) {
+        alert('Invalid input. Please check the time format and ensure start and end windows are different.'); // Alert user
+        return; // Exit function on validation failure
+    }
+
+    // Calculate the next send time using the provided inputs
+    var nextSendTime = calculateNextSendTime(timezoneOffset, daytype, startWindow, endWindow);
+    // Display the next send time result
+    $('#result').text('Next Send Time: ' + nextSendTime);
+};
+
+// Function to calculate the next send time based on various parameters
+function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_window='11:00:00Z', end_window='12:00:00Z') {
+    const currentUTC = new Date(); // Get current UTC time
+    // Split the timezone offset into hours and minutes
+    const offsetParts = timezoneOffset.split('.');
+    const offsetHours = parseInt(offsetParts[0], 10);
+    const offsetMinutes = parseInt(offsetParts[1] || "0", 10);
+    // Calculate total offset in minutes
+    const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -(offsetMinutes * 6) : (offsetMinutes * 6));
+    console.log(`Started function calculateNextSendTime`); // Log function start
+
+    // Combine current date with start and end times
+    const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
+    const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
+    console.log('startDateTimeUTC is', startDateTimeUTC);
+    console.log('endDateTimeUTC is', endDateTimeUTC);
+
+    let nextSendDateTime = null; // Variable to hold the next send date/time
+    console.log('nextSendDateTime is ', nextSendDateTime);
+
+    // Determine the next send time based on current time and start time
+    if (currentUTC <= startDateTimeUTC) {
+        nextSendDateTime = startDateTimeUTC; // If current time is before start time
+        console.log(`currentUTC <= startDateTimeUTC`);
+    } else {
+        nextSendDateTime = addDays(startDateTimeUTC, 1); // Move to the next day
+        console.log(`currentUTC > startDateTimeUTC`);
+    }
+
+    // Adjust the next send time if it's a weekday
+    if (daytype === 'weekday') {
+        // Loop until nextSendDateTime is not a weekend (Saturday or Sunday)
+        while (nextSendDateTime.getUTCDay() === 0 || nextSendDateTime.getUTCDay() === 6) {
+            console.log(`As daytype === weekday`);
+            console.log(nextSendDateTime.getUTCDay());
+            nextSendDateTime = addDays(nextSendDateTime, 1); // Move to next day
+        }
+    }
+    console.log(`Final nextSendDateTime`, nextSendDateTime);
+    return nextSendDateTime.toISOString(); // Return in ISO format
 }
 
-function convertToUTC(userTimeZoneOffset = "-09:30", triggerTime = "08:00", dayType = "Weekday") {
-    // Convert time zone offset to minutes
-    let offsetSign = userTimeZoneOffset[0] === '+' ? 1 : -1;
-    let offsetParts = userTimeZoneOffset.substring(1).split(':');
-    let offsetMinutes = offsetSign * (parseInt(offsetParts[0]) * 60 + parseInt(offsetParts[1]));
-  
-    // Get current date
-    let now = new Date();
-  
-    // Parse the trigger time
-    let triggerParts = triggerTime.split(':');
-    let triggerHours = parseInt(triggerParts[0]);
-    let triggerMinutes = parseInt(triggerParts[1]);
-  
-    // Create a Date object for the trigger time today
-    let triggerDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), triggerHours, triggerMinutes);
-  
-    // Adjust trigger time to UTC
-    triggerDate.setMinutes(triggerDate.getMinutes() - offsetMinutes);
-  
-    // If the trigger time has already passed today, set it to the same time tomorrow
-    if (dayType === 'weekday') {
-      while (triggerDate.getDay() === 0 || triggerDate.getDay() === 6) {
-        triggerDate.setDate(triggerDate.getDate() + 1);
-      }
+// Helper function to combine a date with a time string
+function combineDateTime(date, time, offsetTotalMinutes) {
+    // Validate time format
+    if (!time || typeof time !== 'string' || !time.includes(':')) {
+        // Handle the error: either throw an error or return a default date
+        const defdate = new Date(date);    
+        return defdate;    
     }
-  
-    // Format the UTC trigger time
-    let utcHours = String(triggerDate.getUTCHours()).padStart(2, '0');
-    let utcMinutes = String(triggerDate.getUTCMinutes()).padStart(2, '0');
-    let utcTime = `${utcHours}:${utcMinutes}`;
-  
-    // This part is for browsers and would not be used in Node.js
-    // Since we don't have document object in Node.js, we can comment it out.
-    // document.getElementById("result").innerText = `Next trigger time in UTC: ${utcTime} and Date would be ${triggerDate.toUTCString()}`;
-  
-    // You can return the formatted UTC time for further use in your Node.js application
-    return { utcTime, triggerDate };
-  }
-  
-  // Example usage in Node.js
-  const result = convertToUTC();
-  console.log(`Next trigger time in UTC: ${result.utcTime} and Date would be ${result.triggerDate.toUTCString()}`);
-  
+    // Split the time into hours, minutes, and seconds
+    const [hours, minutes, seconds] = time.split(':');
+    const combinedDateTime = new Date(date.getTime()); // Create a new Date object
+    console.log(`${hours} ${minutes} ${seconds}`);
+    console.log(`Start function combineDateTime ${combinedDateTime}`);
+    // Set UTC hours considering the offset
+    combinedDateTime.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
+    console.log(`End function setUTCHours ${combinedDateTime}`);
+    return combinedDateTime; // Return the combined date/time
+}
 
+// Helper function to add a specified number of days to a date
+function addDays(date, days) {
+    const result = new Date(date); // Create a copy of the date
+    console.log(result);
+    result.setUTCDate(result.getUTCDate() + days); // Add days
+    console.log(result.getUTCDate());
+    console.log(result);
+    return result; // Return the modified date
+}
+
+// POST endpoint to execute the custom activity logic
 app.post('/execute', (req, res) => {
     try {
-	console.log(JSON.stringify(req.body));
-	    
-        const inArguments = req.body.inArguments && req.body.inArguments[0];
-        if (!inArguments) {
-            throw new Error('inArguments missing or invalid');
+        // Destructure input arguments from the request body
+        const { timezoneOffset, daytype, start_window, end_window } = req.body.inArguments[0];
+        const now = new Date(); // Get current date and time
+        let nextSendTime = now.toLocaleString(); // Initialize nextSendTime with current time
+        console.log('timezoneOffset is', timezoneOffset);
+        console.log('daytype is', daytype);
+        console.log('start_window', start_window);
+        console.log('end_window', end_window);
+        // Calculate the next send time based on the provided inputs
+        nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
+        console.log('After the calculateNextSendTime function call');
+
+        // Check if nextSendTime is valid
+        if (nextSendTime) {
+            console.log("Next send time is:", nextSendTime); // Log the result
+        } else {
+            console.log("Error in input params"); // Log error if invalid
+            nextSendTime = "Error in input params"; // Set error message
         }
-	console.log('After validating inArguments');
-        const timezoneOffset = inArguments.timezoneOffset;
-        const triggerTime = inArguments.triggerTime;
-        const daytype = inArguments.daytype;
-    	//let result ;
-
-        if (!timezoneOffset || !triggerTime || !daytype) {
-            throw new Error('Missing required arguments: daytype or triggerTime or timezoneOffset');
+        
+        const nextSendTimeDateType = new Date(nextSendTime); // Convert nextSendTime to Date object    
+        console.log("Next send time in date time is:", nextSendTimeDateType.toISOString());
+        
+        // Check if nextSendTimeDateType is valid
+        if (!nextSendTimeDateType) {
+            return res.status(400).send(JSON.stringify({ error: "nextSendTimeDateType could not be generated" }));
         }
-
-	//console.log('Finding the time difference');
-      //  const currentUtcTime = new Date().toISOString().split('T')[1].split('.')[0]; // Current UTC time in HH:MM:SS
-       // const futureTime = new Date(`1970-01-01T${timezoneOffset}Z`);
-        //const currentTime = new Date(`1970-01-01T${currentUtcTime}Z`);
-
-        //const timeDifference = (futureTime - currentTime) / 1000; // Difference in seconds
-      //  console.log(JSON.stringify(res.body));
-        let result = convertToUTC(timezoneOffset,triggerTime,daytype);
-        console.log(JSON.stringify(result));
-
-        res.json(result.triggerDate);
-       // res.json({ result: result.toString() });
-       //     console.log('Response at execute in app.js ..');
-	      //  console.log(JSON.stringify(res));
-
+        
+        console.log("Data type of nextSendTime: ", typeof nextSendTime);
+        console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
+        
+        // Send the calculated next send time as a JSON response
+        return res.status(200).json({ "nextSendTime": nextSendTime });    
     } catch (error) {
-        handleError(res, error);
+        console.error('Error in /execute:', error); // Log the error
+        res.status(500).json({ error: error.message }); // Send error response
     }
+    console.log(res); // Log the response object
 });
 
+// POST endpoint for publishing
 app.post('/publish', (req, res) => {
     try {
-	console.log(`publishing..`);							
-        res.sendStatus(200);
+        console.log(`published..`); // Log publish action
+        res.sendStatus(200); // Respond with 200 OK
     } catch (error) {
-        handleError(res, error);
+        handleError(res, error); // Handle any errors
     }
 });
 
+// POST endpoint for validation
 app.post('/validate', (req, res) => {
     try {
-	    console.log(`Validated`);
-	    console.log(JSON.stringify(req.body));
-	    res.sendStatus(200);
-     } catch (error) {
-         handleError(res, error);
-     }
-});
-
-app.post('/stop', (req, res) => {
-    try {
-	console.log(`Stopping`);
-        res.sendStatus(200);
+        console.log(`Validated`); // Log validation action
+        console.log(JSON.stringify(req.body)); // Log request body
+        res.sendStatus(200); // Respond with 200 OK
     } catch (error) {
-        handleError(res, error);
+        handleError(res, error); // Handle any errors
     }
 });
 
-app.listen(port, () => {
-    console.log(`Custom Activity running on port ${port}`);
+// POST endpoint for saving data
+app.post('/save', (req, res) => {
+    try {
+        console.log(`Saving ..`); // Log saving action
+        res.sendStatus(200); // Respond with 200 OK
+    } catch (error) {
+        handleError(res, error); // Handle any errors
+    }
+});
+
+// POST endpoint for stopping an activity
+app.post('/stop', (req, res) => {
+    try {
+        console.log(`Stopped`); // Log stop action
+        res.sendStatus(200); // Respond with 200 OK
+    } catch (error) {
+        handleError(res, error); // Handle any errors
+    }
+});
+
+// Server configuration
+const PORT = process.env.PORT || 3000; // Set port from environment variable or default to 3000
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`); // Log server start
 });
