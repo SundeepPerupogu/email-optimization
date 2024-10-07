@@ -159,7 +159,7 @@ app.post('/execute', (req, res) => {
         
         console.log("Data type of nextSendTime: ", typeof nextSendTime);
         console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
-        console.log("eventDefinitionKey : ", eventDefinitionKey);
+        //console.log("eventDefinitionKey : ", eventDefinitionKey);
         // Send the calculated next send time as a JSON response
         return res.status(200).json({ "nextSendTime": nextSendTime });    
     } catch (error) {
