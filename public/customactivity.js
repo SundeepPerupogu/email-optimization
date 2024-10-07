@@ -2,7 +2,7 @@ define(['postmonger'], function (Postmonger) {
     'use strict';
 
     var connection = new Postmonger.Session();
-    var eventDefinitionKey;
+    var eventDefinitionKey,eventDefinitionId;
     var payload = {};
     var steps = [
         { label: 'Configure Activity', key: 'step1' }
@@ -22,6 +22,7 @@ define(['postmonger'], function (Postmonger) {
     connection.on('requestedInteraction', function(settings){
         console.log("settings", settings);
         eventDefinitionKey = settings.triggers[0].metaData.eventDefinitionKey;
+	eventDefinitionId = settings.triggers[0].metaData.eventDefinitionId;    
     });
 	$(window).ready(onRender);
 	console.log(`postmonger is ready on render`);
