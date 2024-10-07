@@ -142,6 +142,8 @@ function save() {
     payload['metaData'].isConfigured = true;
     console.log(`metaData configured`,payload);
     console.log("eventDefKey :", eventDefinitionKey);
+    console.log("eventDefinitionId", eventDefinitionId);    
+	
     // Trigger the updateActivity event with the updated payload
     connection.trigger('updateActivity', payload);
     }
