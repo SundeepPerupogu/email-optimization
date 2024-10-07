@@ -2,7 +2,8 @@ define(['postmonger'], function (Postmonger) {
     'use strict';
 
     var connection = new Postmonger.Session();
-    var eventDefinitionKey,eventDefinitionId;
+    var eventDefinitionKey;
+    var eventDefinitionId;
     var payload = {};
     var steps = [
         { label: 'Configure Activity', key: 'step1' }
