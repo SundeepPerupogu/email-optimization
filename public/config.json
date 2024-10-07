@@ -7,7 +7,7 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "User Mail Scheduler",
+      "name": "Mail Scheduler and UpdateDE",
       "description": "Calculates the next available send time based on the user's time zone."
     }
   },
