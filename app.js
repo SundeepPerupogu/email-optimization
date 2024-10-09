@@ -5,7 +5,7 @@ const app = express(); // Create an Express application
 const path = require('path'); // Module for working with file and directory paths
 const cors = require('cors'); // Middleware for enabling CORS (Cross-Origin Resource Sharing)
 //import fetch from 'node-fetch';
-
+let accessToken;
 async function fetchToken() {
     const tokenUrl = 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/v2/token'; // Replace with your actual Authentication Base URI 
 
@@ -29,7 +29,7 @@ async function fetchToken() {
         }
 
         const data = await response.json();
-        const accessToken = data.access_token;
+        accessToken = data.access_token;
 
         console.log('Access Token:', accessToken);
         return accessToken; // Optionally return the token for further use
