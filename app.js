@@ -38,6 +38,37 @@ async function fetchToken() {
     }
 }
 
+async function fetchDataExtensionId(eventDefinitionId) {
+    const dataUrl = `https://mczjnvsmqwr9kd91bfptvyhht3p1.rest.marketingcloudapis.com/interaction/v1/eventDefinitions/${eventDefinitionId}`;
+    try {
+        //const tokenData = await tokenResponse.json();
+        //const accessToken = tokenData.access_token;
+
+        // Fetch the dataExtensionId using the token
+        const dataResponse = await fetch(dataUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!dataResponse.ok) {
+            throw new Error('Failed to fetch data extension');
+        }
+        console.log('Jresponse',dataResponse);
+        const data = await dataResponse.json();
+        console.log('Dresponse',data);
+        const dataExtensionId = data.dataExtensionId;
+
+        console.log('Data Extension ID:', dataExtensionId);
+        return dataExtensionId;
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+}
+
+
 
 // Enable CORS to allow resource sharing across different origins
 app.use(cors()); 
@@ -195,6 +226,9 @@ app.post('/execute', async (req, res) => {
         // Call the function to fetch the token
         await fetchToken();
         console.log('accessToken', accessToken);
+        const did=fetchDataExtensionId(eventDefinitionId);
+        console.log('DataExtension ID: ', did);
+        
         // Calculate the next send time based on the provided inputs
         nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log('After the calculateNextSendTime function call');
