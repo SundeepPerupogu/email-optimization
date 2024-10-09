@@ -167,6 +167,23 @@ app.post('/execute', (req, res) => {
     try {
         // Destructure input arguments from the request body
         const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId } = req.body.inArguments[0];
+        // Function to check for empty fields
+        const checkFields = () => {
+            const fields = { timezoneOffset, daytype, start_window, end_window, eventDefinitionId };
+            for (const [key, value] of Object.entries(fields)) {
+                if (!value) {
+                    console.log('${key} is required and cannot be empty.');
+                    return `${key} is required and cannot be empty.`;
+                }
+            }
+           // return null; // No errors
+        };
+        
+        const errorMessage = checkFields();
+        if (errorMessage) {
+            console.log('required fields cannot be empty.');
+            return res.status(400).json({ error: errorMessage });
+        }
         const now = new Date(); // Get current date and time
         let nextSendTime = now.toLocaleString(); // Initialize nextSendTime with current time
         console.log('timezoneOffset is', timezoneOffset);
