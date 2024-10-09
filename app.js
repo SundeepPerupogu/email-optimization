@@ -34,7 +34,7 @@ async function fetchToken() {
         console.log('Access Token:', accessToken);
         return accessToken; // Optionally return the token for further use
     } catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error at :', error.message);
     }
 }
 
@@ -177,7 +177,7 @@ app.post('/execute', (req, res) => {
 
         // Call the function to fetch the token
         const tokn = fetchToken();
-        console.log('tokn', tokn);
+        console.log('accessToken', accessToken);
         // Calculate the next send time based on the provided inputs
         nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log('After the calculateNextSendTime function call');
