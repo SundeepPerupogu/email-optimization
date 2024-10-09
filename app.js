@@ -4,7 +4,7 @@ const bodyParser = require('body-parser'); // Middleware for parsing request bod
 const app = express(); // Create an Express application
 const path = require('path'); // Module for working with file and directory paths
 const cors = require('cors'); // Middleware for enabling CORS (Cross-Origin Resource Sharing)
-const fetch = require('node-fetch');
+//import fetch from 'node-fetch';
 
 async function fetchToken() {
     const tokenUrl = 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/v2/token'; // Replace with your actual Authentication Base URI 
