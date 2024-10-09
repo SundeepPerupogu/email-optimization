@@ -113,7 +113,7 @@ async function fetchDataExtensionId(eventDefinitionId) {
         console.log('Data Extension ID:', dataExtensionId);
         return dataExtensionId;
     } catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error in fetching the deId:', error.message);
     }
 }
 
@@ -140,7 +140,44 @@ async function fetchKey(dataExtensionId) {
         console.log('key:', Dkey);
         return Dkey;
     } catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error in fetching Key:', error.message);
+    }
+}
+
+async function postData(datetime,subscriberId, key) {
+    const url = `https://mczjnvsmqwr9kd91bfptvyhht3p1.rest.marketingcloudapis.com/hub/v1/dataevents/key:${key}/rowset`;
+
+    const body = [
+        {
+            keys: {
+                Name: subscriberId // You can change this as needed
+            },
+            values: {
+                nextSendTimeDateType: datetime
+            }
+        }
+    ];
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log('Response Data:', data);
+        return data; // Return the response data for further processing
+    } catch (error) {
+        console.error('Error in postData:', error.message);
+        throw error; // Re-throw error for handling by the caller
     }
 }
 
@@ -274,7 +311,8 @@ app.post('/execute', async (req, res) => {
         if (!nextSendTimeDateType) {
             return res.status(400).send(JSON.stringify({ error: "nextSendTimeDateType could not be generated" }));
         }
-        
+        const postDataResponse = postData(nextSendTime,'Samsung',Dkey);
+        console.log('After Updating the DE ', postDataResponse);
         console.log("Data type of nextSendTime: ", typeof nextSendTime);
         console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
         //console.log("eventDefinitionKey : ", eventDefinitionKey);
