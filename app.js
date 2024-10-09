@@ -4,6 +4,40 @@ const bodyParser = require('body-parser'); // Middleware for parsing request bod
 const app = express(); // Create an Express application
 const path = require('path'); // Module for working with file and directory paths
 const cors = require('cors'); // Middleware for enabling CORS (Cross-Origin Resource Sharing)
+const fetch = require('node-fetch');
+
+async function fetchToken() {
+    const tokenUrl = 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/v2/token'; // Replace with your actual Authentication Base URI 
+
+    const tokenBody = {
+        grant_type: 'client_credentials',
+        client_id: 'wpfbokn7hdg18a6i5tymneyh', // Replace with your actual client Id
+        client_secret: 'Ze25LZCAKYlEjuEuQaPMkCsA' // Replace with your actual client secret
+    };
+
+    try {
+        const response = await fetch(tokenUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tokenBody)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch token: ' + response.statusText);
+        }
+
+        const data = await response.json();
+        const accessToken = data.access_token;
+
+        console.log('Access Token:', accessToken);
+        return accessToken; // Optionally return the token for further use
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+}
+
 
 // Enable CORS to allow resource sharing across different origins
 app.use(cors()); 
@@ -126,17 +160,24 @@ function addDays(date, days) {
     return result; // Return the modified date
 }
 
+
+
 // POST endpoint to execute the custom activity logic
 app.post('/execute', (req, res) => {
     try {
         // Destructure input arguments from the request body
-        const { timezoneOffset, daytype, start_window, end_window } = req.body.inArguments[0];
+        const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId } = req.body.inArguments[0];
         const now = new Date(); // Get current date and time
         let nextSendTime = now.toLocaleString(); // Initialize nextSendTime with current time
         console.log('timezoneOffset is', timezoneOffset);
         console.log('daytype is', daytype);
         console.log('start_window', start_window);
         console.log('end_window', end_window);
+        console.log('eventDefinitionId', eventDefinitionId);
+
+        // Call the function to fetch the token
+        const tokn = fetchToken();
+        console.log('tokn', tokn);
         // Calculate the next send time based on the provided inputs
         nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log('After the calculateNextSendTime function call');
