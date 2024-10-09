@@ -172,7 +172,7 @@ app.post('/execute', (req, res) => {
             const fields = { timezoneOffset, daytype, start_window, end_window, eventDefinitionId };
             for (const [key, value] of Object.entries(fields)) {
                 if (!value) {
-                    console.log('${key} is required and cannot be empty.');
+                    console.log(key,' is required and cannot be empty.');
                     return `${key} is required and cannot be empty.`;
                 }
             }
