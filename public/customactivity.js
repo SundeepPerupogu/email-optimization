@@ -12,7 +12,24 @@ define(['postmonger'], function (Postmonger) {
 
     console.log(`Starting customactivity.js`);
 
-    connection.on('initActivity', initialize);
+    //connection.on('initActivity', initialize);
+    connection.on('initActivity', function(data) {
+        // Log all metadata settings
+        console.log('Activity Metadata:', data);
+    
+        // Access specific fields
+        if (data && data.settings) {
+            const { settings } = data;
+            console.log('Event Definition Key:', settings.triggers[0].metaData.eventDefinitionKey);
+            console.log('Event Definition ID:', settings.triggers[0].metaData.eventDefinitionId);
+            console.log('All Settings:', JSON.stringify(settings, null, 2)); // Pretty-print all settings
+        }
+    });
+
+    // Other Postmonger event handlers
+    connection.on('ready', function() {
+        console.log('Postmonger is ready');
+    });	
     connection.on('requestedTokens', onGetTokens);
     connection.on('requestedEndpoints', onGetEndpoints);
     connection.on('clickedNext', onClickedNext);
