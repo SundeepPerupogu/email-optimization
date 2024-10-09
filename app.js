@@ -163,7 +163,7 @@ function addDays(date, days) {
 
 
 // POST endpoint to execute the custom activity logic
-app.post('/execute', (req, res) => {
+app.post('/execute', async (req, res) => {
     try {
         // Destructure input arguments from the request body
         const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId } = req.body.inArguments[0];
@@ -193,7 +193,7 @@ app.post('/execute', (req, res) => {
         console.log('eventDefinitionId', eventDefinitionId);
 
         // Call the function to fetch the token
-        const tokn = fetchToken();
+        await fetchToken();
         console.log('accessToken', accessToken);
         // Calculate the next send time based on the provided inputs
         nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
