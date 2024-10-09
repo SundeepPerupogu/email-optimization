@@ -12,7 +12,8 @@
         "cors":"^2.8.5",
         "body-parser": "^1.19.0",
         "moment": "^2.29.1",
-        "moment-timezone": "^0.5.34"
+        "moment-timezone": "^0.5.34",
+        "node-fetch": "^3.0.0"
     },
     "author": "Sundeep Perupogu",
     "license": "ISC"
