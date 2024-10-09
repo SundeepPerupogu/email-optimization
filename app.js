@@ -4,7 +4,56 @@ const bodyParser = require('body-parser'); // Middleware for parsing request bod
 const app = express(); // Create an Express application
 const path = require('path'); // Module for working with file and directory paths
 const cors = require('cors'); // Middleware for enabling CORS (Cross-Origin Resource Sharing)
-//import fetch from 'node-fetch';
+
+// Enable CORS to allow resource sharing across different origins
+app.use(cors()); 
+
+// Middleware to parse JSON request bodies
+app.use(bodyParser.json());
+// Serve static files from the 'public' directory
+app.use(express.static('public')); 
+
+// Middleware to parse URL-encoded request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serve static files from the 'public' directory again, using an absolute path
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Initialize an object to hold activity-related methods
+var activity = {};
+
+// Function to initialize the activity
+activity.initialize = function() {
+    connection.trigger('ready'); // Trigger an event when the connection is ready
+    // Attach event handler for form submission (commented out for now)
+    // $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
+    console.log(`Started Initialize in activity.js`); // Log initialization
+};
+
+// Function to calculate the next send time based on user inputs
+activity.calculateNextSendTime = function(event) {
+    // Prevent default form submission behavior (commented out for now)
+    // event.preventDefault();
+
+    console.log(`Started executing function: calculateNextSendTime`); // Log function start
+    // Get input values from the form
+    var daytype = $('#daytype').val();
+    var timezoneOffset = $('#timezoneOffset').val();
+    var startWindow = $('#start_window').val();
+    var endWindow = $('#end_window').val();
+    console.log(daytype, timezoneOffset, startWindow);
+    
+    // Validate input time formats and ensure start and end times are different
+    if (!validateTimeFormat(startWindow) || !validateTimeFormat(endWindow) || startWindow === endWindow) {
+        alert('Invalid input. Please check the time format and ensure start and end windows are different.'); // Alert user
+        return; // Exit function on validation failure
+    }
+
+    // Calculate the next send time using the provided inputs
+    var nextSendTime = calculateNextSendTime(timezoneOffset, daytype, startWindow, endWindow);
+    // Display the next send time result
+    $('#result').text('Next Send Time: ' + nextSendTime);
+};
 let accessToken;
 async function fetchToken() {
     const tokenUrl = 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/v2/token'; // Replace with your actual Authentication Base URI 
@@ -56,7 +105,7 @@ async function fetchDataExtensionId(eventDefinitionId) {
         if (!dataResponse.ok) {
             throw new Error('Failed to fetch data extension');
         }
-        console.log('Jresponse',dataResponse);
+        //console.log('Jresponse',dataResponse);
         const data = await dataResponse.json();
         console.log('Dresponse',data);
         const dataExtensionId = data.dataExtensionId;
@@ -68,57 +117,33 @@ async function fetchDataExtensionId(eventDefinitionId) {
     }
 }
 
+async function fetchKey(dataExtensionId) {
+    const dataUrl = `https://mczjnvsmqwr9kd91bfptvyhht3p1.rest.marketingcloudapis.com/data/v1/customobjects/${dataExtensionId}`;
+    try {
+        // Fetch the dataExtensionId using the token
+        const dataResponse = await fetch(dataUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
 
+        if (!dataResponse.ok) {
+            throw new Error('Failed to fetch data extension');
+        }
+        //console.log('Jresponse',dataResponse);
+        const data = await dataResponse.json();
+        console.log('Dresponse',data);
+        const Dkey = data.key;
 
-// Enable CORS to allow resource sharing across different origins
-app.use(cors()); 
-
-// Middleware to parse JSON request bodies
-app.use(bodyParser.json());
-// Serve static files from the 'public' directory
-app.use(express.static('public')); 
-
-// Middleware to parse URL-encoded request bodies
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Serve static files from the 'public' directory again, using an absolute path
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Initialize an object to hold activity-related methods
-var activity = {};
-
-// Function to initialize the activity
-activity.initialize = function() {
-    connection.trigger('ready'); // Trigger an event when the connection is ready
-    // Attach event handler for form submission (commented out for now)
-    // $('#custom-activity-form').on('submit', activity.calculateNextSendTime);
-    console.log(`Started Initialize in activity.js`); // Log initialization
-};
-
-// Function to calculate the next send time based on user inputs
-activity.calculateNextSendTime = function(event) {
-    // Prevent default form submission behavior (commented out for now)
-    // event.preventDefault();
-
-    console.log(`Started executing function: calculateNextSendTime`); // Log function start
-    // Get input values from the form
-    var daytype = $('#daytype').val();
-    var timezoneOffset = $('#timezoneOffset').val();
-    var startWindow = $('#start_window').val();
-    var endWindow = $('#end_window').val();
-    console.log(daytype, timezoneOffset, startWindow);
-    
-    // Validate input time formats and ensure start and end times are different
-    if (!validateTimeFormat(startWindow) || !validateTimeFormat(endWindow) || startWindow === endWindow) {
-        alert('Invalid input. Please check the time format and ensure start and end windows are different.'); // Alert user
-        return; // Exit function on validation failure
+        console.log('key:', Dkey);
+        return Dkey;
+    } catch (error) {
+        console.error('Error:', error.message);
     }
+}
 
-    // Calculate the next send time using the provided inputs
-    var nextSendTime = calculateNextSendTime(timezoneOffset, daytype, startWindow, endWindow);
-    // Display the next send time result
-    $('#result').text('Next Send Time: ' + nextSendTime);
-};
 
 // Function to calculate the next send time based on various parameters
 function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_window='11:00:00Z', end_window='12:00:00Z') {
@@ -226,9 +251,10 @@ app.post('/execute', async (req, res) => {
         // Call the function to fetch the token
         await fetchToken();
         console.log('accessToken', accessToken);
-        const did=fetchDataExtensionId(eventDefinitionId);
+        const did=await fetchDataExtensionId(eventDefinitionId);
         console.log('DataExtension ID: ', did);
-        
+        const Dkey=await fetchKey(did);
+        console.log('key to update DE: ', Dkey);
         // Calculate the next send time based on the provided inputs
         nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log('After the calculateNextSendTime function call');
