@@ -55,7 +55,7 @@ activity.calculateNextSendTime = function(event) {
     $('#result').text('Next Send Time: ' + nextSendTime);
 };
 let accessToken;
-const primeKey;
+let primeKey;
 async function fetchToken() {
     const tokenUrl = 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/v2/token'; // Replace with your actual Authentication Base URI 
 
@@ -106,9 +106,8 @@ async function fetchDataExtensionId(eventDefinitionId) {
         if (!dataResponse.ok) {
             throw new Error('Failed to fetch data extension');
         }
-        //console.log('Jresponse',dataResponse);
         const data = await dataResponse.json();
-        console.log('Dresponse',data);
+       // console.log('Dresponse',data);
         const dataExtensionId = data.dataExtensionId;
 
         console.log('Data Extension ID:', dataExtensionId);
@@ -133,9 +132,8 @@ async function fetchKey(dataExtensionId) {
         if (!dataResponse.ok) {
             throw new Error('Failed to fetch data extension');
         }
-        //console.log('Jresponse',dataResponse);
         const data = await dataResponse.json();
-        console.log('Dresponse',data);
+       // console.log('Dresponse',data);
         const Dkey = data.key;
         primeKey = data.sendableCustomObjectField; 
         console.log('key:', Dkey, ' and PrimaryKey: ',primeKey);
@@ -151,7 +149,7 @@ async function postData(datetime,subscriberId, key) {
     const body = [
         {
             keys: {
-                primeKey: subscriberId // You can change the field 'Name' as per the Primarykey of the DE
+                [primeKey]: subscriberId // You can change the field 'Name' as per the Primarykey of the DE
             },
             values: {
                 nextSendTimeDateType: datetime
@@ -197,11 +195,11 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
     // Combine current date with start and end times
     const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
     const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
+    let nextSendDateTime = null; // Variable to hold the next send date/time
+    console.log('Checking the calculated date time falls before or after current UTC time ');
     console.log('startDateTimeUTC is', startDateTimeUTC);
     console.log('endDateTimeUTC is', endDateTimeUTC);
 
-    let nextSendDateTime = null; // Variable to hold the next send date/time
-    console.log('nextSendDateTime is ', nextSendDateTime);
 
     // Determine the next send time based on current time and start time
     if (currentUTC <= startDateTimeUTC) {
@@ -262,12 +260,12 @@ app.post('/execute', async (req, res) => {
         // Destructure input arguments from the request body
         const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId, eventDefinitionKey,contactKey,executionMode,definitionId,activityId,startActivityKey,definitionInstanceId,requestObjectId } = req.body.inArguments[0];
         console.log('contactKey is', contactKey);
-        console.log('executionMode is', executionMode);
-        console.log('definitionId', definitionId);
-        console.log('activityId', activityId);
-        console.log('startActivityKey', startActivityKey);
-        console.log('definitionInstanceId', definitionInstanceId);
-        console.log('requestObjectId', requestObjectId);
+       // console.log('executionMode is', executionMode);
+       // console.log('definitionId', definitionId);
+       // console.log('activityId', activityId);
+       // console.log('startActivityKey', startActivityKey);
+       // console.log('definitionInstanceId', definitionInstanceId);
+       // console.log('requestObjectId', requestObjectId);
         // Function to check for empty fields
         const checkFields = () => {
             const fields = { timezoneOffset, daytype, start_window, end_window };
@@ -292,13 +290,13 @@ app.post('/execute', async (req, res) => {
         console.log('start_window', start_window);
         console.log('end_window', end_window);
         console.log('eventDefinitionId', eventDefinitionId);
-        const timezoneOs = "{{Event." + eventDefinitionKey + '."timezoneOffset"}}';
-        console.log('timezoneOs', timezoneOs);
+        //const timezoneOs = "{{Event." + eventDefinitionKey + '."timezoneOffset"}}';
+        //console.log('timezoneOs', timezoneOs);
 
 
         // Call the function to fetch the token
         await fetchToken();
-        console.log('accessToken', accessToken);
+        //console.log('accessToken', accessToken);
         const did=await fetchDataExtensionId(eventDefinitionId);
         console.log('DataExtension ID: ', did);
         const Dkey=await fetchKey(did);
