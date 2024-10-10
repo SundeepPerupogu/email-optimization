@@ -153,8 +153,8 @@ function save() {
         "start_window": `${startHour}:${startMinute}:00Z`,
         "end_window": `${endHour}:${endMinute}:00Z`,
         "daytype": daytype,
-	"eventDefinitionId": eventDefinitionId,
-	"eventDefinitionKey": eventDefinitionKey   
+	"eventDefinitionId": eventDefinitionId
+//	"eventDefinitionKey": eventDefinitionKey   
     }];
 
     // Mark the metaData as configured
