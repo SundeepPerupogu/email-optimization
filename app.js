@@ -150,7 +150,7 @@ async function postData(datetime,subscriberId, key) {
     const body = [
         {
             keys: {
-                Name: subscriberId // You can change this as needed
+                Name: subscriberId // You can change the field 'Name' as per the Primarykey of the DE
             },
             values: {
                 nextSendTimeDateType: datetime
@@ -238,7 +238,7 @@ function combineDateTime(date, time, offsetTotalMinutes) {
     console.log(`${hours} ${minutes} ${seconds}`);
     console.log(`Start function combineDateTime ${combinedDateTime}`);
     // Set UTC hours considering the offset
-    combinedDateTime.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
+    combinedDateTime.setUTCHours(parseInt(hours, 10) + 6, parseInt(minutes, 10) - offsetTotalMinutes, parseInt(seconds, 10));
     console.log(`End function setUTCHours ${combinedDateTime}`);
     return combinedDateTime; // Return the combined date/time
 }
@@ -321,7 +321,7 @@ app.post('/execute', async (req, res) => {
         if (!nextSendTimeDateType) {
             return res.status(400).send(JSON.stringify({ error: "nextSendTimeDateType could not be generated" }));
         }
-        const postDataResponse = postData(nextSendTime,'Samsung',Dkey);
+        const postDataResponse = postData(nextSendTime,contactKey,Dkey);
         console.log('After Updating the DE ', postDataResponse);
         console.log("Data type of nextSendTime: ", typeof nextSendTime);
         console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
