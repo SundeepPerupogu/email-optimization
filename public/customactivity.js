@@ -12,7 +12,7 @@ define(['postmonger'], function (Postmonger) {
 
     console.log(`Starting customactivity.js`);
 
-    //connection.on('initActivity', initialize);
+    connection.on('initActivity', initialize);
     connection.on('initActivity', function(data) {
         // Log all metadata settings
         console.log('Activity Metadata:', data);
