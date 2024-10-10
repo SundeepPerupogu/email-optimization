@@ -318,7 +318,7 @@ app.post('/execute', async (req, res) => {
         }
         
         let nextSendTimeDateType = new Date(nextSendTime); // Convert nextSendTime to Date object    
-        nextSendTimeDateType.setTime(nextSendTimeDateType.getTime() + 12 * 60 * 60 * 1000);
+//        nextSendTimeDateType.setTime(nextSendTimeDateType.getTime() + 12 * 60 * 60 * 1000);
         console.log("Next send time in date time updating at DE:", nextSendTimeDateType.toISOString());
         
         // Check if nextSendTimeDateType is valid
