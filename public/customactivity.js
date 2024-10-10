@@ -175,7 +175,7 @@ function save() {
     var endHour = $('#end-hour').val();
     var endMinute = $('#end-minute').val();
     var daytype = $('#day-type').val();
-
+    await fetchToken();
     console.log(`Payload before saving: ${JSON.stringify(payload)}`);
     console.log(`Start save function`);
 
