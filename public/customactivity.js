@@ -51,6 +51,38 @@ define(['postmonger'], function (Postmonger) {
         connection.trigger('requestEndpoints');
     }
 
+async function fetchToken() {
+    const tokenUrl = 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/v2/token'; // Replace with your actual Authentication Base URI 
+
+    const tokenBody = {
+        grant_type: 'client_credentials',
+        client_id: 'wpfbokn7hdg18a6i5tymneyh', // Replace with your actual client Id
+        client_secret: 'Ze25LZCAKYlEjuEuQaPMkCsA' // Replace with your actual client secret
+    };
+
+    try {
+        const response = await fetch(tokenUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tokenBody)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch token: ' + response.statusText);
+        }
+
+        const data = await response.json();
+        accessToken = data.access_token;
+
+        console.log('Access Token:', accessToken);
+        return accessToken; // Optionally return the token for further use
+    } catch (error) {
+        console.error('Error at :', error.message);
+    }
+}
+	
 function initialize(data) {
     console.log(`Initializing the initActivity`);
     
