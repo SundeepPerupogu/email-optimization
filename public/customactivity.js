@@ -163,9 +163,9 @@ function save() {
         "definitionInstanceId": "{{Context.DefinitionInstanceId}}",
         "requestObjectId": "{{Context.RequestObjectId}}"
     }];
-    var subscrKey = {{activities.arguments.contactKey}};	
-    var subKey = {{Context.ContactKey}};
-    console.log('subKey : ',subKey);
+    //var subscrKey = "{{activities.arguments.contactKey}}";	
+    //var subKey = "{{Context.ContactKey}}";
+    //console.log('subKey : ',subKey);
     // Mark the metaData as configured
     payload['metaData'].isConfigured = true;
     console.log('metaData configured',payload);
