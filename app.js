@@ -314,14 +314,15 @@ app.post('/execute', async (req, res) => {
             nextSendTime = "Error in input params"; // Set error message
         }
         
-        const nextSendTimeDateType = new Date(nextSendTime); // Convert nextSendTime to Date object    
-        console.log("Next send time in date time is:", nextSendTimeDateType.toISOString());
+        let nextSendTimeDateType = new Date(nextSendTime); // Convert nextSendTime to Date object    
+        nextSendTimeDateType.setTime(nextSendTimeDateType.getTime() + 6 * 60 * 60 * 1000);
+        console.log("Next send time in date time updating at DE:", nextSendTimeDateType.toISOString());
         
         // Check if nextSendTimeDateType is valid
         if (!nextSendTimeDateType) {
             return res.status(400).send(JSON.stringify({ error: "nextSendTimeDateType could not be generated" }));
         }
-        const postDataResponse = postData(nextSendTime,contactKey,Dkey);
+        const postDataResponse = postData(nextSendTimeDateType,contactKey,Dkey);
         console.log('After Updating the DE ', postDataResponse);
         console.log("Data type of nextSendTime: ", typeof nextSendTime);
         console.log("Data type of nextSendTimeDateType: ", typeof nextSendTimeDateType);
