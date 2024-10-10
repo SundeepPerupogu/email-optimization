@@ -259,10 +259,17 @@ function addDays(date, days) {
 app.post('/execute', async (req, res) => {
     try {
         // Destructure input arguments from the request body
-        const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId, eventDefinitionKey } = req.body.inArguments[0];
+        const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId, eventDefinitionKey,contactKey,executionMode,definitionId,activityId,startActivityKey,definitionInstanceId,requestObjectId } = req.body.inArguments[0];
+        console.log('contactKey is', contactKey);
+        console.log('executionMode is', executionMode);
+        console.log('definitionId', definitionId);
+        console.log('activityId', activityId);
+        console.log('startActivityKey', startActivityKey);
+        console.log('definitionInstanceId', definitionInstanceId);
+        console.log('requestObjectId', requestObjectId);
         // Function to check for empty fields
         const checkFields = () => {
-            const fields = { timezoneOffset, daytype, start_window, end_window, eventDefinitionId };
+            const fields = { timezoneOffset, daytype, start_window, end_window };
             for (const [key, value] of Object.entries(fields)) {
                 if (!value) {
                     console.log(key,' is required and cannot be empty.');
