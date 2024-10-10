@@ -154,14 +154,21 @@ function save() {
         "end_window": `${endHour}:${endMinute}:00Z`,
         "daytype": daytype,
 	"eventDefinitionId": eventDefinitionId,
-	"eventDefinitionKey": eventDefinitionKey   
+	"eventDefinitionKey": eventDefinitionKey,
+        "contactKey": "{{Context.ContactKey}}",    
+	"executionMode": "{{Context.ExecutionMode}}",
+        "definitionId": "{{Context.DefinitionId}}",
+        "activityId": "{{Activity.Id}}",
+	"startActivityKey": "{{Context.StartActivityKey}}",
+        "definitionInstanceId": "{{Context.DefinitionInstanceId}}",
+        "requestObjectId": "{{Context.RequestObjectId}}"
     }];
     var subscrKey = {{activities.arguments.contactKey}};	
     var subKey = {{Context.ContactKey}};
-    console.log(,` subKey : `,subKey);
+    console.log('subKey : ',subKey);
     // Mark the metaData as configured
     payload['metaData'].isConfigured = true;
-    console.log(`metaData configured`,payload);
+    console.log('metaData configured',payload);
     console.log("eventDefKey :", eventDefinitionKey);
     console.log("eventDefinitionId", eventDefinitionId);    
 	
