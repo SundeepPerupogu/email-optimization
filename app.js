@@ -293,14 +293,18 @@ app.post('/execute', async (req, res) => {
         //const timezoneOs = "{{Event." + eventDefinitionKey + '."timezoneOffset"}}';
         //console.log('timezoneOs', timezoneOs);
 
-
-        // Call the function to fetch the token
-        await fetchToken();
-        //console.log('accessToken', accessToken);
+        // Check if accessToken is empty or undefined
+        if (!accessToken) {
+            // If empty, fetch a new token
+            await fetchToken();
+            console.log('Fetched new access token:', accessToken);
+        } else {
+            console.log('Access token is already available:', accessToken);
+        }
         const did=await fetchDataExtensionId(eventDefinitionId);
-        console.log('DataExtension ID: ', did);
+        //console.log('DataExtension ID: ', did);
         const Dkey=await fetchKey(did);
-        console.log('key to update DE: ', Dkey);
+        //console.log('key to update DE: ', Dkey);
         // Calculate the next send time based on the provided inputs
         nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
         console.log('After the calculateNextSendTime function call');
