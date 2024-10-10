@@ -55,6 +55,7 @@ activity.calculateNextSendTime = function(event) {
     $('#result').text('Next Send Time: ' + nextSendTime);
 };
 let accessToken;
+const primeKey;
 async function fetchToken() {
     const tokenUrl = 'https://mczjnvsmqwr9kd91bfptvyhht3p1.auth.marketingcloudapis.com/v2/token'; // Replace with your actual Authentication Base URI 
 
@@ -136,8 +137,8 @@ async function fetchKey(dataExtensionId) {
         const data = await dataResponse.json();
         console.log('Dresponse',data);
         const Dkey = data.key;
-
-        console.log('key:', Dkey);
+        primeKey = data.sendableCustomObjectField; 
+        console.log('key:', Dkey, ' and PrimaryKey: ',primeKey);
         return Dkey;
     } catch (error) {
         console.error('Error in fetching Key:', error.message);
@@ -150,7 +151,7 @@ async function postData(datetime,subscriberId, key) {
     const body = [
         {
             keys: {
-                Name: subscriberId // You can change the field 'Name' as per the Primarykey of the DE
+                primeKey: subscriberId // You can change the field 'Name' as per the Primarykey of the DE
             },
             values: {
                 nextSendTimeDateType: datetime
