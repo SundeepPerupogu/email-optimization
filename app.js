@@ -259,7 +259,7 @@ function addDays(date, days) {
 app.post('/execute', async (req, res) => {
     try {
         // Destructure input arguments from the request body
-        const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId } = req.body.inArguments[0];
+        const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId, eventDefinitionKey } = req.body.inArguments[0];
         // Function to check for empty fields
         const checkFields = () => {
             const fields = { timezoneOffset, daytype, start_window, end_window, eventDefinitionId };
@@ -284,6 +284,9 @@ app.post('/execute', async (req, res) => {
         console.log('start_window', start_window);
         console.log('end_window', end_window);
         console.log('eventDefinitionId', eventDefinitionId);
+        const timezoneOs = "{{Event." + eventDefinitionKey + '."timezoneOffset"}}';
+        console.log('timezoneOs', timezoneOs);
+
 
         // Call the function to fetch the token
         await fetchToken();
