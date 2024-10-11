@@ -77,12 +77,12 @@ function initialize(data) {
             console.log(JSON.stringify(inArgument.start_window));
         }
 
-        if (inArgument.end_window) {
-            const endWindowParts = inArgument.end_window.split(':');
-            $('#end-hour').val(endWindowParts[0]);  // Assuming you have an input with ID end-hour
-            $('#end-minute').val(endWindowParts[1]); // Assuming you have an input with ID end-minute
-            console.log(JSON.stringify(inArgument.end_window));
-        }
+ //       if (inArgument.end_window) {
+ //           const endWindowParts = inArgument.end_window.split(':');
+ //           $('#end-hour').val(endWindowParts[0]);  // Assuming you have an input with ID end-hour
+ //           $('#end-minute').val(endWindowParts[1]); // Assuming you have an input with ID end-minute
+ //           console.log(JSON.stringify(inArgument.end_window));
+ //       }
 
         if (inArgument.daytype) {
             $('#day-type').val(inArgument.daytype); // Ensure the ID matches the input in index.html
@@ -140,8 +140,8 @@ function save() {
   //  var timezoneOffset = $('#timezone-offset').val();
     var startHour = $('#start-hour').val();
     var startMinute = $('#start-minute').val();
-    var endHour = $('#end-hour').val();
-    var endMinute = $('#end-minute').val();
+//    var endHour = $('#end-hour').val();
+//    var endMinute = $('#end-minute').val();
     var daytype = $('#day-type').val();
 	
     console.log(`Payload before saving: ${JSON.stringify(payload)}`);
@@ -151,7 +151,7 @@ function save() {
     payload['arguments'].execute.inArguments = [{
         "timezoneOffset": "{{Event." + eventDefinitionKey + '."timezoneOffset"}}',
         "start_window": `${startHour}:${startMinute}:00Z`,
-        "end_window": `${endHour}:${endMinute}:00Z`,
+   //     "end_window": `${endHour}:${endMinute}:00Z`,
         "daytype": daytype,
 	"eventDefinitionId": eventDefinitionId,
 	"eventDefinitionKey": eventDefinitionKey,
