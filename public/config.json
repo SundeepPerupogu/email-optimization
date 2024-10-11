@@ -16,7 +16,7 @@
       "inArguments": [
         {
           "start_window": "",
-          "end_window": "",
+         
           "daytype": ""
         }
       ],
@@ -49,11 +49,7 @@
               "readOnly": false,
               "access": "Visible"
             },
-            "end_window": {
-              "dataType": "Text",
-              "isRequired": true,
-              "direction": "in"
-            },
+            
             "daytype": {
               "dataType": "Text",
               "isRequired": true,
