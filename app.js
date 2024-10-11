@@ -40,14 +40,14 @@ activity.calculateNextSendTime = function(event) {
     var daytype = $('#daytype').val();
     var timezoneOffset = $('#timezoneOffset').val();
     var startWindow = $('#start_window').val();
-    var endWindow = $('#end_window').val();
+//    var endWindow = $('#end_window').val();
     console.log(daytype, timezoneOffset, startWindow);
     
     // Validate input time formats and ensure start and end times are different
-    if (!validateTimeFormat(startWindow) || !validateTimeFormat(endWindow) || startWindow === endWindow) {
-        alert('Invalid input. Please check the time format and ensure start and end windows are different.'); // Alert user
-        return; // Exit function on validation failure
-    }
+//    if (!validateTimeFormat(startWindow) || !validateTimeFormat(endWindow) || startWindow === endWindow) {
+//        alert('Invalid input. Please check the time format and ensure start and end windows are different.'); // Alert user
+//        return; // Exit function on validation failure
+//    }
 
     // Calculate the next send time using the provided inputs
     var nextSendTime = calculateNextSendTime(timezoneOffset, daytype, startWindow, endWindow);
@@ -182,7 +182,7 @@ async function postData(datetime,subscriberId, key) {
 
 
 // Function to calculate the next send time based on various parameters
-function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_window='11:00:00Z', end_window='12:00:00Z') {
+function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_window='11:00:00Z') {
     const currentUTC = new Date(); // Get current UTC time
     // Split the timezone offset into hours and minutes
     const offsetParts = timezoneOffset.split('.');
@@ -194,11 +194,11 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
 
     // Combine current date with start and end times
     const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
-    const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
+   // const endDateTimeUTC = combineDateTime(currentUTC, end_window, offsetTotalMinutes);
     let nextSendDateTime = null; // Variable to hold the next send date/time
     console.log('Checking the calculated date time falls before or after current UTC time ');
     console.log('startDateTimeUTC is', startDateTimeUTC);
-    console.log('endDateTimeUTC is', endDateTimeUTC);
+  //  console.log('endDateTimeUTC is', endDateTimeUTC);
 
 
     // Determine the next send time based on current time and start time
@@ -258,7 +258,7 @@ function addDays(date, days) {
 app.post('/execute', async (req, res) => {
     try {
         // Destructure input arguments from the request body
-        const { timezoneOffset, daytype, start_window, end_window, eventDefinitionId, eventDefinitionKey,contactKey,executionMode,definitionId,activityId,startActivityKey,definitionInstanceId,requestObjectId } = req.body.inArguments[0];
+        const { timezoneOffset, daytype, start_window,  eventDefinitionId, eventDefinitionKey,contactKey,executionMode,definitionId,activityId,startActivityKey,definitionInstanceId,requestObjectId } = req.body.inArguments[0];
         console.log('contactKey is', contactKey);
        // console.log('executionMode is', executionMode);
        // console.log('definitionId', definitionId);
@@ -268,7 +268,7 @@ app.post('/execute', async (req, res) => {
        // console.log('requestObjectId', requestObjectId);
         // Function to check for empty fields
         const checkFields = () => {
-            const fields = { timezoneOffset, daytype, start_window, end_window };
+            const fields = { timezoneOffset, daytype, start_window };
             for (const [key, value] of Object.entries(fields)) {
                 if (!value) {
                     console.log(key,' is required and cannot be empty.');
@@ -288,7 +288,7 @@ app.post('/execute', async (req, res) => {
         console.log('timezoneOffset is', timezoneOffset);
         console.log('daytype is', daytype);
         console.log('start_window', start_window);
-        console.log('end_window', end_window);
+      //  console.log('end_window', end_window);
         console.log('eventDefinitionId', eventDefinitionId);
         //const timezoneOs = "{{Event." + eventDefinitionKey + '."timezoneOffset"}}';
         //console.log('timezoneOs', timezoneOs);
@@ -306,7 +306,7 @@ app.post('/execute', async (req, res) => {
         const Dkey=await fetchKey(did);
         //console.log('key to update DE: ', Dkey);
         // Calculate the next send time based on the provided inputs
-        nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window, end_window);
+        nextSendTime = calculateNextSendTime(timezoneOffset, daytype, start_window);
         console.log('After the calculateNextSendTime function call');
 
         // Check if nextSendTime is valid
