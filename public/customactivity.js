@@ -150,8 +150,7 @@ function save() {
     // Set the inArguments with the user input values
     payload['arguments'].execute.inArguments = [{
         "timezoneOffset": "{{Event." + eventDefinitionKey + '."timezoneOffset"}}',
-        console.log("start_window :", start_window);
-   //     "start_window": `${startWindow}`,
+        "start_window": `${start_window}`,
    //     "end_window": `${endHour}:${endMinute}:00Z`,
         "daytype": daytype,
 	"eventDefinitionId": eventDefinitionId,
@@ -164,9 +163,9 @@ function save() {
         "definitionInstanceId": "{{Context.DefinitionInstanceId}}",
         "requestObjectId": "{{Context.RequestObjectId}}"
     }];
+    console.log('start_window : ',start_window);
     //var subscrKey = "{{activities.arguments.contactKey}}";	
     //var subKey = "{{Context.ContactKey}}";
-    //console.log('subKey : ',subKey);
     // Mark the metaData as configured
     payload['metaData'].isConfigured = true;
     console.log('metaData configured',payload);
