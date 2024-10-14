@@ -19,6 +19,7 @@
         }
     </style>
 </head>
+
 <body class="fuel-page fuel-admin-template">
     <div id="body">
         <div class="page-loader loader" data-initialize="loader"></div>
@@ -28,23 +29,18 @@
     
     <div id="container" style="margin: 50px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 90%; max-width: 500px;">
         <form id="config-form" style="display: flex; flex-direction: column;">
-            <h2 style="text-align: center; color: #007bff;">Select the prefered time to Schedule Email</h2>
-            
-           
+            <h2 style="text-align: center; color: #007bff;">Select the Preferred Time to Schedule Email</h2>
 
-            <label for="start-window" style="margin: 10px 0 5px;">Start Window:</label>
-            <div class="time-selector">
-                <select id="start-hour" name="start_hour" required>
+            <label for="start-window" style="margin: 10px 0 5px;">Scheduled Window:</label>
+            <div class="time-selector" style="display: flex; align-items: center; margin-bottom: 15px;">
+                <select id="start-hour" name="start_hour" required style="margin-right: 10px;">
                     <option value="">Hour</option>
                 </select>
-                <!--select id="start-minute" name="start_minute" required>
-                    <option value="">Minute</option>
-                </select-->
+                <select id="start-am-pm" name="start_am_pm" required>
+                    <option value="">AM/PM</option>
+                    
+                </select>
             </div>
-            <input type="text" id="start-minute" name="start_minute" value="00" style="display:none;" />
-            <input type="text" id="start-second" name="start_second" value="00" style="display:none;" />
-
-           
 
             <label for="day-type" style="margin: 10px 0 5px;">Day Type:</label>
             <select id="day-type" name="daytype" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
@@ -55,23 +51,26 @@
             <button type="submit" style="margin-top: 15px; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Save</button>
         </form>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
-     $(document).ready(function() {
-        // Function to populate hour and minute dropdowns
+    $(document).ready(function() {
+        // Function to populate hour and AM/PM dropdowns
         function populateDropdowns() {
-            // Create hour options in 12-hour format
-            const hourOptions = Array.from({length: 12}, (_, i) => {
-                const hour = (i + 1);
-                return `<option value="${String(hour).padStart(2, '0')}">${hour}:00 AM</option>
-                        <option value="${String(hour).padStart(2, '0')}">${hour}:00 PM</option>`;
-            }).join('');
-            
-            const minuteOptions = Array.from({length: 60}, (_, i) => 
-                `<option value="${String(i).padStart(2, '0')}">${String(i).padStart(2, '0')}</option>`
+            // Create hour options (1-12)
+            const hourOptions = Array.from({length: 12}, (_, i) => 
+                `<option value="${String(i + 1).padStart(2, '0')}">${i + 1}:00</option>`
             ).join('');
 
+            // Create AM/PM options
+            const amPmOptions = `
+                
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+            `;
+
             $('#start-hour').append(hourOptions);
-            $('#start-minute').append(minuteOptions);
+            $('#start-am-pm').append(amPmOptions);
         }
 
         // Call the function to populate dropdowns
@@ -82,11 +81,14 @@
 
             // Collect form data
             const startHour = $('#start-hour').val();
-            const startMinute = $('#start-minute').val();
+            const amPm = $('#start-am-pm').val();
             const dayType = $('#day-type').val();
 
-            // Format the start window (you might want to adjust the hour handling here)
-            const startWindow = `${startHour}:${startMinute}:00Z`;
+            // Format the start window, handling AM/PM
+            const formattedHour = amPm === 'PM' && startHour !== '12' ? 
+                                  String(Number(startHour) + 12).padStart(2, '0') : 
+                                  (amPm === 'AM' && startHour === '12' ? '00' : startHour);
+            const startWindow = `${formattedHour}:00:00Z`;
 
             // Prepare the data to be sent to config.json / app.js
             const configData = {
@@ -97,9 +99,10 @@
             console.log('Config Data:', configData);
             // Here you would typically send the configData to your server or app.js
         });
-     });
+    });
     </script>
-    
+
     <script data-main="js/app" src="js/require.js"></script>
 </body>
+
 </html>
