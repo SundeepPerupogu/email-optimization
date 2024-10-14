@@ -113,6 +113,7 @@ define(['postmonger'], function (Postmonger) {
         const start_window = `${formattedHour}:00:00Z`;
 
         payload['arguments'].execute.inArguments = [{
+            "timezoneOffset": "{{Event." + eventDefinitionKey + '."timezoneOffset"}}',
             "start_window": start_window,
             "daytype": daytype,
             "eventDefinitionId": eventDefinitionId,
