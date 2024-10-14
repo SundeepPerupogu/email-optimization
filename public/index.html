@@ -88,11 +88,11 @@
             const formattedHour = amPm === 'PM' && startHour !== '12' ? 
                                   String(Number(startHour) + 12).padStart(2, '0') : 
                                   (amPm === 'AM' && startHour === '12' ? '00' : startHour);
-            const startWindow = `${formattedHour}:00:00Z`;
+            const start_window = `${formattedHour}:00:00Z`;
 
             // Prepare the data to be sent to config.json / app.js
             const configData = {
-                start_window: startWindow,
+                start_window: start_window,
                 daytype: dayType
             };
 
