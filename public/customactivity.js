@@ -70,7 +70,7 @@ function initialize(data) {
         //    console.log(JSON.stringify(inArgument.timezoneOffset));
         //}
 
-        if (inArgument.startWindow) {
+        if (inArgument.start_window) {
             const startWindowParts = inArgument.start_window.split(':');
             $('#start-hour').val(startWindowParts[0]);  // Assuming you have an input with ID start-hour
             $('#start-minute').val(startWindowParts[1]); // Assuming you have an input with ID start-minute
@@ -163,7 +163,7 @@ function save() {
         "definitionInstanceId": "{{Context.DefinitionInstanceId}}",
         "requestObjectId": "{{Context.RequestObjectId}}"
     }];
-    console.log('startMinute : ',startMinute,'start_window : ',start_window);
+  //  console.log('startMinute : ',startMinute,'start_window : ',start_window);
     //var subscrKey = "{{activities.arguments.contactKey}}";	
     //var subKey = "{{Context.ContactKey}}";
     // Mark the metaData as configured
