@@ -150,7 +150,7 @@ function save() {
     // Set the inArguments with the user input values
     payload['arguments'].execute.inArguments = [{
         "timezoneOffset": "{{Event." + eventDefinitionKey + '."timezoneOffset"}}',
-        "start_window": `${startHour}:${startMinute}:00Z`,
+        "start_window": `${startWindow}`,
    //     "end_window": `${endHour}:${endMinute}:00Z`,
         "daytype": daytype,
 	"eventDefinitionId": eventDefinitionId,
