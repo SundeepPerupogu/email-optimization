@@ -25,7 +25,7 @@
           "nextSendTime": null
         }
       ],
-      "url": "https://email-optimization-1.onrender.com/execute",
+      "url": "https://sendtimecalculator.onrender.com/execute",
       "verb": "POST",
       "body": "",
       "header": "",
@@ -75,21 +75,21 @@
   "configurationArguments": {
     "applicationExtensionKey": "cfaaed29-c9a5-470b-9580-cf5e344567a2",
     "publish": {
-      "url": "https://email-optimization-1.onrender.com/publish",
+      "url": "https://sendtimecalculator.onrender.com/publish",
       "verb": "POST",
       "header": "Content-Type: application/json",
       "body": "{}",
       "useJwt": false
     },
     "validate": {
-      "url": "https://email-optimization-1.onrender.com/validate",
+      "url": "https://sendtimecalculator.onrender.com/validate",
       "verb": "POST",
       "header": "Content-Type: application/json",
       "body": "{}",
       "useJwt": false
     },
     "stop": {
-      "url": "https://email-optimization-1.onrender.com/stop",
+      "url": "https://sendtimecalculator.onrender.com/stop",
       "verb": "POST",
       "header": "Content-Type: application/json",
       "body": "{}",
@@ -98,9 +98,9 @@
   },
   "userInterfaces": {
     "configModal": {
-      "height": 600,
+      "height": 500,
       "width": 500,
-      "url": "https://email-optimization-1.onrender.com/index.html"
+      "url": "https://sendtimecalculator.onrender.com/index.html"
     }
   }
 }
