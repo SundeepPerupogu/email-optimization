@@ -6,7 +6,18 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script data-main="js/main.js" type="text/javascript" src="js/require.js"></script>
-
+    <style>
+        .time-selector {
+            display: flex;
+            gap: 10px; /* Space between hour and minute dropdowns */
+        }
+        select {
+            width: 240px; /* Fixed width for dropdowns */
+            padding: 5px; /* Padding for better touch targets */
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+    </style>
 </head>
 <body class="fuel-page fuel-admin-template">
     <div id="body">
@@ -19,25 +30,81 @@
         <form id="config-form" style="display: flex; flex-direction: column;">
             <h2 style="text-align: center; color: #007bff;">Email User Scheduler Configuration</h2>
             
-            <label for="timezone-offset" style="margin: 10px 0 5px;">Timezone Offset (e.g., +05:30, -04:00):</label>
-            <input type="text" id="timezone-offset" name="timezoneOffset" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+            <!--label for="timezone-offset" style="margin: 10px 0 5px;">Timezone Offset (Pulled from Data Extension):</label>
+            <input type="text" id="timezone-offset" name="timezoneOffset" required readonly style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; background-color: #bbe2ff;" -->
 
-            <label for="start-window" style="margin: 10px 0 5px;">Start Window (e.g., 10:00:00Z):</label>
-            <input type="text" id="start-window" name="start_window" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+            <label for="start-window" style="margin: 10px 0 5px;">Start Window:</label>
+            <div class="time-selector">
+                <select id="start-hour" name="start_hour" required>
+                    <option value="">Hour</option>
+                </select>
+                <select id="start-minute" name="start_minute" required>
+                    <option value="">Minute</option>
+                </select>
+            </div>
+            <input type="text" id="start-second" name="start_second" value="00" style="display:none;" />
 
-            <label for="end-window" style="margin: 10px 0 5px;">End Window (e.g., 14:30:00Z):</label>
-            <input type="text" id="end-window" name="end_window" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+            <label for="end-window" style="margin: 10px 0 5px;">End Window:</label>
+            <div class="time-selector">
+                <select id="end-hour" name="end_hour" required>
+                    <option value="">Hour</option>
+                </select>
+                <select id="end-minute" name="end_minute" required>
+                    <option value="">Minute</option>
+                </select>
+            </div>
+            <input type="text" id="end-second" name="end_second" value="00" style="display:none;" />
 
-            <label for="day-type" style="margin: 10px 0 5px;">Day Type (weekday/anyday):</label>
-            <input type="text" id="day-type" name="daytype" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+            <label for="day-type" style="margin: 10px 0 5px;">Day Type:</label>
+            <select id="day-type" name="daytype" required style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+                <option value="weekday">Weekday</option>
+                <option value="anyday">Any Day</option>
+            </select>
+            
+            <button type="submit" style="margin-top: 15px; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Submit</button>
         </form>
     </div>
-
     <script type="text/javascript">
-        window.MC = {};
-        window.MC.options = {
-            logErrors: true
-        };
+        $(document).ready(function() {
+            // Function to populate hour and minute dropdowns
+            function populateDropdowns() {
+                const hourOptions = Array.from({length: 24}, (_, i) => `<option value="${String(i).padStart(2, '0')}">${String(i).padStart(2, '0')}</option>`).join('');
+                const minuteOptions = Array.from({length: 60}, (_, i) => `<option value="${String(i).padStart(2, '0')}">${String(i).padStart(2, '0')}</option>`).join('');
+                
+                $('#start-hour, #end-hour').append(hourOptions);
+                $('#start-minute, #end-minute').append(minuteOptions);
+            }
+
+            // Call the function to populate dropdowns
+            populateDropdowns();
+
+            $('#config-form').on('submit', function(event) {
+                event.preventDefault();
+
+                // Collect form data
+               // const timezoneOffset = $('#timezone-offset').val();
+                const startHour = $('#start-hour').val();
+                const startMinute = $('#start-minute').val();
+                const endHour = $('#end-hour').val();
+                const endMinute = $('#end-minute').val();
+                const dayType = $('#day-type').val();
+
+                // Format the start and end windows
+                const startWindow = `${startHour}:${startMinute}:${$('#start-second').val()}Z`;
+                const endWindow = `${endHour}:${endMinute}:${$('#end-second').val()}Z`;
+
+                // Prepare the data to be sent to config.json / app.js
+                const configData = {
+                  //  timezoneOffset,
+                    start_window: startWindow,
+                    end_window: endWindow,
+                    daytype: dayType
+                };
+
+                console.log('Config Data:', configData);
+                // Here you would typically send the configData to your server or app.js
+            });
+        });
     </script>
     
     <script data-main="js/app" src="js/require.js"></script>

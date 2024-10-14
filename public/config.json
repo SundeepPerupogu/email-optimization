@@ -15,16 +15,9 @@
     "execute": {
       "inArguments": [
         {
-          "timezoneOffset": "{{Event.userMailSchedulerInputs.timezoneOffset}}"
-        },
-        {
-          "start_window": ""
-        },
-        {
-          "end_window": "{{Event.triggers[0].metaData.eventDefinitionId.end_window}}"
-        },
-        {
-          "daytype": "{{triggers[0].metaData.eventDefinitionId.daytype}}"
+          "start_window": "",
+          "end_window": "",
+          "daytype": ""
         }
       ],
       "outArguments": [
@@ -49,11 +42,6 @@
       "execute": {
         "inArguments": [
           {
-            "timezoneOffset": {
-              "dataType": "Text",
-              "isRequired": true,
-              "direction": "in"
-            },
             "start_window": {
               "dataType": "Text",
               "isRequired": true,
