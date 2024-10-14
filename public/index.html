@@ -56,46 +56,48 @@
         </form>
     </div>
     <script type="text/javascript">
-        $(document).ready(function() {
-            // Function to populate hour and minute dropdowns
-            function populateDropdowns() {
-                const hourOptions = Array.from({length: 24}, (_, i) => `<option value="${String(i).padStart(2, '0')}">${String(i).padStart(2, '0')}</option>`).join('');
-                //const minuteOptions = Array.from({length: 60}, (_, i) => `<option value="${String(i).padStart(2, '0')}">${String(i).padStart(2, '0')}</option>`).join('');
-                
-                $('#start-hour').append(hourOptions);
-               
-            }
+     $(document).ready(function() {
+        // Function to populate hour and minute dropdowns
+        function populateDropdowns() {
+            // Create hour options in 12-hour format
+            const hourOptions = Array.from({length: 12}, (_, i) => {
+                const hour = (i + 1);
+                return `<option value="${String(hour).padStart(2, '0')}">${hour}:00 AM</option>
+                        <option value="${String(hour).padStart(2, '0')}">${hour}:00 PM</option>`;
+            }).join('');
+            
+            const minuteOptions = Array.from({length: 60}, (_, i) => 
+                `<option value="${String(i).padStart(2, '0')}">${String(i).padStart(2, '0')}</option>`
+            ).join('');
 
-            // Call the function to populate dropdowns
-            populateDropdowns();
+            $('#start-hour').append(hourOptions);
+            $('#start-minute').append(minuteOptions);
+        }
 
-            $('#config-form').on('submit', function(event) {
-                event.preventDefault();
+        // Call the function to populate dropdowns
+        populateDropdowns();
 
-                // Collect form data
-               // const timezoneOffset = $('#timezone-offset').val();
-                const startHour = $('#start-hour').val();
-                const startMinute = $('#start-minute').val();
-               // const endHour = $('#end-hour').val();
-               // const endMinute = $('#end-minute').val();
-                const dayType = $('#day-type').val();
+        $('#config-form').on('submit', function(event) {
+            event.preventDefault();
 
-                // Format the start and end windows
-                const startWindow = `${startHour}:${startMinute}:${$('#start-second').val()}Z`;
-               // const endWindow = `${endHour}:${endMinute}:${$('#end-second').val()}Z`;
+            // Collect form data
+            const startHour = $('#start-hour').val();
+            const startMinute = $('#start-minute').val();
+            const dayType = $('#day-type').val();
 
-                // Prepare the data to be sent to config.json / app.js
-                const configData = {
-                  //  timezoneOffset,
-                    start_window: startWindow,
-                //    end_window: endWindow,
-                    daytype: dayType
-                };
+            // Format the start window (you might want to adjust the hour handling here)
+            const startWindow = `${startHour}:${startMinute}:00Z`;
 
-                console.log('Config Data:', configData);
-                // Here you would typically send the configData to your server or app.js
-            });
+            // Prepare the data to be sent to config.json / app.js
+            const configData = {
+                start_window: startWindow,
+                daytype: dayType
+            };
+
+            console.log('Config Data:', configData);
+            // Here you would typically send the configData to your server or app.js
         });
+     });
     </script>
     
     <script data-main="js/app" src="js/require.js"></script>
