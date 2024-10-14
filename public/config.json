@@ -7,7 +7,7 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "Send Time to DE",
+      "name": "Send Time Calculator",
       "description": "Calculates the next available send time based on the user's time zone."
     }
   },
@@ -98,7 +98,7 @@
   },
   "userInterfaces": {
     "configModal": {
-      "height": 300,
+      "height": 400,
       "width": 500,
       "url": "https://sendtimecalculator.onrender.com/index.html"
     }
