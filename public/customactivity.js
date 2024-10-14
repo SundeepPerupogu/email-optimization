@@ -70,7 +70,7 @@ function initialize(data) {
         //    console.log(JSON.stringify(inArgument.timezoneOffset));
         //}
 
-        if (inArgument.start_window) {
+        if (inArgument.startWindow) {
             const startWindowParts = inArgument.start_window.split(':');
             $('#start-hour').val(startWindowParts[0]);  // Assuming you have an input with ID start-hour
             $('#start-minute').val(startWindowParts[1]); // Assuming you have an input with ID start-minute
