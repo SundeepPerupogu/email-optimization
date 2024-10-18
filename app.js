@@ -81,7 +81,7 @@ async function fetchToken() {
         const data = await response.json();
         accessToken = data.access_token;
 
-        console.log('Access Token:', accessToken);
+        //console.log('Access Token:', accessToken);
         return accessToken; // Optionally return the token for further use
     } catch (error) {
         console.error('Error at :', error.message);
@@ -298,13 +298,13 @@ app.post('/execute', async (req, res) => {
         //console.log('timezoneOs', timezoneOs);
 
         // Check if accessToken is empty or undefined
-        if (!accessToken) {
+       // if (!accessToken) {
             // If empty, fetch a new token
-            await fetchToken();
-            console.log('Fetched new access token:', accessToken);
-        } else {
-            console.log('Access token is already available:', accessToken);
-        }
+       //     await fetchToken();
+       //     console.log('Fetched new access token:', accessToken);
+       // } else {
+       //     console.log('Access token is already available:', accessToken);
+       // }
         const did=await fetchDataExtensionId(eventDefinitionId);
         //console.log('DataExtension ID: ', did);
         const Dkey=await fetchKey(did);
