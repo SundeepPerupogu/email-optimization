@@ -214,8 +214,9 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
 
     // Adjust the next send time if it's a weekday
     if (daytype === 'weekday') {
+        updateSendDateTime = new Date(nextSendDateTime.getTime() - (6 * 60 * 60 * 1000));
         // Loop until nextSendDateTime is not a weekend (Saturday or Sunday)
-        while (nextSendDateTime.getUTCDay() === 0 || nextSendDateTime.getUTCDay() === 6) {
+        while (updateSendDateTime.getUTCDay() === 0 || updateSendDateTime.getUTCDay() === 6) {
             console.log(`As daytype === weekday`);
             console.log(nextSendDateTime.getUTCDay());
             nextSendDateTime = addDays(nextSendDateTime, 1); // Move to next day
