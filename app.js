@@ -190,7 +190,7 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
     const offsetMinutes = parseInt(offsetParts[1] || "0", 10);
     // Calculate total offset in minutes
     const offsetTotalMinutes = (offsetHours * 60) + (offsetHours < 0 ? -(offsetMinutes * 6) : (offsetMinutes * 6));
-    console.log(`Started function calculateNextSendTime`); // Log function start
+    console.log(`Started function calculateNextSendTime. Current MST : `,currentUTC); // Log function start
 
     // Combine current date with start and end times
     const startDateTimeUTC = combineDateTime(currentUTC, start_window, offsetTotalMinutes);
@@ -200,9 +200,11 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
     console.log('startDateTimeUTC is', startDateTimeUTC);
   //  console.log('endDateTimeUTC is', endDateTimeUTC);
 
-
+    // Add 6 hours (6 hours * 60 minutes * 60 seconds * 1000 milliseconds)
+    const updatedUTC = new Date(currentUTC.getTime() + 6 * 60 * 60 * 1000);
+    console.log('Current UTC time is : ',updatedUTC)
     // Determine the next send time based on current time and start time
-    if (currentUTC <= startDateTimeUTC) {
+    if (updatedUTC <= startDateTimeUTC) {
         nextSendDateTime = startDateTimeUTC; // If current time is before start time
         console.log(`currentUTC <= startDateTimeUTC`);
     } else {
