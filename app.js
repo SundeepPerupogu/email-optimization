@@ -222,6 +222,7 @@ function calculateNextSendTime(timezoneOffset='5.5', daytype='weekday', start_wi
             updateSendDateTime = addDays(updateSendDateTime, 1); // Move to next day
         }
     }
+    nextSendDateTime = new Date(updateSendDateTime.getTime() + (6 * 60 * 60 * 1000));
     console.log(`Final nextSendDateTime`, nextSendDateTime);
     return nextSendDateTime.toISOString(); // Return in ISO format
 }
