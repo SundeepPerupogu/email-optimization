@@ -300,7 +300,7 @@ app.post('/execute', async (req, res) => {
         // Check if accessToken is empty or undefined
        // if (!accessToken) {
             // If empty, fetch a new token
-       //     await fetchToken();
+        await fetchToken();
        //     console.log('Fetched new access token:', accessToken);
        // } else {
        //     console.log('Access token is already available:', accessToken);
